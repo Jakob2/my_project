@@ -11,10 +11,10 @@ public:
     void background();
 
 private:
-    std::vector<float> menuX;
-    std::vector<float> menuY;
+    std::vector<float> backgroundColor = {.8,.8,.8};
     float menuWidth = 0.25;
+    std::vector<float> menuX = {1-menuWidth,1};
+    std::vector<float> menuY = {0,1};
 };
-
 
 #endif // MENU_H
