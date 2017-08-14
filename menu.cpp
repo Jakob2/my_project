@@ -16,7 +16,7 @@ std::vector<float> Menu::mouseToMenuGrid(int mouseX, int mouseY){
     res[0] = (float)mouseX/World::width;
     res[1] = 1-(float)mouseY/World::height;
     res[2] = 0;
-    std::cout<<res[0]<<"-"<<res[1]<<"-"<<res[2]<<std::endl;
+    //std::cout<<res[0]<<"-"<<res[1]<<"-"<<res[2]<<std::endl;
     return res;
 }
 
@@ -28,5 +28,5 @@ void Menu::background(){
         glVertex2f(menuX[0],menuY[1]);
         glVertex2f(menuX[1],menuY[1]);
         glVertex2f(menuX[1],menuY[0]);
-        glEnd();
+    glEnd();
 }

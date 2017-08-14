@@ -38,6 +38,7 @@ bool Compass::panelCompass(std::vector<float> in){
 void Compass::turnCamera(std::vector<float> q){
     calcAngle(q);
     calcNeedlePos();
+    turn();
 }
 
 void Compass::calcAngle(std::vector<float> q){
@@ -49,11 +50,18 @@ void Compass::calcAngle(std::vector<float> q){
     if(x<0) angle = 180 - angle;
     if(angle<0) angle = 360 + angle;
     //angle = floor(angle);
-    std::cout<<"angle "<<angle<<std::endl;
+    //std::cout<<"angle "<<angle<<std::endl;
 }
 
 void Compass::calcNeedlePos(){
     needleX = (cos(angle*World::pi/180)*radius/2) + comMidX;
     needleY = (sin(angle*World::pi/180)*radius) + comMidY;
+}
+
+void Compass::turn(){
+    float r;
+    r = sqrt(pow(1,2)+pow(1,2));
+    World::eyeX = cos(angle*World::pi/180) * r;
+    World::eyeZ = sin(angle*World::pi/180) * r;
 }
 
