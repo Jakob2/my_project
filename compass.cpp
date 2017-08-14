@@ -60,7 +60,7 @@ void Compass::calcNeedlePos(){
 
 void Compass::turn(){
     float r;
-    r = sqrt(pow(1,2)+pow(1,2));
+    r = sqrt(pow(World::eyeX,2)+pow(World::eyeZ,2));
     World::eyeX = cos(angle*World::pi/180) * r;
     World::eyeZ = sin(angle*World::pi/180) * r;
 }
