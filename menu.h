@@ -10,6 +10,7 @@ class Menu : public Compass
 public:
     Menu();
     void drawMenu();
+    std::vector<float> mouseToMenuGrid(int mouseX, int mouseY);
 
 private:
     void background();

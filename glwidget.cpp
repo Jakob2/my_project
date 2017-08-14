@@ -47,3 +47,44 @@ void GlWidget::dd(){
     glLoadIdentity();
     gluOrtho2D(0,1,0,1);
 }
+
+void GlWidget::keyPressEvent(QKeyEvent *event){
+    /*vector<double> move;
+    move = Vector::moveDirection();*/
+    switch(event->key()){
+    case Qt::Key_A:
+        World::x += move[0];
+        World::z -= move[1];
+        break;
+    case Qt::Key_D:
+        World::x -= move[0];
+        World::z += move[1];
+        break;
+    case Qt::Key_W:
+        World::x += move[1];
+        World::z += move[0];
+        break;
+    case Qt::Key_S:
+        World::x -= move[1];
+        World::z -= move[0];
+        break;
+    }
+    paintGL();
+}
+
+void GlWidget::mousePressEvent(QMouseEvent *event){
+    World::mousePressed = true;
+    pressWinX = event->pos().x();
+    pressWinY = event->pos().y();
+    if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+}
+
+void GlWidget::mouseReleaseEvent(QMouseEvent *event){
+    World::mousePressed = false;
+}
+
+void GlWidget::mouseMoveEvent(QMouseEvent *event){
+    moveWinX = event->pos().x();
+    moveWinY = event->pos().y();
+    if(World::mousePressed && panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+}

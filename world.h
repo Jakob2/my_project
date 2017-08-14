@@ -18,12 +18,12 @@ public:
     static int validPlace;
     static float x;
     static float z;
-
     static int option;
     static float intersectionX;
     static float intersectionZ;
     static float areaX;
     static float areaZ;
+    static bool mousePressed;
 };
 
 #endif // WORLD_H

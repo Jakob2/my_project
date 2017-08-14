@@ -10,13 +10,13 @@ int World::range;
 int World::validPlace;
 float World::x;
 float World::z;
-
 int World::option;
 float World::intersectionX;
 float World::intersectionZ;
 float World::areaX;
 float World::areaZ;
 float World::pi;
+bool World::mousePressed;
 
 World::World(){
     World::width = 701;
@@ -30,5 +30,6 @@ World::World(){
     World::z = 0;
     World::option = 0;
     World::pi = 3.14159265;
+    World::mousePressed = false;
 }
 

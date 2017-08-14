@@ -15,12 +15,15 @@ public:
     void paintGL();
     void resizeGL(int w, int h);
 
-    /*void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event);
     void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);*/
+    void mouseReleaseEvent(QMouseEvent * event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     QTimer timer;
+    int pressWinX, pressWinY, moveWinX, moveWinY;
+    std::vector<int> move = {1,1};
 
     void ddd();
     void dd();

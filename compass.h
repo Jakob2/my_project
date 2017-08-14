@@ -11,13 +11,17 @@ public:
     Compass();
     void drawCompass();
     void drawNeedle();
+    bool panelCompass(std::vector<float> in);
+    void turnCamera(std::vector<float> q);
+    void calcAngle(std::vector<float> q);
+    void calcNeedlePos();
+    float comMidX = 0.825;
+    float comMidY = 0.125;
 
 private:
-    int angle;
-    float radius = 0.05;
-    float comMidX = 0.825;
-    float comMidY = 0.075;
-    void calcAngle(std::vector<float> q, std::vector<float> m);
+    float angle;
+    float radius = 0.1;
+    float needleX, needleY;
 };
 
 #endif // COMPASS_H
