@@ -7,6 +7,7 @@ class World
 public:
     World();
 
+    static float pi;
     static int width;
     static int height;
     static float zoom;

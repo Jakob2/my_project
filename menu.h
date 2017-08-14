@@ -3,8 +3,9 @@
 
 #include "general.h"
 #include "world.h"
+#include "compass.h"
 
-class Menu
+class Menu : public Compass
 {
 public:
     Menu();

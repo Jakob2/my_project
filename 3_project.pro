@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     db.cpp \
     tilemap.cpp \
     shape.cpp \
-    menu.cpp
+    menu.cpp \
+    compass.cpp \
+    vector.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -28,7 +30,9 @@ HEADERS  += mainwindow.h \
     db.h \
     tilemap.h \
     shape.h \
-    menu.h
+    menu.h \
+    compass.h \
+    vector.h
 
 FORMS    += mainwindow.ui
 

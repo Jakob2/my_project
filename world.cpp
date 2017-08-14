@@ -16,6 +16,7 @@ float World::intersectionX;
 float World::intersectionZ;
 float World::areaX;
 float World::areaZ;
+float World::pi;
 
 World::World(){
     World::width = 701;
@@ -28,5 +29,6 @@ World::World(){
     World::x = 0;
     World::z = 0;
     World::option = 0;
+    World::pi = 3.14159265;
 }
 

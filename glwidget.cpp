@@ -21,7 +21,9 @@ void GlWidget::paintGL(){
     /*constructs(Db::construct, X, Z);*/
 
     dd();
+    drawCompass();
     background();
+
 
     ddd();
     glScalef(World::zoom, World::zoom, World::zoom);

@@ -12,6 +12,5 @@ void Menu::background(){
         glVertex2f(menuX[0],menuY[1]);
         glVertex2f(menuX[1],menuY[1]);
         glVertex2f(menuX[1],menuY[0]);
-    glEnd();
+        glEnd();
 }
-
