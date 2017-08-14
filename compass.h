@@ -10,6 +10,7 @@ class Compass
 public:
     Compass();
     void drawCompass();
+    void drawNeedle();
 
 private:
     int angle;

@@ -4,6 +4,12 @@ Menu::Menu(){
 
 }
 
+void Menu::drawMenu(){
+    drawNeedle();
+    drawCompass();
+    background();
+}
+
 void Menu::background(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor3f(backgroundColor[0],backgroundColor[1],backgroundColor[2]);

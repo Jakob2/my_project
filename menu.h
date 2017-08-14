@@ -9,9 +9,10 @@ class Menu : public Compass
 {
 public:
     Menu();
-    void background();
+    void drawMenu();
 
 private:
+    void background();
     std::vector<float> backgroundColor = {.8,.8,.8};
     float menuWidth = 0.25;
     std::vector<float> menuX = {1-menuWidth,1};

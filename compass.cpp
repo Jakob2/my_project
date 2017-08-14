@@ -14,6 +14,18 @@ void Compass::drawCompass(){
     glEnd();
 }
 
+void Compass::drawNeedle(){
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glColor3f(0,0,1);
+    glBegin(GL_POLYGON);
+        glVertex2f(comMidX+radius/2-.005, comMidY-.01);
+        glVertex2f(comMidX+radius/2-.005, comMidY+.01);
+        glVertex2f(comMidX+radius/2+.005, comMidY+.01);
+        glVertex2f(comMidX+radius/2+.005, comMidY-.01);
+    glEnd();
+
+}
+
 void Compass::calcAngle(std::vector<float> q, std::vector<float> m){
     std::vector<float> v;
     v = Vector::direction(m,q);
