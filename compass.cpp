@@ -8,7 +8,8 @@ Compass::Compass(){
 
 void Compass::drawCompass(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glColor3f(0,0,0);
+    if(World::hoverCompass == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     //for(float i=0; i<2*World::pi; i+=World::pi/12)
     for(int i=0; i<360; i++)
@@ -28,12 +29,16 @@ void Compass::drawNeedle(){
 
 }
 
-bool Compass::panelCompass(std::vector<float> in){
+bool Compass::panelCompass(std::vector<float> mouse){
     bool res = false;
     //std::cout<<comMidX-radius/2<<"-"<<comMidX+radius/2<<"/"<<comMidY-radius<<"-"<<comMidY+radius<<std::endl;
-    //std::cout<<in[0]<<"//"<<in[1]<<std::endl;
-    if(in[0]>comMidX-radius/2 && in[0]<comMidX+radius/2 && in[1]>comMidY-radius && in[1]<comMidY+radius) res = true;
+    if(mouse[0]>comMidX-radius/2 && mouse[0]<comMidX+radius/2 && mouse[1]>comMidY-radius && mouse[1]<comMidY+radius) res = true;
+    else World::hoverCompass = -1;
     return res;
+}
+
+void Compass::hoverCompass(std::vector<float> mouse){
+    if(mouse[0]>comMidX-radius/2 && mouse[0]<comMidX+radius/2 && mouse[1]>comMidY-radius && mouse[1]<comMidY+radius) World::hoverCompass = 1;
 }
 
 void Compass::turnCamera(std::vector<float> q){

@@ -11,7 +11,8 @@ public:
     Compass();
     void drawCompass();
     void drawNeedle();
-    bool panelCompass(std::vector<float> in);
+    bool panelCompass(std::vector<float> mouse);
+    void hoverCompass(std::vector<float> mouse);
     void turnCamera(std::vector<float> q);
     float angle = 45;
     void calcCameraMoveUnits();
