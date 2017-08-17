@@ -3,6 +3,7 @@
 Compass::Compass(){
     needleX = comMidX+radius/2;
     needleY = comMidY;
+    calcCameraMoveUnits();
 }
 
 void Compass::drawCompass(){

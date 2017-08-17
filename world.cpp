@@ -18,7 +18,7 @@ float World::areaZ;
 float World::pi;
 bool World::mousePressed;
 float World::cameraMove;
-std::vector<int> World::tile;
+std::vector<float> World::tile;
 
 World::World(){
     World::width = 701;
@@ -34,6 +34,6 @@ World::World(){
     World::pi = 3.14159265;
     World::mousePressed = false;
     World::cameraMove = 0.5;
-    World::tile = {0,0};
+    World::tile = {0,0,0,0};
 }
 

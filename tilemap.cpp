@@ -109,14 +109,12 @@ void Tilemap::area(int i, int ii, int j, int jj, int clr){
 }
 
 void Tilemap::single(int i, int ii, int j, int jj, int clr){
-    float QX, X, QZ, Z;
-    QX = World::intersectionX;
-    X = World::x;
-    QZ = World::intersectionZ;
-    Z = World::z;
-    if((i<QX-X && ii>QX-X) && (j<QZ-Z && jj>QZ-Z)){
-        /*CURRENT_TILE_X = i;
-        CURRENT_TILE_Z = j;*/
+    float qx, x, qz, z;
+    qx = World::tile[2];
+    qz = World::tile[3];
+    x = World::x;
+    z = World::z;
+    if((i<qx-x && ii>qx-x) && (j<qz-z && jj>qz-z)){
         glColor3f(select[0],select[1],select[2]);
     }
     else{

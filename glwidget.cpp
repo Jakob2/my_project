@@ -4,7 +4,6 @@ GlWidget::GlWidget(QWidget * parent) : QGLWidget(parent){
     setFocusPolicy(Qt::StrongFocus);
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     timer.start(16);
-    calcCameraMoveUnits();
 }
 
 void GlWidget::initializeGL(){
