@@ -13,12 +13,14 @@ public:
     void drawNeedle();
     bool panelCompass(std::vector<float> in);
     void turnCamera(std::vector<float> q);
-    float comMidX = 0.825;
-    float comMidY = 0.125;
+    float angle = 45;
+    void calcCameraMoveUnits();
+    std::vector<float> camMoveUnit = {World::cameraMove,World::cameraMove};
 
 private:
-    float angle;
     float radius = 0.1;
+    float comMidX = 0.825;
+    float comMidY = 0.125;
     float needleX, needleY;
     void calcAngle(std::vector<float> q);
     void calcNeedlePos();

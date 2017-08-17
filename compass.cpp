@@ -56,6 +56,8 @@ void Compass::calcAngle(std::vector<float> q){
 void Compass::calcNeedlePos(){
     needleX = (cos(angle*World::pi/180)*radius/2) + comMidX;
     needleY = (sin(angle*World::pi/180)*radius) + comMidY;
+    //needleX = (cos(angle)*radius/2) + comMidX;
+    //needleY = (sin(angle)*radius) + comMidY;
 }
 
 void Compass::turn(){
@@ -63,5 +65,15 @@ void Compass::turn(){
     r = sqrt(pow(World::eyeX,2)+pow(World::eyeZ,2));
     World::eyeX = cos(angle*World::pi/180) * r;
     World::eyeZ = sin(angle*World::pi/180) * r;
+}
+
+void Compass::calcCameraMoveUnits(){
+    double x, z, r;
+    r = sqrt(pow(camMoveUnit[0],2)+pow(camMoveUnit[1],2));
+    z = cos(angle*World::pi/180) * r;
+    x = sin(angle*World::pi/180) * r;
+    camMoveUnit[0] = x;
+    camMoveUnit[1] = z;
+    //cout<<"x: "<<x<<", z: "<<z<<endl;
 }
 

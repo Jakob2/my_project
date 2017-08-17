@@ -4,6 +4,7 @@ GlWidget::GlWidget(QWidget * parent) : QGLWidget(parent){
     setFocusPolicy(Qt::StrongFocus);
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     timer.start(16);
+    calcCameraMoveUnits();
 }
 
 void GlWidget::initializeGL(){
@@ -37,7 +38,7 @@ void GlWidget::ddd(){
     glViewport(0, 0, World::width, World::height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, (float)World::width/(float)World::height, 0.01, 100.0);
+    gluPerspective(60.0, (float)World::width/World::height, 0.01, 100.0);
     gluLookAt(World::eyeX,World::eyeY,World::eyeZ, 0,0,0, 0,1,0);
 }
 
@@ -49,24 +50,23 @@ void GlWidget::dd(){
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){
-    /*vector<double> move;
-    move = Vector::moveDirection();*/
+    calcCameraMoveUnits();
     switch(event->key()){
     case Qt::Key_A:
-        World::x += move[0];
-        World::z -= move[1];
+        World::x += camMoveUnit[0];
+        World::z -= camMoveUnit[1];
         break;
     case Qt::Key_D:
-        World::x -= move[0];
-        World::z += move[1];
+        World::x -= camMoveUnit[0];
+        World::z += camMoveUnit[1];
         break;
     case Qt::Key_W:
-        World::x += move[1];
-        World::z += move[0];
+        World::x += camMoveUnit[1];
+        World::z += camMoveUnit[0];
         break;
     case Qt::Key_S:
-        World::x -= move[1];
-        World::z -= move[0];
+        World::x -= camMoveUnit[1];
+        World::z -= camMoveUnit[0];
         break;
     }
     paintGL();

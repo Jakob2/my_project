@@ -17,6 +17,7 @@ float World::areaX;
 float World::areaZ;
 float World::pi;
 bool World::mousePressed;
+float World::cameraMove;
 
 World::World(){
     World::width = 701;
@@ -31,5 +32,6 @@ World::World(){
     World::option = 0;
     World::pi = 3.14159265;
     World::mousePressed = false;
+    World::cameraMove = 0.5;
 }
 

@@ -17,7 +17,6 @@ void Tilemap::setMapTiles(){
     }
 }
 
-
 void Tilemap::selectMapTiles(){
     setMapTiles();
     int x, z, color, open, traverse;

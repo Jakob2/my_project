@@ -23,10 +23,12 @@ public:
 private:
     QTimer timer;
     int pressWinX, pressWinY, moveWinX, moveWinY;
-    std::vector<int> move = {1,1};
+
 
     void ddd();
     void dd();
+
+
 };
 
 #endif // GLWIDGET_H

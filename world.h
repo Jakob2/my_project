@@ -24,6 +24,7 @@ public:
     static float areaX;
     static float areaZ;
     static bool mousePressed;
+    static float cameraMove;
 };
 
 #endif // WORLD_H
