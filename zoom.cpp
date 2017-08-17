@@ -36,7 +36,7 @@ void Zoom::hoverZoom(std::vector<float> mouse){
 
 void Zoom::plus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 0) glColor3f(.5,.5,0);
+    if(World::hoverZoom == 0) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
     else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     glVertex2f(f+mid[0]+-v[0], mid[1]+-v[1]*weight);
@@ -61,7 +61,7 @@ void Zoom::plus(){
 
 void Zoom::minus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 1) glColor3f(.5,.5,0);
+    if(World::hoverZoom == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
     else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     glVertex2f(f*2+mid[2]+-v[0], mid[3]+-v[1]*weight);

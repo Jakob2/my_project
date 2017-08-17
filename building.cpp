@@ -15,7 +15,7 @@ void Building::options(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     for(int xx=0; xx<2; xx++){
         id = xx;
-        if(id == World::hoverBuilding) glColor3f(.5,.5,0);
+        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -29,7 +29,7 @@ void Building::options(){
     y = -(v[1]*2+f);
     for(int xx=0; xx<2; xx++){
         id = xx+3;
-        if(id == World::hoverBuilding) glColor3f(.5,.5,0);
+        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -43,7 +43,7 @@ void Building::options(){
     y = -(v[1]*4+f*2);
     for(int xx=0; xx<2; xx++){
         id = xx+6;
-        if(id == World::hoverBuilding) glColor3f(.5,.5,0);
+        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);

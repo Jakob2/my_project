@@ -20,7 +20,6 @@ private:
     std::vector<float> v = {.025, .05};
     void plus();
     void minus();
-
 };
 
 #endif // ZOOM_H

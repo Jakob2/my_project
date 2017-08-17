@@ -29,6 +29,8 @@ public:
     static std::vector<float> tile;
     static int hoverBuilding;
     static int hoverZoom;
+    static int hoverCompass;
+    static std::vector<float> hoverColor;
 };
 
 #endif // WORLD_H

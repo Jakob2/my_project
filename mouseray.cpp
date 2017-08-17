@@ -29,7 +29,7 @@ void Mouseray::intersect(std::vector<float> in){
     yy = World::eyeY + (t * y);
     zz = World::eyeZ + (t * z);
     intersection = {xx,yy,zz};
-    World::tile = {floor(xx),floor(zz),xx,zz};
+    World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz};
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<std::endl;
     //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
