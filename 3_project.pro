@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     shape.cpp \
     menu.cpp \
     compass.cpp \
-    vector.cpp
+    vector.cpp \
+    mouseray.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     shape.h \
     menu.h \
     compass.h \
-    vector.h
+    vector.h \
+    mouseray.h
 
 FORMS    += mainwindow.ui
 

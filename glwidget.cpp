@@ -49,6 +49,12 @@ void GlWidget::dd(){
     gluOrtho2D(0,1,0,1);
 }
 
+void GlWidget::setIntersection(){
+    glClear(GL_DEPTH_BUFFER_BIT);
+    ground(World::x, World::z, Tilemap::mapTiles);
+    calculateGLCoords(pressWinX, pressWinY);
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -77,6 +83,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
     if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(panelWorld(mouseToMenuGrid(moveWinX,moveWinY))) setIntersection();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
