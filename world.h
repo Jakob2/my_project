@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include "general.h"
 
 class World
 {
@@ -25,6 +26,7 @@ public:
     static float areaZ;
     static bool mousePressed;
     static float cameraMove;
+    static std::vector<int> tile;
 };
 
 #endif // WORLD_H

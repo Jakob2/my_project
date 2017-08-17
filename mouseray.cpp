@@ -14,7 +14,7 @@ void Mouseray::calculateGLCoords(int x, int y){
     glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
     e = {World::eyeX, World::eyeY, World::eyeZ};
-    p = {posX, posY, posZ};
+    p = {(float)posX, (float)posY, (float)posZ};
     intersect(Vector::direction(e,p));
 }
 
@@ -31,12 +31,27 @@ void Mouseray::intersect(std::vector<float> in){
     intersection[0] = xx;
     intersection[1] = yy;
     intersection[2] = zz;
-    std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
+    World::tile[0] = floor(xx);
+    World::tile[1] = floor(zz);
+    std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<std::endl;
+    //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
 
 bool Mouseray::panelWorld(std::vector<float> in){
     bool out = false;
     if(in[0]>0 && in[0]<0.75 && in[1]>0 && in[1]<1) out = true;
     return out;
+}
+
+void Mouseray::crossfade(){
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(5.0);
+    glColor3f(.5,.5,0);
+    glBegin(GL_POLYGON);
+    glVertex3f(-.1+intersection[0],.01,.1+intersection[2]);
+    glVertex3f(.1+intersection[0],.01,.1+intersection[2]);
+    glVertex3f(.1+intersection[0],.01,-.1+intersection[2]);
+    glVertex3f(-.1+intersection[0],.01,-.1+intersection[2]);
+    glEnd();
 }
 

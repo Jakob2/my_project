@@ -12,6 +12,7 @@ public:
     void calculateGLCoords(int x, int y);
     bool panelWorld(std::vector<float> in);
     std::vector<float> intersection = {0,0,0};
+    void crossfade();
 
 private:
     GLint viewport[4];// Where The Viewport Values Will Be Stored

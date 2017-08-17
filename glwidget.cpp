@@ -27,6 +27,7 @@ void GlWidget::paintGL(){
     ddd();
     glScalef(World::zoom, World::zoom, World::zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
+    crossfade();
 }
 
 void GlWidget::resizeGL(int w, int h){
