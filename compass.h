@@ -18,9 +18,9 @@ public:
     std::vector<float> camMoveUnit = {World::cameraMove,World::cameraMove};
 
 private:
-    float radius = 0.1;
-    float comMidX = 0.81;
-    float comMidY = 0.125;
+    float radius = .1;
+    float comMidX = .81;
+    float comMidY = .125;
     float needleX, needleY;
     void calcAngle(std::vector<float> q);
     void calcNeedlePos();

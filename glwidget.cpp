@@ -84,6 +84,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     pressWinY = event->pos().y();
     if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(panelWorld(mouseToMenuGrid(moveWinX,moveWinY))) setIntersection();
+    if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) zoom();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -95,4 +96,5 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinY = event->pos().y();
     if(World::mousePressed && panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))) hoverBuildings(mouseToMenuGrid(moveWinX,moveWinY));
+    if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) hoverZoom(mouseToMenuGrid(moveWinX,moveWinY));
 }

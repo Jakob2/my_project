@@ -20,6 +20,7 @@ bool World::mousePressed;
 float World::cameraMove;
 std::vector<float> World::tile;
 int World::hoverBuilding;
+int World::hoverZoom;
 
 World::World(){
     World::width = 701;
@@ -37,5 +38,6 @@ World::World(){
     World::cameraMove = 0.5;
     World::tile = {0,0,0,0};
     World::hoverBuilding = -1;
+    World::hoverZoom = -1;
 }
 

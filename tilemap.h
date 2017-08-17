@@ -17,11 +17,11 @@ public:
 
 private:
     const float clip = 0.5;
-    std::vector<float> select = {0.9,0.9,0.9};
+    std::vector<float> select = {.9,.9,.9};
     std::vector<float> color = {0,0,0};
     std::vector<float> grass = {0,1,0};
     std::vector<float> water = {0,0,1};
-    std::vector<float> desert = {0.4,0.4,0.4};
+    std::vector<float> desert = {.4,.4,.4};
     void setMapTiles();
     float sink(int type);
     void selectionColor(int i, int j, int ii, int jj, int clr);

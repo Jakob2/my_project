@@ -28,6 +28,7 @@ public:
     static float cameraMove;
     static std::vector<float> tile;
     static int hoverBuilding;
+    static int hoverZoom;
 };
 
 #endif // WORLD_H

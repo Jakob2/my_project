@@ -14,10 +14,10 @@ public:
     bool panelBuildings(std::vector<float> mouse);
 
 private:
-    float f = 0.01;
-    std::vector<float> margin = {0.81, 0.89};
+    float f = .01;
+    std::vector<float> margin = {.81, .89};
     void setMargin();
-    std::vector<float> vertice = {0.05, 0.1};
+    std::vector<float> vertice = {.05, .1};
 };
 
 #endif // BUILDING_H

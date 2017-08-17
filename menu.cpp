@@ -6,6 +6,7 @@ Menu::Menu(){
 
 void Menu::drawMenu(){
     options();
+    drawZoom();
     drawNeedle();
     drawCompass();
     background();
