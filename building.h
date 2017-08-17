@@ -18,8 +18,6 @@ private:
     std::vector<float> margin = {0.81, 0.89};
     void setMargin();
     std::vector<float> vertice = {0.05, 0.1};
-    void setVertice();
-
 };
 
 #endif // BUILDING_H
