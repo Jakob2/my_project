@@ -4,8 +4,9 @@
 #include "general.h"
 #include "world.h"
 #include "compass.h"
+#include "building.h"
 
-class Menu : public Compass
+class Menu : public Compass, public Building
 {
 public:
     Menu();

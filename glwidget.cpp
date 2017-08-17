@@ -94,4 +94,5 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
     if(World::mousePressed && panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))) hoverBuildings(mouseToMenuGrid(moveWinX,moveWinY));
 }

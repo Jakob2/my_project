@@ -10,7 +10,7 @@ int World::range;
 int World::validPlace;
 float World::x;
 float World::z;
-int World::option;
+int World::areaOption;
 float World::intersectionX;
 float World::intersectionZ;
 float World::areaX;
@@ -19,6 +19,7 @@ float World::pi;
 bool World::mousePressed;
 float World::cameraMove;
 std::vector<float> World::tile;
+int World::hoverBuilding;
 
 World::World(){
     World::width = 701;
@@ -30,10 +31,11 @@ World::World(){
     World::range = 10;
     World::x = 0;
     World::z = 0;
-    World::option = 0;
+    World::areaOption = 0;
     World::pi = 3.14159265;
     World::mousePressed = false;
     World::cameraMove = 0.5;
     World::tile = {0,0,0,0};
+    World::hoverBuilding = -1;
 }
 

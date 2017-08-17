@@ -19,7 +19,7 @@ public:
     static int validPlace;
     static float x;
     static float z;
-    static int option;//???
+    static int areaOption;//???
     static float intersectionX;//???
     static float intersectionZ;//???
     static float areaX;
@@ -27,6 +27,7 @@ public:
     static bool mousePressed;
     static float cameraMove;
     static std::vector<float> tile;
+    static int hoverBuilding;
 };
 
 #endif // WORLD_H

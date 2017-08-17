@@ -19,7 +19,7 @@ public:
 
 private:
     float radius = 0.1;
-    float comMidX = 0.825;
+    float comMidX = 0.81;
     float comMidY = 0.125;
     float needleX, needleY;
     void calcAngle(std::vector<float> q);
