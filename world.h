@@ -31,6 +31,7 @@ public:
     static int hoverZoom;
     static int hoverCompass;
     static std::vector<float> hoverColor;
+    static int buildingOption;
 };
 
 #endif // WORLD_H

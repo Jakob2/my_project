@@ -13,6 +13,7 @@ public:
     void options();
     void hoverBuildings(std::vector<float> mouse);
     bool panelBuildings(std::vector<float> mouse);
+    void onBuildings(QMouseEvent *event);
 
 private:
     /*float f = .01;
