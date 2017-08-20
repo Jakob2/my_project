@@ -4,8 +4,9 @@
 #include "general.h"
 #include "world.h"
 #include "vector.h"
+#include "menumetrics.h"
 
-class Compass
+class Compass : protected MenuMetrics
 {
 public:
     Compass();
@@ -20,8 +21,8 @@ public:
 
 private:
     float radius = .1;
-    float comMidX = .81;
-    float comMidY = .125;
+    /*float comMidX = .81;
+    float comMidY = .125;*/
     float needleX, needleY;
     void calcAngle(std::vector<float> q);
     void calcNeedlePos();

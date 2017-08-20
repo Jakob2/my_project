@@ -6,8 +6,9 @@
 #include "compass.h"
 #include "building.h"
 #include "zoom.h"
+#include "icon.h"
 
-class Menu : public Compass, public Building, public Zoom
+class Menu : public Compass, public Building, public Zoom, public Icon
 {
 public:
     Menu();

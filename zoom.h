@@ -3,8 +3,9 @@
 
 #include "general.h"
 #include "world.h"
+#include "menumetrics.h"
 
-class Zoom
+class Zoom : protected MenuMetrics
 {
 public:
     Zoom();
@@ -14,10 +15,10 @@ public:
     void hoverZoom(std::vector<float> mouse);
 
 private:
-    float f = .01;
+    /*float f = .01;
     float weight = .25;
     std::vector<float> mid = {.885,.125, .935,.125};
-    std::vector<float> v = {.025, .05};
+    std::vector<float> v = {.025, .05};*/
     void plus();
     void minus();
 };

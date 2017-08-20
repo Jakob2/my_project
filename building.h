@@ -3,8 +3,9 @@
 
 #include "general.h"
 #include "world.h"
+#include "menumetrics.h"
 
-class Building
+class Building : protected MenuMetrics
 {
 public:
     Building();
@@ -14,10 +15,10 @@ public:
     bool panelBuildings(std::vector<float> mouse);
 
 private:
-    float f = .01;
+    /*float f = .01;
     std::vector<float> margin = {.81, .89};
     void setMargin();
-    std::vector<float> vertice = {.05, .1};
+    std::vector<float> vertice = {.05, .1};*/
 };
 
 #endif // BUILDING_H

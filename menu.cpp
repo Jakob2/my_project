@@ -5,6 +5,7 @@ Menu::Menu(){
 }
 
 void Menu::drawMenu(){
+    drawIcon();
     options();
     drawZoom();
     drawNeedle();

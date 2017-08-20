@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     vector.cpp \
     mouseray.cpp \
     building.cpp \
-    zoom.cpp
+    zoom.cpp \
+    icon.cpp \
+    menumetrics.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -38,7 +40,9 @@ HEADERS  += mainwindow.h \
     vector.h \
     mouseray.h \
     building.h \
-    zoom.h
+    zoom.h \
+    icon.h \
+    menumetrics.h
 
 FORMS    += mainwindow.ui
 

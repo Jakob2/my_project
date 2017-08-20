@@ -13,6 +13,7 @@ public:
     QString mapTable = "map";
     QString constructsTable = "polysd3";
     QString tilesTable = "tiles";
+    QString iconsTable = "icon";
 };
 
 #endif // DB_H

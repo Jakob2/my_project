@@ -1,7 +1,7 @@
 #include "building.h"
 
 Building::Building(){
-    setMargin();
+    //setMargin();
 }
 
 void Building::options(){
@@ -103,9 +103,4 @@ bool Building::panelBuildings(std::vector<float> mouse){
     if(mouse[0]>margin[0]-vertice[0] && mouse[0]<margin[0]+vertice[0]+vertice[0]*2+f && mouse[1]>margin[1]-(vertice[1]*4+f*2)-vertice[1] && mouse[1]<1) out = true;
     else World::hoverBuilding = -1;
     return out;
-}
-
-void Building::setMargin(){
-    margin[0] = 0.75 + vertice[0] + 0.01;
-    margin[1] = 1 - vertice[1] - 0.01;
 }
