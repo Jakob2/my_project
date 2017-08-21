@@ -27,6 +27,10 @@ void GlWidget::paintGL(){
     glScalef(World::zoom, World::zoom, World::zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
+    /*constructs(Construction::construct, World::x, World::z);
+    if(World::moveConstruct && inRange()){
+        wireToken(token, World::tile[2], World::tile[3], World::x, World::z, Tilemap::mapTiles);
+    }*/
 }
 
 void GlWidget::resizeGL(int w, int h){
@@ -52,7 +56,7 @@ void GlWidget::dd(){
 void GlWidget::setIntersection(){
     glClear(GL_DEPTH_BUFFER_BIT);
     ground(World::x, World::z, Tilemap::mapTiles);
-    calculateGLCoords(pressWinX, pressWinY);
+    calculateGLCoords(pressWinX,pressWinY);
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){
@@ -85,7 +89,12 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(panelWorld(mouseToMenuGrid(moveWinX,moveWinY))) setIntersection();
     if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) zoom();
-    if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))) onBuildings(event);
+    /*if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))){
+        onBuildings(event);
+        //insertConstruct(QString::number(1), QString::number(World::buildingOption));
+        //selectConstructs(QString::number(1));
+    }*/
+    inRange();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -99,4 +108,6 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))) hoverBuildings(mouseToMenuGrid(moveWinX,moveWinY));
     if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) hoverZoom(mouseToMenuGrid(moveWinX,moveWinY));
     if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) hoverCompass(mouseToMenuGrid(moveWinX,moveWinY));
+    //if(!panelMenu(moveWinX,moveWinY)) calculateGLCoords(moveWinX,moveWinY);
+
 }

@@ -16,6 +16,7 @@ public:
     void onBuildings(QMouseEvent *event);
 
 private:
+    std::vector<int> buildingId = {1,0,3,7,999,999};
     /*float f = .01;
     std::vector<float> margin = {.81, .89};
     void setMargin();

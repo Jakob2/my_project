@@ -18,7 +18,8 @@ protected:
     float comMidX = .81;
     float comMidY = .125;
     //icon
-    std::vector<float> iconPos = {.76,.79, .861,.79, .76,.59, .861,.59};
+    int numIcons = 6;
+    std::vector<float> iconPos = {.76,.79, .861,.79, .76,.59, .861,.59, .76,.39, .861,.39};
     void setIconPos();
     //zoom
     //float f = .01;

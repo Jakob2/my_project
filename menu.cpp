@@ -23,6 +23,20 @@ std::vector<float> Menu::mouseToMenuGrid(int mouseX, int mouseY){
     return res;
 }
 
+bool Menu::panelMenu(float mouseX, float mouseY){
+    bool out = false;
+    float x,y;
+    x = mouseX/World::width;
+    y = mouseY/World::height;
+    if((x>1-menuWidth && x<1) && (y>0 && y<1)){
+        //std::cout<<"on menu"<<std::endl;
+        out = true;
+    }else{
+        //std::cout<<"on World"<<std::endl;
+    }
+    return out;
+}
+
 void Menu::background(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor3f(backgroundColor[0],backgroundColor[1],backgroundColor[2]);

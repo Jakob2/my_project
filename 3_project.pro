@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     building.cpp \
     zoom.cpp \
     icon.cpp \
-    menumetrics.cpp
+    menumetrics.cpp \
+    construction.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     building.h \
     zoom.h \
     icon.h \
-    menumetrics.h
+    menumetrics.h \
+    construction.h
 
 FORMS    += mainwindow.ui
 

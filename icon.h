@@ -16,7 +16,7 @@ public:
 
 private:
     void setIcons();
-    int numIcons = 4;
+    //int numIcons = 6;
     //std::vector<float> iconPos = {.76,.79, .861,.79, .76,.59, .861,.59};
 };
 

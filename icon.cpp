@@ -6,8 +6,8 @@ Icon::Icon(){
 
 void Icon::setIcons(){
     icons.clear();
-    icons.resize(4);
-    for(int i=0; i<4; i++){
+    icons.resize(numIcons);
+    for(int i=0; i<numIcons; i++){
         icons[i].resize(100);
     }
 }
@@ -37,7 +37,7 @@ void Icon::drawIcon(){
     float xx, yy;
     int index, ipx, ipy, p;
     p = 0;
-    for(float i=0; i<4; i++){
+    for(float i=0; i<numIcons; i++){
         ipx = i+p;
         ipy = i+1+p;
         index = 0;

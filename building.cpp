@@ -106,7 +106,7 @@ bool Building::panelBuildings(std::vector<float> mouse){
 }
 
 void Building::onBuildings(QMouseEvent *event){
-    if(event->buttons() == Qt::LeftButton) World::buildingOption = World::hoverBuilding;
+    if(event->buttons() == Qt::LeftButton) World::buildingOption = buildingId[World::hoverBuilding];
     std::cout<<"BUILDING OPTION: "<<World::buildingOption<<std::endl;
 }
 

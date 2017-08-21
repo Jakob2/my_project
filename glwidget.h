@@ -6,8 +6,9 @@
 #include "tilemap.h"
 #include "menu.h"
 #include "mouseray.h"
+//#include "construction.h"
 
-class GlWidget : public QGLWidget, public Tilemap, public Menu, public Mouseray
+class GlWidget : public QGLWidget, public Tilemap, public Menu, public Mouseray //, public Construction
 {
 public:
     explicit GlWidget(QWidget * parent = 0);
@@ -22,6 +23,7 @@ public:
     void mouseMoveEvent(QMouseEvent *event);
 
 private:
+    Tilemap tilemap;
     QTimer timer;
     int pressWinX, pressWinY, moveWinX, moveWinY;
 

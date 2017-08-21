@@ -14,6 +14,7 @@ public:
     Menu();
     void drawMenu();
     std::vector<float> mouseToMenuGrid(int mouseX, int mouseY);
+    bool panelMenu(float mouseX, float mouseY);
 
 private:
     void background();

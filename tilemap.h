@@ -3,10 +3,11 @@
 
 #include "general.h"
 #include "world.h"
-#include "db.h"
-#include "shape.h"
+//#include "db.h"
+//#include "shape.h"
+#include "construction.h"
 
-class Tilemap : public Db, public Shape
+class Tilemap : public Construction //public Db, public Shape,
 {
 public:
     Tilemap();
@@ -14,9 +15,17 @@ public:
     void selectMapTiles();
     static std::vector<std::vector<std::vector<int>>> mapTiles;
     void ground(float x, float z, std::vector<std::vector<std::vector<int>>> &mapTiles);
+    /*void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos);
+
+    std::vector<std::vector<std::vector<float>>> token;
+    void initToken();
+    void setToken(int i, std::vector<std::vector<std::vector<float>>> &construct);*/
+
+    bool inRange();
 
 private:
-    const float clip = 0.5;
+    //int tIndex = 0;
+    //const float clip = 0.5;
     std::vector<float> select = {.9,.9,.9};
     std::vector<float> color = {0,0,0};
     std::vector<float> grass = {0,1,0};

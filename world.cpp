@@ -24,6 +24,8 @@ int World::hoverZoom;
 int World::hoverCompass;
 std::vector<float> World::hoverColor;
 int World::buildingOption;
+int World::map;
+bool World::moveConstruct;
 
 World::World(){
     World::width = 701;
@@ -39,11 +41,13 @@ World::World(){
     World::pi = 3.14159265;
     World::mousePressed = false;
     World::cameraMove = 0.5;
-    World::tile = {0,0,0,0};
+    World::tile = {0,0,0,0,0,0};
     World::hoverBuilding = -1;
     World::hoverZoom = -1;
     World::hoverCompass = -1;
     World::hoverColor = {.5,.5,0};
     World::buildingOption = -1;
+    World::map = 1;
+    World::moveConstruct = false;
 }
 
