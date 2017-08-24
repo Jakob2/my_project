@@ -20,8 +20,6 @@ public:
     static float x;
     static float z;
     static int areaOption;//???
-    static float intersectionX;//???
-    static float intersectionZ;//???
     static float areaX;
     static float areaZ;
     static bool mousePressed;

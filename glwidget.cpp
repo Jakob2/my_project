@@ -55,8 +55,9 @@ void GlWidget::dd(){
 
 void GlWidget::setIntersection(){
     glClear(GL_DEPTH_BUFFER_BIT);
-    ground(World::x, World::z, Tilemap::mapTiles);
+    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
     calculateGLCoords(pressWinX,pressWinY);
+    glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){

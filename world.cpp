@@ -11,8 +11,6 @@ int World::validPlace;
 float World::x;
 float World::z;
 int World::areaOption;
-float World::intersectionX;
-float World::intersectionZ;
 float World::areaX;
 float World::areaZ;
 float World::pi;

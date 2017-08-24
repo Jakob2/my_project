@@ -56,6 +56,26 @@ void Tilemap::ground(float x, float z, std::vector<std::vector<std::vector<int>>
     glPopMatrix();
 }
 
+void Tilemap::unsunkenGround(float x, float z, std::vector<std::vector<std::vector<int> > > &mapTiles){
+    float y = 0;
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    for(float i=0; i<World::range; i++){
+        int ii = i+1;
+        for(float j=0; j<World::range; j++){
+            int jj = j+1;
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                selectionColor(i,j, ii, jj, mapTiles[i][j][0]);
+                    flatCube(0.5, i,j, x,y,z);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                glLineWidth(2.0);
+                glColor3f(0,0,0);
+                    flatCube(0.5, i,j, x,y,z);
+        }
+    }
+    glPopMatrix();
+}
+
 bool Tilemap::inRange(){
     std::cout<<"TILE: "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
     std::cout<<"offset: "<<World::x<<"-"<<World::z<<std::endl;
@@ -95,10 +115,10 @@ void Tilemap::selectionColor(int i, int j, int ii, int jj, int clr){
 
 void Tilemap::area(int i, int ii, int j, int jj, int clr){
     float QX, X, AREA_X, QZ, Z, AREA_Z;
-    QX = World::intersectionX;
+    QX = World::tile[2];
     X = World::x;
     AREA_X = World::areaX;
-    QZ = World::intersectionZ;
+    QZ = World::tile[3];
     Z = World::z;
     AREA_Z = World::areaZ;
     if((i<QX-X && ii>floor(AREA_X-X)) && (j<QZ-Z && jj>floor(AREA_Z-Z))){

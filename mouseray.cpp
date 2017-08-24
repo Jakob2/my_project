@@ -28,11 +28,8 @@ void Mouseray::intersect(std::vector<float> in){
     xx = World::eyeX + (t * x);
     yy = World::eyeY + (t * y);
     zz = World::eyeZ + (t * z);
-    intersection = {xx,yy,zz};
-    World::intersectionX = xx;
-    World::intersectionZ = zz;
     World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz,(float)floor(xx-World::x),(float)floor(zz-World::z)};
-    //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<std::endl;
+    std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
     std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
 
@@ -47,10 +44,10 @@ void Mouseray::crossfade(){
     glLineWidth(5.0);
     glColor3f(.5,.5,0);
     glBegin(GL_POLYGON);
-    glVertex3f(-.1+intersection[0],.01,.1+intersection[2]);
-    glVertex3f(.1+intersection[0],.01,.1+intersection[2]);
-    glVertex3f(.1+intersection[0],.01,-.1+intersection[2]);
-    glVertex3f(-.1+intersection[0],.01,-.1+intersection[2]);
+    glVertex3f(-.1+World::tile[2],.01,.1+World::tile[3]);
+    glVertex3f(.1+World::tile[2],.01,.1+World::tile[3]);
+    glVertex3f(.1+World::tile[2],.01,-.1+World::tile[3]);
+    glVertex3f(-.1+World::tile[2],.01,-.1+World::tile[3]);
     glEnd();
 }
 

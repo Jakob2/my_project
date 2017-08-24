@@ -128,8 +128,8 @@ QString Construction::id(){
 
 void Construction::constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos){
     float QX, QZ, X, Z;
-    QX = World::intersectionX;
-    QZ = World::intersectionZ;
+    QX = World::tile[2];
+    QZ = World::tile[3];
     X = World::x;
     Z = World::z;
     float x,y,z, r, g, b, xx, zz;
