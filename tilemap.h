@@ -16,13 +16,12 @@ public:
     static std::vector<std::vector<std::vector<int>>> mapTiles;
     void ground(float x, float z, std::vector<std::vector<std::vector<int>>> &mapTiles);
     void unsunkenGround(float x, float z, std::vector<std::vector<std::vector<int>>> &mapTiles);
+
     /*void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos);
 
     std::vector<std::vector<std::vector<float>>> token;
     void initToken();
     void setToken(int i, std::vector<std::vector<std::vector<float>>> &construct);*/
-
-    bool inRange();
 
 private:
     //int tIndex = 0;

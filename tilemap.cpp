@@ -61,30 +61,13 @@ void Tilemap::unsunkenGround(float x, float z, std::vector<std::vector<std::vect
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     for(float i=0; i<World::range; i++){
-        int ii = i+1;
         for(float j=0; j<World::range; j++){
-            int jj = j+1;
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                selectionColor(i,j, ii, jj, mapTiles[i][j][0]);
-                    flatCube(0.5, i,j, x,y,z);
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                glLineWidth(2.0);
-                glColor3f(0,0,0);
-                    flatCube(0.5, i,j, x,y,z);
+            glColor3f(0,0,0);
+            top(i,j,x,y,z);
         }
     }
     glPopMatrix();
-}
-
-bool Tilemap::inRange(){
-    std::cout<<"TILE: "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
-    std::cout<<"offset: "<<World::x<<"-"<<World::z<<std::endl;
-    bool out = false;
-    if((World::tile[0]>=0 && World::tile[0]<World::range) && (World::tile[1]>=0 && World::tile[1]<World::range)){
-        std::cout<<"on map"<<std::endl;
-        out = true;
-    }else std::cout<<"not on map"<<std::endl;
-    return out;
 }
 
 float Tilemap::sink(int type){

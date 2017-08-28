@@ -51,3 +51,19 @@ void Mouseray::crossfade(){
     glEnd();
 }
 
+bool Mouseray::checkIfOnTilemap(int x, int y){
+    readPixelColor(x,y);
+    if(!pickedId) return true;
+    else return false;
+}
+
+void Mouseray::readPixelColor(int x, int y){
+    glFlush();
+    glFinish();
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    unsigned char pixelcolor[4];
+    glReadPixels(x,World::height-y, 1,1, GL_RGBA,GL_UNSIGNED_BYTE, pixelcolor);
+    //std::cout<<pixelcolor[0]<<"-"<<pixelcolor[1]<<"-"<<pixelcolor[2]<<"-"<<pixelcolor[3]<<"-"<<std::endl;
+    pickedId = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
+    std::cout<<"PIXELID: "<<pickedId<<std::endl;
+}

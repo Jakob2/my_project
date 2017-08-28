@@ -60,6 +60,12 @@ void GlWidget::setIntersection(){
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
+bool GlWidget::onTilemap(){
+    glClear(GL_DEPTH_BUFFER_BIT);
+    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    return checkIfOnTilemap(pressWinX, pressWinY);
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -87,15 +93,18 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     World::mousePressed = true;
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
-    if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
-    if(panelWorld(mouseToMenuGrid(moveWinX,moveWinY))) setIntersection();
-    if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) zoom();
+    std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
+    if(panelCompass(mouseToMenuGrid(pressWinX,pressWinY))) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
+    if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap()) setIntersection();
+    if(panelZoom(mouseToMenuGrid(pressWinX,pressWinY))) zoom();
+
+    //glClear(GL_DEPTH_BUFFER_BIT);
+
     /*if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))){
         onBuildings(event);
         //insertConstruct(QString::number(1), QString::number(World::buildingOption));
         //selectConstructs(QString::number(1));
     }*/
-    inRange();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

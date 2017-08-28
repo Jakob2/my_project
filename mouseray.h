@@ -12,6 +12,7 @@ public:
     void calculateGLCoords(int x, int y);
     bool panelWorld(std::vector<float> in);
     void crossfade();
+    bool checkIfOnTilemap(int x, int y);
 
 private:
     GLint viewport[4];// Where The Viewport Values Will Be Stored
@@ -23,6 +24,8 @@ private:
     std::vector<float> e = {World::eyeX, World::eyeY, World::eyeZ};
     std::vector<float> p = {0,0,0};
     void intersect(std::vector<float> in);
+    void readPixelColor(int x, int y);
+    int pickedId;
 };
 
 #endif // MOUSERAY_H
