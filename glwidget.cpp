@@ -13,6 +13,7 @@ void GlWidget::initializeGL(){
 }
 
 void GlWidget::paintGL(){
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     resizeGL(0,0);
     ddd();
@@ -22,7 +23,10 @@ void GlWidget::paintGL(){
 
     dd();
     drawMenu();
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //uniqueColoredOptions();
 
+    //glClear(GL_DEPTH_BUFFER_BIT);
     ddd();
     glScalef(World::zoom, World::zoom, World::zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
@@ -66,6 +70,17 @@ bool GlWidget::onTilemap(){
     return checkIfOnTilemap(pressWinX, pressWinY);
 }
 
+bool GlWidget::onGui(int x, int y){
+    dd();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    uniqueColoredOptions();
+    uniqueColoredPlus();
+    uniqueColoredMinus();
+    uniqueColoredCompass();
+    readPixelColor(x,y);
+    return hoverGui(x,y);
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -93,18 +108,10 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     World::mousePressed = true;
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
-    std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
-    if(panelCompass(mouseToMenuGrid(pressWinX,pressWinY))) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
+    //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
+    if(World::hoverCompass == 1) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap()) setIntersection();
-    if(panelZoom(mouseToMenuGrid(pressWinX,pressWinY))) zoom();
-
-    //glClear(GL_DEPTH_BUFFER_BIT);
-
-    /*if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))){
-        onBuildings(event);
-        //insertConstruct(QString::number(1), QString::number(World::buildingOption));
-        //selectConstructs(QString::number(1));
-    }*/
+    if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -114,10 +121,7 @@ void GlWidget::mouseReleaseEvent(QMouseEvent *event){
 void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
-    if(World::mousePressed && panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
-    if(panelBuildings(mouseToMenuGrid(moveWinX,moveWinY))) hoverBuildings(mouseToMenuGrid(moveWinX,moveWinY));
-    if(panelZoom(mouseToMenuGrid(moveWinX,moveWinY))) hoverZoom(mouseToMenuGrid(moveWinX,moveWinY));
-    if(panelCompass(mouseToMenuGrid(moveWinX,moveWinY))) hoverCompass(mouseToMenuGrid(moveWinX,moveWinY));
-    //if(!panelMenu(moveWinX,moveWinY)) calculateGLCoords(moveWinX,moveWinY);
-
+    if(World::hoverCompass && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(onGui(moveWinX,moveWinY)) std::cout<<"ON GUI"<<std::endl;
+    else std::cout<<"NOT ON GUI"<<std::endl;
 }

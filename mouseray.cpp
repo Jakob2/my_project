@@ -57,6 +57,63 @@ bool Mouseray::checkIfOnTilemap(int x, int y){
     else return false;
 }
 
+bool Mouseray::hoverGui(int x, int y){
+    switch(pickedId){
+    case 1703936:
+        World::hoverBuilding = 0;
+        return true;
+        //return 1;
+        break;
+    case 3342336:
+        World::hoverBuilding = 1;
+        return true;
+        //return 0;
+        break;
+    case 19456:
+        World::hoverBuilding = 2;
+        return true;
+        //return 3;
+        break;
+    case 26112:
+        World::hoverBuilding = 3;
+        return true;
+        //return 7;
+        break;
+    case 128:
+        World::hoverBuilding = 4;
+        return true;
+        //return 6;
+        break;
+    case 153:
+        World::hoverBuilding = 5;
+        return true;
+        //return 66;
+        break;
+    case 255:
+        World::hoverCompass = 1;
+        return true;
+        break;
+    case 65280:
+        World::hoverZoom = 0;
+        return true;
+        break;
+    case 16711680:
+        World::hoverZoom = 1;
+        return true;
+        break;
+    case 32896:
+        std::cout<<"HOVERCOLOR"<<std::endl;
+        return true;
+        break;
+    default:
+        World::hoverBuilding = -1;
+        World::hoverZoom = -1;
+        World::hoverCompass = -1;
+        return false;
+        break;
+    }
+}
+
 void Mouseray::readPixelColor(int x, int y){
     //glFlush();
     //glFinish();
