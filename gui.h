@@ -10,16 +10,11 @@ class Gui : public Db
 public:
     Gui();
 
-    //int menuId;
-
     void drawMenu();
     std::vector<float> mouseToMenuGrid(int mouseX, int mouseY);
-    //bool panelMenu(float mouseX, float mouseY);
 
     void options();
     void uniqueColoredOptions();
-    //void hoverBuildings(std::vector<float> mouse);
-    //bool panelBuildings(std::vector<float> mouse);
     void onBuildings(QMouseEvent *event);
 
     void selectIcons();
@@ -29,8 +24,6 @@ public:
     void zoom();
     void drawZoom();
     void drawUniqueColoredZoom();
-    //bool panelZoom(std::vector<float> mouse);
-    //void hoverZoom(std::vector<float> mouse);
     void uniqueColoredPlus();
     void uniqueColoredMinus();
 
@@ -39,8 +32,6 @@ public:
     void drawNeedle();
     float angle = 45;
     std::vector<float> camMoveUnit = {World::cameraMove,World::cameraMove};
-    //bool panelCompass(std::vector<float> mouse);
-    //void hoverCompass(std::vector<float> mouse);
     void turnCamera(std::vector<float> q);
     void calcCameraMoveUnits();
 

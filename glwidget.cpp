@@ -121,7 +121,7 @@ void GlWidget::mouseReleaseEvent(QMouseEvent *event){
 void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
-    if(World::hoverCompass && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(World::hoverCompass == 1 && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(onGui(moveWinX,moveWinY)) std::cout<<"ON GUI"<<std::endl;
     else std::cout<<"NOT ON GUI"<<std::endl;
 }
