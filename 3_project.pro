@@ -19,15 +19,10 @@ SOURCES += main.cpp\
     db.cpp \
     tilemap.cpp \
     shape.cpp \
-    menu.cpp \
-    compass.cpp \
     vector.cpp \
     mouseray.cpp \
-    building.cpp \
-    zoom.cpp \
-    icon.cpp \
-    menumetrics.cpp \
-    construction.cpp
+    construction.cpp \
+    gui.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -36,15 +31,10 @@ HEADERS  += mainwindow.h \
     db.h \
     tilemap.h \
     shape.h \
-    menu.h \
-    compass.h \
     vector.h \
     mouseray.h \
-    building.h \
-    zoom.h \
-    icon.h \
-    menumetrics.h \
-    construction.h
+    construction.h \
+    gui.h
 
 FORMS    += mainwindow.ui
 
