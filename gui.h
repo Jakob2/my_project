@@ -12,10 +12,11 @@ public:
 
     void drawMenu();
     std::vector<float> mouseToMenuGrid(int mouseX, int mouseY);
+    bool onMenu(float mouseX);
 
     void options();
     void uniqueColoredOptions();
-    void onBuildings(QMouseEvent *event);
+    void panelBuildings(QMouseEvent *event);
 
     void selectIcons();
     void drawIcon();
@@ -42,7 +43,7 @@ private:
     std::vector<float> menuX = {1-menuWidth,1};
     std::vector<float> menuY = {0,1};
 
-    std::vector<int> buildingId = {1,0,3,7,999,999};
+    std::vector<int> buildingId = {1,0,3,7,6,999};
 
     void setIcons();
 

@@ -62,32 +62,26 @@ bool Mouseray::hoverGui(int x, int y){
     case 1703936:
         World::hoverBuilding = 0;
         return true;
-        //return 1;
         break;
     case 3342336:
         World::hoverBuilding = 1;
         return true;
-        //return 0;
         break;
     case 19456:
         World::hoverBuilding = 2;
         return true;
-        //return 3;
         break;
     case 26112:
         World::hoverBuilding = 3;
         return true;
-        //return 7;
         break;
     case 128:
         World::hoverBuilding = 4;
         return true;
-        //return 6;
         break;
     case 153:
         World::hoverBuilding = 5;
         return true;
-        //return 66;
         break;
     case 255:
         World::hoverCompass = 1;
@@ -102,7 +96,7 @@ bool Mouseray::hoverGui(int x, int y){
         return true;
         break;
     case 32896:
-        std::cout<<"HOVERCOLOR"<<std::endl;
+        //std::cout<<"HOVERCOLOR"<<std::endl;
         return true;
         break;
     default:
@@ -112,6 +106,7 @@ bool Mouseray::hoverGui(int x, int y){
         return false;
         break;
     }
+    //std::cout<<"BUILDING OPTION ID: "<<World::buildingOption<<std::endl;
 }
 
 void Mouseray::readPixelColor(int x, int y){
@@ -120,7 +115,7 @@ void Mouseray::readPixelColor(int x, int y){
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     unsigned char pixelcolor[3];
     glReadPixels(x,World::height-y, 1,1, GL_RGB,GL_UNSIGNED_BYTE, pixelcolor);
-    std::cout<<pixelcolor[0]<<"-"<<pixelcolor[1]<<"-"<<pixelcolor[2]<<"-"<<pixelcolor[3]<<"-"<<std::endl;
+    //std::cout<<pixelcolor[0]<<"-"<<pixelcolor[1]<<"-"<<pixelcolor[2]<<"-"<<pixelcolor[3]<<"-"<<std::endl;
     pickedId = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
-    std::cout<<"PIXELID: "<<pickedId<<std::endl;
+    //std::cout<<"PIXELID: "<<pickedId<<std::endl;
 }

@@ -33,7 +33,7 @@ private:
 
     void setIntersection();
     bool onTilemap();
-    bool onGui(int x, int y);
+    void drawUniqueColoredGui(int x, int y);
 };
 
 #endif // GLWIDGET_H

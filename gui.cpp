@@ -28,6 +28,13 @@ std::vector<float> Gui::mouseToMenuGrid(int mouseX, int mouseY){
     return res;
 }
 
+bool Gui::onMenu(float mouseX){
+    float gridX;
+    gridX = mouseX/World::width;
+    if(gridX > menuX[0]) return true;
+    else return false;
+}
+
 void Gui::background(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor3f(backgroundColor[0],backgroundColor[1],backgroundColor[2]);
@@ -38,7 +45,6 @@ void Gui::background(){
         glVertex2f(menuX[1],menuY[0]);
     glEnd();
 }
-
 
 void Gui::options(){
     int id;
@@ -143,8 +149,8 @@ void Gui::uniqueColoredOptions(){
 }
 
 
-void Gui::onBuildings(QMouseEvent *event){
-    if(event->buttons() == Qt::LeftButton) World::buildingOption = buildingId[World::hoverBuilding];
+void Gui::panelBuildings(QMouseEvent *event){
+    if(event->buttons() == Qt::LeftButton && World::hoverBuilding != -1) World::buildingOption = buildingId[World::hoverBuilding];
     std::cout<<"BUILDING OPTION: "<<World::buildingOption<<std::endl;
 }
 
@@ -188,15 +194,15 @@ void Gui::drawIcon(){
         for(float x=0; x<10; x++){
             xx = x/100;
             for(float y=0; y<10; y++){
-                yy = y/50;
+                yy = y/100;
                 if(icons[i][index] == 1){
                     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                     glColor3f(0,0,0);
                     glBegin(GL_POLYGON);
-                    glVertex2f(iconPos[ipx]+xx-.005, iconPos[ipy]+yy+.01);
-                    glVertex2f(iconPos[ipx]+xx+.005, iconPos[ipy]+yy+.01);
-                    glVertex2f(iconPos[ipx]+xx+.005, iconPos[ipy]+yy-.01);
-                    glVertex2f(iconPos[ipx]+xx-.005, iconPos[ipy]+yy-.01);
+                    glVertex2f(iconPos[ipx]+xx-.005, iconPos[ipy]+yy+.005);
+                    glVertex2f(iconPos[ipx]+xx+.005, iconPos[ipy]+yy+.005);
+                    glVertex2f(iconPos[ipx]+xx+.005, iconPos[ipy]+yy-.005);
+                    glVertex2f(iconPos[ipx]+xx-.005, iconPos[ipy]+yy-.005);
                     glEnd();
                 }
                 index++;

@@ -70,7 +70,7 @@ bool GlWidget::onTilemap(){
     return checkIfOnTilemap(pressWinX, pressWinY);
 }
 
-bool GlWidget::onGui(int x, int y){
+void GlWidget::drawUniqueColoredGui(int x, int y){
     dd();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     uniqueColoredOptions();
@@ -78,7 +78,7 @@ bool GlWidget::onGui(int x, int y){
     uniqueColoredMinus();
     uniqueColoredCompass();
     readPixelColor(x,y);
-    return hoverGui(x,y);
+    hoverGui(x,y);
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){
@@ -112,6 +112,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(World::hoverCompass == 1) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap()) setIntersection();
     if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
+    if(onMenu(pressWinX)) panelBuildings(event);
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -122,6 +123,5 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
     if(World::hoverCompass == 1 && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
-    if(onGui(moveWinX,moveWinY)) std::cout<<"ON GUI"<<std::endl;
-    else std::cout<<"NOT ON GUI"<<std::endl;
+    if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
 }
