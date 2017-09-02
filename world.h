@@ -32,6 +32,7 @@ public:
     static int buildingOption;
     static int map;
     static bool moveConstruct;
+    static int constructId;
 };
 
 #endif // WORLD_H

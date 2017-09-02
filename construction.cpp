@@ -150,9 +150,15 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        if(construct[i][5][0] == World::buildingOption){
+        if(construct[i][4][0]-1 == World::tile[4] && construct[i][4][2]-1 == World::tile[5])
+            World::constructId = construct[i][5][0];
+        else World::constructId = -1;
+        //std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
+
+        //if(construct[i][5][0] == World::buildingOption){
+        if(construct[i][5][0] == World::constructId){
             glTranslatef(xPos+x,y,zPos+z);
-            glRotatef(0,0,1,0);
+            glRotatef(turn,0,1,0);
             glTranslatef(-xPos-x,-y,-zPos-z);
             glColor3f(0,1,1);
             corpus(construct, i, x,y,z, xPos, zPos);

@@ -16,7 +16,7 @@ void GlWidget::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     resizeGL(0,0);
-    ddd();
+    /*ddd();
     glScalef(World::zoom, World::zoom, World::zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
     /*constructs(Db::construct, X, Z);*/
@@ -31,8 +31,8 @@ void GlWidget::paintGL(){
     glScalef(World::zoom, World::zoom, World::zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
-    /*constructs(Construction::construct, World::x, World::z);
-    if(World::moveConstruct && inRange()){
+    constructs(Construction::construct, World::x, World::z);
+    /*if(World::moveConstruct && inRange()){
         wireToken(token, World::tile[2], World::tile[3], World::x, World::z, Tilemap::mapTiles);
     }*/
 }

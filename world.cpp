@@ -24,6 +24,7 @@ std::vector<float> World::hoverColor;
 int World::buildingOption;
 int World::map;
 bool World::moveConstruct;
+int World::constructId;
 
 World::World(){
     World::width = 701;
@@ -47,5 +48,6 @@ World::World(){
     World::buildingOption = -1;
     World::map = 1;
     World::moveConstruct = false;
+    World::constructId = -1;
 }
 

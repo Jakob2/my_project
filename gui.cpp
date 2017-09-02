@@ -10,11 +10,9 @@ Gui::Gui(){
 void Gui::drawMenu(){
     drawIcon();
     options();
-    //uniqueColoredOptions();
     drawZoom();
     drawNeedle();
     drawCompass();
-    //uniqueColoredCompass();
     background();
 }
 
