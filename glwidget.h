@@ -31,9 +31,11 @@ private:
     void ddd();
     void dd();
 
-    void setIntersection();
-    bool onTilemap();
+    void setIntersection(int mouseX, int mouseY);
+    bool onTilemap(int mouseX, int mouseY);
     void drawUniqueColoredGui(int x, int y);
+
+    //bool hoverTilemap = false;
 };
 
 #endif // GLWIDGET_H

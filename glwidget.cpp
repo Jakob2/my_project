@@ -32,9 +32,9 @@ void GlWidget::paintGL(){
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::x, World::z);
-    /*if(World::moveConstruct && inRange()){
-        wireToken(token, World::tile[2], World::tile[3], World::x, World::z, Tilemap::mapTiles);
-    }*/
+    if(World::token){
+        wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
+    }
 }
 
 void GlWidget::resizeGL(int w, int h){
@@ -57,17 +57,17 @@ void GlWidget::dd(){
     gluOrtho2D(0,1,0,1);
 }
 
-void GlWidget::setIntersection(){
+void GlWidget::setIntersection(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
-    calculateGLCoords(pressWinX,pressWinY);
+    calculateGLCoords(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-bool GlWidget::onTilemap(){
+bool GlWidget::onTilemap(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
-    return checkIfOnTilemap(pressWinX, pressWinY);
+    return checkIfOnTilemap(mouseX, mouseY);
 }
 
 void GlWidget::drawUniqueColoredGui(int x, int y){
@@ -110,9 +110,15 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     pressWinY = event->pos().y();
     //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
     if(World::hoverCompass == 1) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
-    if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap()) setIntersection();
+    if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
     if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
-    if(onMenu(pressWinX)) panelBuildings(event);
+    if(onMenu(pressWinX)){
+        panelBuildings(event);
+        createToken(QString::number(World::buildingOption));
+        World::token ? World::token = false : World::token = true;
+        if(World::token) std::cout<<"TRUE TOKEN"<<std::endl;
+        else std::cout<<"FALSE TOKEN"<<std::endl;
+    }
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -124,4 +130,10 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinY = event->pos().y();
     if(World::hoverCompass == 1 && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
+    if(World::token){
+        if(onTilemap(moveWinX,moveWinY)){
+            setIntersection(moveWinX,moveWinY);
+            //hoverTilemap =
+        }
+    }
 }

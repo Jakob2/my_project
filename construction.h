@@ -17,8 +17,9 @@ public:
 
     void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos);
     std::vector<std::vector<std::vector<float>>> token;
-    void initToken();
-    void setToken(int i, std::vector<std::vector<std::vector<float>>> &construct);
+    void initToken(int size);
+    void createToken(QString constructId);
+    //void setToken(int i, std::vector<std::vector<std::vector<float>>> &construct);
     void wireToken(std::vector<std::vector<std::vector<float>>> token, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles);
 
 

@@ -33,6 +33,7 @@ public:
     static int map;
     static bool moveConstruct;
     static int constructId;
+    static bool token;
 };
 
 #endif // WORLD_H

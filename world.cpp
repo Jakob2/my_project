@@ -25,6 +25,7 @@ int World::buildingOption;
 int World::map;
 bool World::moveConstruct;
 int World::constructId;
+bool World::token;
 
 World::World(){
     World::width = 701;
@@ -49,5 +50,6 @@ World::World(){
     World::map = 1;
     World::moveConstruct = false;
     World::constructId = -1;
+    World::token = false;
 }
 

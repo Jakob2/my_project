@@ -150,10 +150,9 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        if(construct[i][4][0]-1 == World::tile[4] && construct[i][4][2]-1 == World::tile[5])
-            World::constructId = construct[i][5][0];
+        if(construct[i][4][0]-1 == World::tile[4] && construct[i][4][2]-1 == World::tile[5]) World::constructId = construct[i][5][0];
         else World::constructId = -1;
-        //std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
+        //if(World::constructId != -1) std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
 
         //if(construct[i][5][0] == World::buildingOption){
         if(construct[i][5][0] == World::constructId){
@@ -162,7 +161,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             glTranslatef(-xPos-x,-y,-zPos-z);
             glColor3f(0,1,1);
             corpus(construct, i, x,y,z, xPos, zPos);
-            setToken(i, construct);
+            //setToken(i, construct);
         }else{
             glTranslatef(xPos+x,y,zPos+z);
             glRotatef(turn,0,1,0);
@@ -178,9 +177,11 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
     }
 }
 
-void Construction::initToken(){
-    token.resize(tIndex+1);
-    for(int i=0; i<tIndex+1; i++){
+void Construction::initToken(int size){
+    //token.resize(tIndex+1);
+    token.resize(size);
+    //for(int i=0; i<tIndex+1; i++){
+    for(int i=0; i<size; i++){
         token[i].resize(4);
         for(int j=0; j<(int)token[i].size(); j++){
             token[i][j].resize(3);
@@ -188,7 +189,39 @@ void Construction::initToken(){
     }
 }
 
-void Construction::setToken(int i, std::vector<std::vector<std::vector<float>>> &construct){
+void Construction::createToken(QString constructId){
+    int index = 0;
+    int size = 0;
+    QSqlQuery query;
+    if(query.exec("select count(ax) from "+constructsTable+" where name= "+constructId)) std::cout<<"distinct token parts selected"<<std::endl;
+    else qDebug()<<"select distinct token parts error"<<query.lastError()<<" / "<<query.lastQuery();
+    while(query.next()){
+        size = query.value(0).toInt();
+    }
+    initToken(size);
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+constructsTable+" WHERE name="+constructId+"")) std::cout<<"token selected"<<std::endl;
+    else qDebug()<<"select token error"<<query.lastError()<<" / "<<query.lastQuery();
+    while(query.next()){
+        token[index][0][0] = query.value(0).toFloat();
+        token[index][0][1] = query.value(1).toFloat();
+        token[index][0][2] = query.value(2).toFloat();
+
+        token[index][1][0] = query.value(3).toFloat();
+        token[index][1][1] = query.value(4).toFloat();
+        token[index][1][2] = query.value(5).toFloat();
+
+        token[index][2][0] = query.value(6).toFloat();
+        token[index][2][1] = query.value(7).toFloat();
+        token[index][2][2] = query.value(8).toFloat();
+
+        token[index][3][0] = query.value(9).toFloat();
+        token[index][3][1] = query.value(10).toFloat();
+        token[index][3][2] = query.value(11).toFloat();
+        index++;
+    }
+}
+
+/*void Construction::setToken(int i, std::vector<std::vector<std::vector<float>>> &construct){
     initToken();
     token[tIndex][0][0] = construct[i][0][0];
     token[tIndex][0][1] = construct[i][0][1];
@@ -206,7 +239,7 @@ void Construction::setToken(int i, std::vector<std::vector<std::vector<float>>> 
     token[tIndex][3][1] = construct[i][3][1];
     token[tIndex][3][2] = construct[i][3][2];
     tIndex++;
-}
+}*/
 
 void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles){
     int VALID_PLACE;
