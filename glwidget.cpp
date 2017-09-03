@@ -81,6 +81,27 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     hoverGui(x,y);
 }
 
+void GlWidget::createToken(QMouseEvent *event){
+    panelBuildings(event);
+    selectToken(QString::number(World::buildingOption));
+    World::token ? World::token = false : World::token = true;
+    if(World::token) std::cout<<"TRUE TOKEN"<<std::endl;
+    else std::cout<<"FALSE TOKEN"<<std::endl;
+}
+
+void GlWidget::buildAHouse(){
+    insertConstruct(QString::number(World::map), QString::number(World::buildingOption),QString::number(World::tile[4]+1),QString::number(World::tile[5]+1));
+    updateTilesOpen(QString::number(World::tile[4]), QString::number(World::tile[5]));
+    selectConstructs(QString::number(1));
+    selectMapTiles();
+    World::token = false;
+}
+
+void GlWidget::crackHouse(){
+    deleteConstruct(QString::number(World::constructId));
+    selectConstructs(QString::number(World::map));
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -112,19 +133,9 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(World::hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
     if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
-    if(onMenu(pressWinX) && World::hoverBuilding != -1){
-        panelBuildings(event);
-        createToken(QString::number(World::buildingOption));
-        World::token ? World::token = false : World::token = true;
-        if(World::token) std::cout<<"TRUE TOKEN"<<std::endl;
-        else std::cout<<"FALSE TOKEN"<<std::endl;
-    }
-    if(onTilemap(pressWinX,pressWinY) && World::token){
-        insertConstruct(QString::number(World::map), QString::number(World::buildingOption),QString::number(World::tile[4]+1),QString::number(World::tile[5]+1));
-        selectConstructs(QString::number(1));
-        World::token = false;
-    }
-
+    if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
+    if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::token) buildAHouse();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -139,7 +150,6 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     if(World::token){
         if(onTilemap(moveWinX,moveWinY)){
             setIntersection(moveWinX,moveWinY);
-            //hoverTilemap =
         }
     }
 }

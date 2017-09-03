@@ -35,7 +35,9 @@ private:
     bool onTilemap(int mouseX, int mouseY);
     void drawUniqueColoredGui(int x, int y);
 
-    //bool hoverTilemap = false;
+    void createToken(QMouseEvent *event);
+    void buildAHouse();
+    void crackHouse();
 };
 
 #endif // GLWIDGET_H

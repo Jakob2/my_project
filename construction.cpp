@@ -117,6 +117,18 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
     }
 }
 
+void Construction::updateTilesOpen(QString x, QString z){
+    QSqlQuery query;
+    if(query.exec("update tiles set open = 0 where x = "+x+" and z = "+z)) std::cout<<"tiles open updated"<<std::endl;
+    else qDebug()<<"update tiles open error"<<query.lastError()<<" / "<<query.lastQuery();
+}
+
+void Construction::deleteConstruct(QString id){
+    QSqlQuery query;
+    if(query.exec("delete from map where id = "+id)) std::cout<<"construct deleted"<<std::endl;
+    else qDebug()<<"delete construct error"<<query.lastError()<<" / "<<query.lastQuery();
+}
+
 QString Construction::id(){
     int id = 0;
     QSqlQuery query;
@@ -151,7 +163,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         if(construct[i][4][0]-1 == World::tile[4] && construct[i][4][2]-1 == World::tile[5]) World::constructId = construct[i][5][0];
-        else World::constructId = -1;
+        //else World::constructId = -1;
         //if(World::constructId != -1) std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
 
         //if(construct[i][5][0] == World::buildingOption){
@@ -189,7 +201,7 @@ void Construction::initToken(int size){
     }
 }
 
-void Construction::createToken(QString constructId){
+void Construction::selectToken(QString constructId){
     int index = 0;
     int size = 0;
     QSqlQuery query;
