@@ -67,7 +67,7 @@ void Construction::selectConstructs(QString map){
     }*/
 }
 
-void Construction::insertConstruct(QString map, QString name){
+void Construction::insertConstruct(QString map, QString name, QString x, QString z){
     QString ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
     std::vector<std::vector<float>> test;
     int index = 0;
@@ -112,7 +112,7 @@ void Construction::insertConstruct(QString map, QString name){
         g = QString::number(test[i][13]);
         b = QString::number(test[i][14]);
 
-        if(query.exec("INSERT INTO "+mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", 0,0,0, "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"inserted"<<std::endl;
+        if(query.exec("INSERT INTO "+mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"inserted"<<std::endl;
         else qDebug()<<"insert mappart error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }

@@ -28,8 +28,10 @@ int World::constructId;
 bool World::token;
 
 World::World(){
-    World::width = 701;
-    World::height = 381;
+    //World::width = 701;
+    //World::height = 381;
+    World::width = 800;
+    World::height = 600;
     World::zoom = 0.2;
     World::eyeX = 1;
     World::eyeY = 1;
@@ -45,7 +47,7 @@ World::World(){
     World::hoverBuilding = -1;
     World::hoverZoom = -1;
     World::hoverCompass = -1;
-    World::hoverColor = {.5,.5,0};
+    World::hoverColor = {.5,.5,0}; //only used in gui class, refactor it ...
     World::buildingOption = -1;
     World::map = 1;
     World::moveConstruct = false;

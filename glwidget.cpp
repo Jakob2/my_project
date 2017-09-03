@@ -109,16 +109,22 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
     //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
-    if(World::hoverCompass == 1) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
+    if(World::hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
     if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
-    if(onMenu(pressWinX)){
+    if(onMenu(pressWinX) && World::hoverBuilding != -1){
         panelBuildings(event);
         createToken(QString::number(World::buildingOption));
         World::token ? World::token = false : World::token = true;
         if(World::token) std::cout<<"TRUE TOKEN"<<std::endl;
         else std::cout<<"FALSE TOKEN"<<std::endl;
     }
+    if(onTilemap(pressWinX,pressWinY) && World::token){
+        insertConstruct(QString::number(World::map), QString::number(World::buildingOption),QString::number(World::tile[4]+1),QString::number(World::tile[5]+1));
+        selectConstructs(QString::number(1));
+        World::token = false;
+    }
+
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
