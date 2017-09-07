@@ -13,13 +13,9 @@ void GlWidget::initializeGL(){
 }
 
 void GlWidget::paintGL(){
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     resizeGL(0,0);
-    /*ddd();
-    glScalef(World::zoom, World::zoom, World::zoom);
-    ground(World::x, World::z, Tilemap::mapTiles);
-    /*constructs(Db::construct, X, Z);*/
+
 
     dd();
     drawMenu();
@@ -35,6 +31,13 @@ void GlWidget::paintGL(){
     if(World::token){
         wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
     }
+
+    /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ddd();
+    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    dd();
+    uniqueColoredOptions();*/
+
 }
 
 void GlWidget::resizeGL(int w, int h){
@@ -65,8 +68,17 @@ void GlWidget::setIntersection(int mouseX, int mouseY){
 }
 
 bool GlWidget::onTilemap(int mouseX, int mouseY){
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    dd();
+    uniqueColoredOptions();
+    ddd();
+    glScalef(World::zoom, World::zoom, World::zoom);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    dd();
+    uniqueColoredOptions();
+    ddd();
+    unsunkenGround(World::x, World::z, Tilemap::mapTiles);*/
     return checkIfOnTilemap(mouseX, mouseY);
 }
 
@@ -94,6 +106,7 @@ void GlWidget::buildAHouse(){
     updateTilesOpen(QString::number(World::tile[4]), QString::number(World::tile[5]));
     selectConstructs(QString::number(1));
     selectMapTiles();
+    World::token = false;
 }
 
 void GlWidget::crackHouse(){
