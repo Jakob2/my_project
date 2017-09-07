@@ -94,7 +94,6 @@ void GlWidget::buildAHouse(){
     updateTilesOpen(QString::number(World::tile[4]), QString::number(World::tile[5]));
     selectConstructs(QString::number(1));
     selectMapTiles();
-    World::token = false;
 }
 
 void GlWidget::crackHouse(){
@@ -135,7 +134,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::token) buildAHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace) buildAHouse();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

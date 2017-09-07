@@ -16,7 +16,7 @@ public:
     static float eyeY;
     static float eyeZ;
     static int range;
-    static int validPlace;
+    static bool validPlace;
     static float x;
     static float z;
     static int areaOption;//???

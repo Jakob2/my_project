@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     vector.cpp \
     mouseray.cpp \
     construction.cpp \
-    gui.cpp
+    gui.cpp \
+    field.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h \
     vector.h \
     mouseray.h \
     construction.h \
-    gui.h
+    gui.h \
+    field.h
 
 FORMS    += mainwindow.ui
 

@@ -254,16 +254,15 @@ void Construction::selectToken(QString constructId){
 }*/
 
 void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles){
-    int VALID_PLACE;
     float clip = 0.5;
     for(int i=0; i<(int)token.size(); i++){
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     if(!mapTiles[x][z][1]){
-        VALID_PLACE = 0;
+        World::validPlace = false;
         glColor3f(1,0,0);
     }
     else{
-        VALID_PLACE = 1;
+        World::validPlace = true;
         glColor3f(0.9,0.9,0.9);
     }
     glBegin(GL_POLYGON);

@@ -7,7 +7,7 @@ float World::eyeX;
 float World::eyeY;
 float World::eyeZ;
 int World::range;
-int World::validPlace;
+bool World::validPlace;
 float World::x;
 float World::z;
 int World::areaOption;
