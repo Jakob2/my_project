@@ -273,3 +273,10 @@ void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token,
     glEnd();
     }
 }
+
+void Construction::updateOpen(QString x, QString z, QString state){
+    std::cout<<"UPDATE OPEN X/Y "<<x.toStdString()<<"/"<<z.toStdString()<<std::endl;
+    QSqlQuery query;
+    if(query.exec("UPDATE "+tilesTable+" SET open = "+state+" WHERE x = "+x+" AND z ="+z)) std::cout<<"tiles open updated"<<std::endl;
+    else qDebug()<<"update tile open error: "<<query.lastError()<<" / "<<query.lastQuery();
+}

@@ -9,6 +9,10 @@
 class Construction : public Db, public Shape
 {
 public:
+    QString id();
+    void updateOpen(QString x, QString z, QString state);
+
+
     Construction();
     static std::vector<std::vector<std::vector<float>>> construct;
     void setConstruct(int size);
@@ -28,9 +32,6 @@ public:
 private:
     int tIndex = 0;
     const float clip = 0.5;
-
-    QString id();
-    //int tIndex = 0;
 };
 
 #endif // CONSTRUCTION_H

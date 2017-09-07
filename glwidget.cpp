@@ -112,6 +112,9 @@ void GlWidget::buildAHouse(){
 void GlWidget::crackHouse(){
     deleteConstruct(QString::number(World::constructId));
     selectConstructs(QString::number(World::map));
+    updateOpen(QString::number(World::tile[4]), QString::number(World::tile[5]), QString::number(1));
+    selectMapTiles();
+    World::token = false;
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){
@@ -144,7 +147,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
     if(World::hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
-    if(World::hoverZoom == 0 | World::hoverZoom == 1) zoom();
+    if(World::hoverZoom == 0 || World::hoverZoom == 1) zoom();
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
     if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace) buildAHouse();

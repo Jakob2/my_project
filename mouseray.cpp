@@ -54,11 +54,11 @@ void Mouseray::crossfade(){
 bool Mouseray::checkIfOnTilemap(int x, int y){
     readPixelColor(x,y);
     if(!pickedId){
-        std::cout<<"ON TILEMAP !!!"<<std::endl;
+        //std::cout<<"ON TILEMAP !!!"<<std::endl;
         return true;
     }
     else{
-        std::cout<<"NOT ON TILEMAP !!!"<<std::endl;
+        //std::cout<<"NOT ON TILEMAP !!!"<<std::endl;
         return false;
     }
 }
