@@ -39,6 +39,9 @@ private:
     void createToken(QMouseEvent *event);
     void buildAHouse();
     void crackHouse();
+
+    void activateField();
+    void plantField();
 };
 
 #endif // GLWIDGET_H

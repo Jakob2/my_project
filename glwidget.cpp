@@ -131,6 +131,43 @@ void GlWidget::crackHouse(){
     std::cout<<"CRACK ID: "<<World::buildingOption<<std::endl;
 }
 
+void GlWidget::activateField(){
+    selectField(QString::number(6));
+    World::field[0] ? World::field[0] = false : World::field[0] = true;
+    World::field[1] = false;
+    World::field[2] = true;
+    if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
+    else std::cout<<"END THE FIELD 0"<<std::endl;
+}
+
+void GlWidget::plantField(){
+    if(World::field[0]){
+
+        World::field[1] ? World::field[1] = false : World::field[1] = true;
+
+        if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
+        else std::cout<<"END THE FIELD 1"<<std::endl;
+
+        if(World::field[2]){
+            testIntersection = setIntersectionTest(pressWinX,pressWinY);
+            World::areaX = testIntersection[0];
+            World::areaZ = testIntersection[2];
+        }
+        World::field[2] = false;
+
+        if(!World::field[1]){
+            std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
+            insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+            //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
+            //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
+            selectConstructs(QString::number(World::map));
+            selectMapTiles();
+            World::field[1] = false;
+            World::field[2] = true;
+        }
+    }
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -167,44 +204,8 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
     if(World::hoverZoom == 0 || World::hoverZoom == 1) zoom();
     //plant a field
-    if(onMenu(pressWinX) && World::hoverBuilding == 4){
-        selectField(QString::number(6));
-        World::field[0] ? World::field[0] = false : World::field[0] = true;
-        World::field[1] = false;
-        World::field[2] = true;
-        if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
-        else std::cout<<"END THE FIELD 0"<<std::endl;
-    }
-
-    std::cout<<"BUILD THIS: "<<World::buildingOption<<std::endl;
-    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 6){
-        if(World::field[0]){
-
-            World::field[1] ? World::field[1] = false : World::field[1] = true;
-
-            if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
-            else std::cout<<"END THE FIELD 1"<<std::endl;
-
-            if(World::field[2]){
-                testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                World::areaX = testIntersection[0];
-                World::areaZ = testIntersection[2];
-            }
-            World::field[2] = false;
-
-            if(!World::field[1]){
-                std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
-                insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
-                //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
-                //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
-                selectConstructs(QString::number(World::map));
-                selectMapTiles();
-                World::field[1] = false;
-                World::field[2] = true;
-            }
-        }
-    }
-
+    if(onMenu(pressWinX) && World::hoverBuilding == 4) activateField();
+    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 6) plantField();
     //build a house
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
@@ -225,9 +226,4 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
             setIntersection(moveWinX,moveWinY);
         }
     }
-    /*if(World::field[1]){
-        if(onTilemap(moveWinX,moveWinY)){
-            setIntersection(moveWinX,moveWinY);
-        }
-    }*/
 }
