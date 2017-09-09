@@ -26,4 +26,11 @@ void Db::connectDatabase(){
     else std::cout<< "Database: connection ok"<<std::endl;
 }
 
+void Db::updateOpen(QString x, QString z, QString state){
+    //std::cout<<"UPDATE OPEN X/Y "<<x.toStdString()<<"/"<<z.toStdString()<<std::endl;
+    QSqlQuery query;
+    if(query.exec("UPDATE "+Db::tilesTable+" SET open = "+state+" WHERE x = "+x+" AND z ="+z)) std::cout<<"tiles open updated"<<std::endl;
+    else qDebug()<<"update tile open error: "<<query.lastError()<<" / "<<query.lastQuery();
+}
+
 

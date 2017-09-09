@@ -112,8 +112,8 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
         g = QString::number(test[i][13]);
         b = QString::number(test[i][14]);
 
-        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"inserted"<<std::endl;
-        else qDebug()<<"insert mappart error: "<<query.lastError()<<" / "<<query.lastQuery();
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"construct inserted"<<std::endl;
+        else qDebug()<<"insert construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
 
@@ -272,11 +272,4 @@ void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token,
         glVertex3f(offX+clip+x+token[i][3][0], token[i][3][1], offZ+clip+z+token[i][3][2]);
     glEnd();
     }
-}
-
-void Construction::updateOpen(QString x, QString z, QString state){
-    //std::cout<<"UPDATE OPEN X/Y "<<x.toStdString()<<"/"<<z.toStdString()<<std::endl;
-    QSqlQuery query;
-    if(query.exec("UPDATE "+Db::tilesTable+" SET open = "+state+" WHERE x = "+x+" AND z ="+z)) std::cout<<"tiles open updated"<<std::endl;
-    else qDebug()<<"update tile open error: "<<query.lastError()<<" / "<<query.lastQuery();
 }

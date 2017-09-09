@@ -175,7 +175,9 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
         if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
         else std::cout<<"END THE FIELD 0"<<std::endl;
     }
-    if(onTilemap(pressWinX,pressWinY)){
+
+    std::cout<<"BUILD THIS: "<<World::buildingOption<<std::endl;
+    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 6){
         if(World::field[0]){
 
             World::field[1] ? World::field[1] = false : World::field[1] = true;
@@ -192,8 +194,8 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
 
             if(!World::field[1]){
                 std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
-                //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
-                insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
+                insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+                //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
                 //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
                 selectConstructs(QString::number(World::map));
                 selectMapTiles();
@@ -206,7 +208,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //build a house
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    //if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && !World::field[0]) buildAHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && World::buildingOption != 6) buildAHouse();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

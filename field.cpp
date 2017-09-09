@@ -75,7 +75,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             for(int z=zLow; z<=zHigh; z++){
                 if(fieldValidation(x, z)){
                     fieldSQL(map, name, field, x,z);
-                    //updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
+                    Db::updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
                     std::cout<<"FIELD I"<<std::endl;
                 }
             }
@@ -86,7 +86,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
            for(int z=zLow; z<=zHigh; z++){
                if(fieldValidation(x, z)){
                     fieldSQL(map, name, field, x,z);
-                    //updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
+                    Db::updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
                     std::cout<<"FIELD II"<<std::endl;
                 }
             }
@@ -97,7 +97,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
                     fieldSQL(map, name, field, x,z);
-                    //updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
+                    Db::updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
                     std::cout<<"FIELD III"<<std::endl;
                 }
             }
@@ -108,7 +108,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
                     fieldSQL(map, name, field, x,z);
-                    //updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
+                    Db::updateOpen(QString::number(x-1), QString::number(z-1), QString::number(0));
                     std::cout<<"FIELD IV"<<std::endl;
                 }
             }

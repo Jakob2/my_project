@@ -386,6 +386,7 @@ bool Gui::hoverGui(int x, int y){
         break;
     case 128:
         World::hoverBuilding = 4;
+        //std::cout<<"HOVER FIELD OPTION"<<std::endl;
         //World::pullField = true;
         //World::field[0] = true;
         return true;
@@ -412,7 +413,7 @@ bool Gui::hoverGui(int x, int y){
         break;
     default:
         World::hoverBuilding = -1;
-        World::buildingOption = -1;
+        //World::buildingOption = -1;
         World::hoverZoom = -1;
         World::hoverCompass = -1;
         //World::pullField = false;

@@ -20,6 +20,8 @@ public:
     static QString constructsTable;
     static QString tilesTable;
     static QString iconsTable;
+
+    static void updateOpen(QString x, QString z, QString state);
 };
 
 #endif // DB_H
