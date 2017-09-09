@@ -70,7 +70,8 @@ void Field::selectField(QString name){
 }
 
 void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<std::vector<float>>> &field, int xLow, int xHigh, int zLow, int zHigh){
-    if(World::areaX<World::tile[2] && World::areaZ<World::tile[3]){
+    //if(World::areaX<World::tile[2] && World::areaZ<World::tile[3]){
+    if(fieldstuff.areaX<World::tile[2] && fieldstuff.areaZ<World::tile[3]){
         for(int x=xLow; x<=xHigh; x++){
             for(int z=zLow; z<=zHigh; z++){
                 if(fieldValidation(x, z)){
@@ -81,7 +82,8 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX>World::tile[2] && World::areaZ<World::tile[3]){
+    //else if(World::areaX>World::tile[2] && World::areaZ<World::tile[3]){
+    else if(fieldstuff.areaX>World::tile[2] && fieldstuff.areaZ<World::tile[3]){
         for(int x=xHigh; x<=xLow; x++){
            for(int z=zLow; z<=zHigh; z++){
                if(fieldValidation(x, z)){
@@ -92,7 +94,8 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX>World::tile[2] && World::areaZ>World::tile[3]){
+    //else if(World::areaX>World::tile[2] && World::areaZ>World::tile[3]){
+    else if(fieldstuff.areaX>World::tile[2] && fieldstuff.areaZ>World::tile[3]){
         for(int x=xHigh; x<=xLow; x++){
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
@@ -103,7 +106,8 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX<World::tile[2] && (World::areaZ>World::tile[3])){
+    //else if(World::areaX<World::tile[2] && (World::areaZ>World::tile[3])){
+    else if(fieldstuff.areaX<World::tile[2] && (fieldstuff.areaZ>World::tile[3])){
         for(int x=xLow; x<=xHigh; x++){
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
@@ -126,13 +130,17 @@ void Field::fieldarea(std::vector<std::vector<std::vector<float>>> &field, float
     glPushMatrix();
     glColor3f(r,g,b);
     for(int f=0; f<(int)field.size(); f++){
-        if(World::tile[2] > World::areaX && World::tile[3] > World::areaZ)
+        //if(World::tile[2] > World::areaX && World::tile[3] > World::areaZ)
+        if(World::tile[2] > fieldstuff.areaX && World::tile[3] > fieldstuff.areaZ)
             southarea(field, f, xPos,zPos);
-        else if(World::tile[2] < World::areaX && World::tile[3] > World::areaZ)
+        //else if(World::tile[2] < World::areaX && World::tile[3] > World::areaZ)
+        else if(World::tile[2] < fieldstuff.areaX && World::tile[3] > fieldstuff.areaZ)
             westarea(field, f, xPos,zPos);
-        else if(World::tile[2] > World::areaX && World::tile[3] < World::areaZ)
+        //else if(World::tile[2] > World::areaX && World::tile[3] < World::areaZ)
+        else if(World::tile[2] > fieldstuff.areaX && World::tile[3] < fieldstuff.areaZ)
             eastarea(field, f, xPos,zPos);
-        else if(World::tile[2] < World::areaX && World::tile[3] < World::areaZ)
+        //else if(World::tile[2] < World::areaX && World::tile[3] < World::areaZ)
+        else if(World::tile[2] < fieldstuff.areaX && World::tile[3] < fieldstuff.areaZ)
             northarea(field, f, xPos,zPos);
     }
     glPopMatrix();
@@ -140,9 +148,11 @@ void Field::fieldarea(std::vector<std::vector<std::vector<float>>> &field, float
 
 void Field::southarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
+    //for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
+    for(int i=floor(fieldstuff.areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
+        //for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
+        for(int j=floor(fieldstuff.areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
@@ -154,9 +164,11 @@ void Field::southarea(std::vector<std::vector<std::vector<float>>> &field, int f
 
 void Field::westarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
+    //for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
+    for(int i=floor(World::tile[2]-xPos); i<ceil(fieldstuff.areaX-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
+        //for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
+        for(int j=floor(fieldstuff.areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
@@ -168,10 +180,11 @@ void Field::westarea(std::vector<std::vector<std::vector<float>>> &field, int f,
 
 void Field::northarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
+    //for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
+    for(int i=floor(World::tile[2]-xPos); i<ceil(fieldstuff.areaX-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
-            z=j+0.5;
+        //for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
+        for(int j=floor(World::tile[3]-zPos); j<ceil(fieldstuff.areaZ-zPos); j++){z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
             Shape::corpus(field,f, x,0,z, xPos,zPos);
@@ -182,9 +195,11 @@ void Field::northarea(std::vector<std::vector<std::vector<float>>> &field, int f
 
 void Field::eastarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
+    //for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
+    for(int i=floor(fieldstuff.areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
+        //for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
+        for(int j=floor(World::tile[3]-zPos); j<ceil(fieldstuff.areaZ-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);

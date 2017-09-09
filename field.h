@@ -11,6 +11,14 @@ class Field// : public Db//, private Shape
 public:
     Field();
 
+    struct fieldstruct{
+        float areaX = .0;
+        float areaZ = .0;
+        bool activate = false;
+        bool build = false;
+        bool init = true;
+    }fieldstuff;
+
     //void selectFieldSet();
     void selectField(QString name);
     void insertFieldPart(QString map, QString name, std::vector<std::vector<std::vector<float>>> &field, int xLow, int xHigh, int zLow, int zHigh);

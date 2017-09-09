@@ -32,7 +32,8 @@ void GlWidget::paintGL(){
     if(World::token){ // && onTilemap(moveWinX,moveWinY)
         wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
     }
-    if(World::field[1]){
+    //if(World::field[1]){
+    if(fieldstuff.build){
         fieldarea(Field::field, World::x,World::z);
     }
     //if(World::way[3]){
@@ -141,39 +142,48 @@ void GlWidget::crackHouse(){
 
 void GlWidget::activateField(){
     selectField(QString::number(6));
-    World::field[0] ? World::field[0] = false : World::field[0] = true;
+    /*World::field[0] ? World::field[0] = false : World::field[0] = true;
     World::field[1] = false;
     World::field[2] = true;
     if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
-    else std::cout<<"END THE FIELD 0"<<std::endl;
+    else std::cout<<"END THE FIELD 0"<<std::endl;*/
+    fieldstuff.activate ? fieldstuff.activate = false : fieldstuff.activate = true;
+    fieldstuff.build = false;
+    fieldstuff.init = true;
 }
 
 void GlWidget::plantField(){
-    if(World::field[0]){
+    //if(World::field[0]){
+    if(fieldstuff.activate){
+        //World::field[1] ? World::field[1] = false : World::field[1] = true;
+        fieldstuff.build ? fieldstuff.build = false : fieldstuff.build = true;
 
-        World::field[1] ? World::field[1] = false : World::field[1] = true;
+        //if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
+        //else std::cout<<"END THE FIELD 1"<<std::endl;
 
-        if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
-        else std::cout<<"END THE FIELD 1"<<std::endl;
-
-        if(World::field[2]){
-            //calculateGLCoords(pressWinX,pressWinY);
+        //if(World::field[2]){
+        if(fieldstuff.init){
             testIntersection = setIntersectionTest(pressWinX,pressWinY);
-            //testIntersection = calculateGLCoordsTest(pressWinX,pressWinY);
-            World::areaX = testIntersection[0];
-            World::areaZ = testIntersection[2];
+            //World::areaX = testIntersection[0];
+            //World::areaZ = testIntersection[2];
+            fieldstuff.areaX = testIntersection[0];
+            fieldstuff.areaZ  = testIntersection[2];
         }
-        World::field[2] = false;
+        //World::field[2] = false;
+        fieldstuff.init = false;
 
-        if(!World::field[1]){
+        //if(!World::field[1]){
+        if(!fieldstuff.build){
             std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
-            insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+            //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+            insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(fieldstuff.areaX-World::x),ceil(World::tile[2]-World::x), ceil(fieldstuff.areaZ-World::z),ceil(World::tile[3]-World::z));
             //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
             //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
             selectConstructs(QString::number(World::map));
             selectMapTiles();
-            World::field[1] = false;
-            World::field[2] = true;
+            //World::field[1] = false;
+            //World::field[2] = true;
+            fieldstuff.init = true;
         }
     }
 }
@@ -210,7 +220,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::constructId = -1;
         break;
     }
-    std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
+    //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
     paintGL();
 }
 

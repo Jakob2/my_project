@@ -100,10 +100,12 @@ void Tilemap::area(int i, int ii, int j, int jj, int clr){
     float QX, X, AREA_X, QZ, Z, AREA_Z;
     QX = World::tile[2];
     X = World::x;
-    AREA_X = World::areaX;
+    //AREA_X = World::areaX;
+    AREA_X = fieldstuff.areaX;
     QZ = World::tile[3];
     Z = World::z;
-    AREA_Z = World::areaZ;
+    //AREA_Z = World::areaZ;
+    AREA_Z = fieldstuff.areaZ;
     if((i<QX-X && ii>floor(AREA_X-X)) && (j<QZ-Z && jj>floor(AREA_Z-Z))){
         glColor3f(select[0],select[1],select[2]);
     }

@@ -20,8 +20,8 @@ public:
     static float x;
     static float z;
     static int areaOption;//???
-    static float areaX;
-    static float areaZ;
+    //static float areaX;
+    //static float areaZ;
     static bool mousePressed;
     static float cameraMove;
     static std::vector<float> tile;
@@ -36,7 +36,7 @@ public:
     static bool token;
     static int pickedColor;
     //static bool pullField;
-    static std::vector<bool> field;
+    //static std::vector<bool> field;
     //static std::vector<float> way;
 };
 

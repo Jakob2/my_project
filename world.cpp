@@ -11,8 +11,8 @@ bool World::validPlace;
 float World::x;
 float World::z;
 int World::areaOption;
-float World::areaX;
-float World::areaZ;
+//float World::areaX;
+//float World::areaZ;
 float World::pi;
 bool World::mousePressed;
 float World::cameraMove;
@@ -27,7 +27,7 @@ bool World::moveConstruct;
 int World::constructId;
 bool World::token;
 int World::pickedColor;
-std::vector<bool> World::field;
+//std::vector<bool> World::field;
 //std::vector<float> World::way;
 
 World::World(){
@@ -57,10 +57,10 @@ World::World(){
     World::constructId = -1;
     World::token = false;
     //World::pullField = false;
-    World::field.resize(3);
+    /*World::field.resize(3);
     World::field[0] = false;
     World::field[1] = false;
-    World::field[2] = false;
+    World::field[2] = false;*/
     //World::way = {0,0,0,0,0};
 }
 
