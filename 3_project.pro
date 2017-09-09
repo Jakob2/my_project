@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     mouseray.cpp \
     construction.cpp \
     gui.cpp \
-    field.cpp
+    field.cpp \
+    way.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     mouseray.h \
     construction.h \
     gui.h \
-    field.h
+    field.h \
+    way.h
 
 FORMS    += mainwindow.ui
 

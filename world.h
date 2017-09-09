@@ -37,6 +37,7 @@ public:
     static int pickedColor;
     //static bool pullField;
     static std::vector<bool> field;
+    static std::vector<float> way;
 };
 
 #endif // WORLD_H

@@ -7,8 +7,9 @@
 //#include "shape.h"
 #include "construction.h"
 #include "field.h"
+#include "way.h"
 
-class Tilemap : public Construction, public Field //public Db, public Shape,
+class Tilemap : public Construction, public Field, public Way //public Db, public Shape,
 {
 public:
     Tilemap();
