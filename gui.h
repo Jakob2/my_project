@@ -24,7 +24,7 @@ public:
 
     void zoom();
     void drawZoom();
-    void drawUniqueColoredZoom();
+    void uniqueColoredZoom();
     void uniqueColoredPlus();
     void uniqueColoredMinus();
 

@@ -29,17 +29,14 @@ void GlWidget::paintGL(){
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::x, World::z);
-    if(World::token){
+    if(World::token){ // && onTilemap(moveWinX,moveWinY)
         wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
     }
     if(World::field[1]){
         fieldarea(Field::field, World::x,World::z);
     }
     if(World::way[3]){
-       //fixedWayPos();
-       if(World::tile[4]+1>=0 && World::tile[4]+1<World::range && World::tile[5]+1>=0 && World::tile[5]+1<World::range){
-           drawWay(Way::way, Tilemap::mapTiles);
-       }
+        drawWay(Way::way, Tilemap::mapTiles);
     }
 
     /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -83,6 +80,7 @@ std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
     std::vector<float> out;
     out = calculateGLCoordsTest(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
+    //paintGL();
     return out;
 }
 
@@ -90,6 +88,8 @@ bool GlWidget::onTilemap(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     dd();
     uniqueColoredOptions();
+    uniqueColoredCompass();
+    uniqueColoredZoom();
     ddd();
     glScalef(World::zoom, World::zoom, World::zoom);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
@@ -110,6 +110,7 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     uniqueColoredCompass();
     readPixelColor(x,y);
     hoverGui(x,y);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void GlWidget::createToken(QMouseEvent *event){
@@ -155,7 +156,9 @@ void GlWidget::plantField(){
         else std::cout<<"END THE FIELD 1"<<std::endl;
 
         if(World::field[2]){
+            //calculateGLCoords(pressWinX,pressWinY);
             testIntersection = setIntersectionTest(pressWinX,pressWinY);
+            //testIntersection = calculateGLCoordsTest(pressWinX,pressWinY);
             World::areaX = testIntersection[0];
             World::areaZ = testIntersection[2];
         }
@@ -221,7 +224,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
         if(World::way[2]) std::cout<<"START THE WAY 2(activate)"<<std::endl;
         else std::cout<<"END THE WAY 2(activate)"<<std::endl;
     }
-    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 7){
+    if(onTilemap(moveWinX,moveWinY) && World::buildingOption == 7){
         if(World::way[2]){
 
             World::way[3] ? World::way[3] = 0 : World::way[3] = 1;
@@ -229,10 +232,12 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
             if(World::way[3]) std::cout<<"START THE WAY 3"<<std::endl;
             else std::cout<<"END THE WAY 3"<<std::endl;
 
-            if(World::way[4]){
+            if(World::way[4] && onTilemap(moveWinX,moveWinY)){
+                //calculateGLCoords(pressWinX,pressWinY);
                 testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                World::way[0] = testIntersection[0];
-                World::way[1] = testIntersection[2];
+                //testIntersection = calculateGLCoordsTest(pressWinX,pressWinY);
+                World::way[0] = ceil(testIntersection[0]-World::x);
+                World::way[1] = ceil(testIntersection[2]-World::z);
             }
             World::way[4] = false;
 
@@ -250,6 +255,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
     if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && World::buildingOption != 6 && World::buildingOption != 7) buildAHouse();
+
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

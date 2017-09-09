@@ -229,8 +229,9 @@ void Gui::drawZoom(){
     //uniqueColoredMinus();
 }
 
-void Gui::drawUniqueColoredZoom(){
-
+void Gui::uniqueColoredZoom(){
+    uniqueColoredPlus();
+    uniqueColoredMinus();
 }
 
 void Gui::plus(){

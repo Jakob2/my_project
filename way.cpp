@@ -87,8 +87,8 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     int x, z, xx, zz;
     x = World::way[0];
     z = World::way[1];
-    xx = ceil(World::tile[2]);
-    zz = ceil(World::tile[3]);
+    xx = ceil(World::tile[2]-World::x);
+    zz = ceil(World::tile[3]-World::z);
     std::cout<<"x: "<<x<<" / z: "<<z<<" - xx: "<<xx<<" / zz: "<<zz<<std::endl;
     calcAngle();
     if(xx>=x && zz>=z) waySouth(way,mapTiles,x,z,xx,zz);
@@ -127,8 +127,8 @@ void Way::calcAngle(){
     std::vector<float> d = Vector::direction(goal,start);
 
     angle = asin(d[0]/av) * (180/World::pi) * -1;
-    if(World::tile[5]<World::way[1]+0.5) angle = 180 - angle;
-    if(World::tile[4]<World::way[0]+0.5 && World::tile[5]>World::way[1]+0.5) angle = 360 + angle;
+    if((World::tile[3]-World::z)<World::way[1]+0.5) angle = 180 - angle;
+    if((World::tile[2]-World::x)<World::way[0]+0.5 && (World::tile[3]-World::z)>World::way[1]+0.5) angle = 360 + angle;
     std::cout<<"angle: "<<angle<<std::endl;
 }
 
