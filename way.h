@@ -11,8 +11,16 @@ class Way
 public:
     Way();
 
+    struct wayStruct{
+        float x = .0;
+        float z = .0;
+        bool active = false;
+        bool build = false;
+        bool init = true;
+    }waystuff;
+
     void selectWay();
-    void waySQL(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z);
+    void insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z);
 
     void drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles);
     void calcAngle();

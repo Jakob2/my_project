@@ -28,7 +28,7 @@ int World::constructId;
 bool World::token;
 int World::pickedColor;
 std::vector<bool> World::field;
-std::vector<float> World::way;
+//std::vector<float> World::way;
 
 World::World(){
     //World::width = 701;
@@ -61,6 +61,6 @@ World::World(){
     World::field[0] = false;
     World::field[1] = false;
     World::field[2] = false;
-    World::way = {0,0,0,0,0};
+    //World::way = {0,0,0,0,0};
 }
 

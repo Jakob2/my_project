@@ -35,7 +35,8 @@ void GlWidget::paintGL(){
     if(World::field[1]){
         fieldarea(Field::field, World::x,World::z);
     }
-    if(World::way[3]){
+    //if(World::way[3]){
+    if(waystuff.build){
         drawWay(Way::way, Tilemap::mapTiles);
     }
 
@@ -177,6 +178,15 @@ void GlWidget::plantField(){
     }
 }
 
+void GlWidget::activateWay(){
+
+}
+
+void GlWidget::buildWay()
+{
+
+}
+
 void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
@@ -218,36 +228,41 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //build a way
     if(onMenu(pressWinX) && World::hoverBuilding == 3){
         selectWay();
-        World::way[2] ? World::way[2] = 0 : World::way[2] = 1;
+        /*World::way[2] ? World::way[2] = 0 : World::way[2] = 1;
         World::way[3] = false;
-        World::way[4] = true;
-        if(World::way[2]) std::cout<<"START THE WAY 2(activate)"<<std::endl;
-        else std::cout<<"END THE WAY 2(activate)"<<std::endl;
+        World::way[4] = true;*/
+        waystuff.active ? waystuff.active = false : waystuff.active = true;
+        waystuff.build = false;
+        waystuff.init = true;
+        /*if(World::way[2]) std::cout<<"START THE WAY 2(activate)"<<std::endl;
+        else std::cout<<"END THE WAY 2(activate)"<<std::endl;*/
     }
     if(onTilemap(moveWinX,moveWinY) && World::buildingOption == 7){
-        if(World::way[2]){
+        //if(World::way[2]){
+        if(waystuff.active){
+            //World::way[3] ? World::way[3] = 0 : World::way[3] = 1;
+            waystuff.build ? waystuff.build = false : waystuff.build = true;
 
-            World::way[3] ? World::way[3] = 0 : World::way[3] = 1;
+            /*if(World::way[3]) std::cout<<"START THE WAY 3"<<std::endl;
+            else std::cout<<"END THE WAY 3"<<std::endl;*/
 
-            if(World::way[3]) std::cout<<"START THE WAY 3"<<std::endl;
-            else std::cout<<"END THE WAY 3"<<std::endl;
-
-            if(World::way[4] && onTilemap(moveWinX,moveWinY)){
-                //calculateGLCoords(pressWinX,pressWinY);
+            //if(World::way[4] && onTilemap(moveWinX,moveWinY)){
+            if(waystuff.init && onTilemap(moveWinX,moveWinY)){
                 testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                //testIntersection = calculateGLCoordsTest(pressWinX,pressWinY);
-                World::way[0] = ceil(testIntersection[0]-World::x);
-                World::way[1] = ceil(testIntersection[2]-World::z);
+                /*World::way[0] = ceil(testIntersection[0]-World::x);
+                World::way[1] = ceil(testIntersection[2]-World::z);*/
+                waystuff.x = ceil(testIntersection[0]-World::x)-1;
+                waystuff.z = ceil(testIntersection[2]-World::z)-1;
             }
-            World::way[4] = false;
+            //World::way[4] = false;
+            waystuff.init = false;
 
-            if(!World::way[3]){
+            //if(!World::way[3]){
+            if(!waystuff.build){
                 std::cout<<"BUILD THE DAMN WAY"<<std::endl;
-                /*insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
-                selectConstructs(QString::number(World::map));
-                selectMapTiles();*/
-                World::way[3] = false;
-                World::way[4] = true;
+                /*World::way[3] = false;
+                World::way[4] = true;*/
+                waystuff.init = true;
             }
         }
     }

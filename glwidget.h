@@ -42,6 +42,9 @@ private:
 
     void activateField();
     void plantField();
+
+    void activateWay();
+    void buildWay();
 };
 
 #endif // GLWIDGET_H

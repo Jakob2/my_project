@@ -51,7 +51,7 @@ void Way::selectWay(){
     std::cout<<"WAY COLOR: "<<Way::way[1][4][0]<<std::endl;
 }
 
-void Way::waySQL(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z){
+void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z){
     QSqlQuery query;
     QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
     mid = id();
@@ -85,8 +85,10 @@ void Way::waySQL(QString map, std::vector<std::vector<std::vector<float>>> &way,
 
 void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles){
     int x, z, xx, zz;
-    x = World::way[0];
-    z = World::way[1];
+    /*x = World::way[0];
+    z = World::way[1];*/
+    x = waystuff.x;
+    z = waystuff.z;
     xx = ceil(World::tile[2]-World::x);
     zz = ceil(World::tile[3]-World::z);
     std::cout<<"x: "<<x<<" / z: "<<z<<" - xx: "<<xx<<" / zz: "<<zz<<std::endl;
@@ -111,9 +113,12 @@ void Way::colorway(int x, int z){
 
 void Way::calcAngle(){
     std::vector<float> start;
-    start.push_back(World::way[0]+0.5);
+    /*start.push_back(World::way[0]+0.5);
     start.push_back(0);
-    start.push_back(World::way[1]+0.5);
+    start.push_back(World::way[1]+0.5);*/
+    start.push_back(waystuff.x+.5);
+    start.push_back(0);
+    start.push_back(waystuff.z+.5);
     //std::cout<<start[0]<<" / "<<start[2]<<std::endl;
 
     std::vector<float> goal;
@@ -127,8 +132,11 @@ void Way::calcAngle(){
     std::vector<float> d = Vector::direction(goal,start);
 
     angle = asin(d[0]/av) * (180/World::pi) * -1;
-    if((World::tile[3]-World::z)<World::way[1]+0.5) angle = 180 - angle;
-    if((World::tile[2]-World::x)<World::way[0]+0.5 && (World::tile[3]-World::z)>World::way[1]+0.5) angle = 360 + angle;
+    //if((World::tile[3]-World::z)<World::way[1]+0.5) angle = 180 - angle;
+    //if((World::tile[2]-World::x)<World::way[0]+0.5 && (World::tile[3]-World::z)>World::way[1]+0.5) angle = 360 + angle;
+    if((World::tile[3]-World::z)<waystuff.z+0.5) angle = 180 - angle;
+    if((World::tile[2]-World::x)<waystuff.x+0.5 && (World::tile[3]-World::z)>waystuff.z+0.5) angle = 360 + angle;
+
     std::cout<<"angle: "<<angle<<std::endl;
 }
 
