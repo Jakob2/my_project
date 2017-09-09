@@ -10,12 +10,15 @@ class Mouseray
 public:
     Mouseray();
     void calculateGLCoords(int x, int y);
+    std::vector<float> calculateGLCoordsTest(int x, int y);
     bool panelWorld(std::vector<float> in);
     void crossfade();
     bool checkIfOnTilemap(int x, int y);
-    bool hoverGui(int x, int y);
+    //bool hoverGui(int x, int y);
 
     void readPixelColor(int x, int y);
+
+    std::vector<float> testIntersection = {0,0,0};
 private:
     GLint viewport[4];// Where The Viewport Values Will Be Stored
     GLdouble modelview[16];// Where The 16 Doubles Of The Modelview Matrix Are To Be Stored
@@ -26,6 +29,7 @@ private:
     std::vector<float> e = {World::eyeX, World::eyeY, World::eyeZ};
     std::vector<float> p = {0,0,0};
     void intersect(std::vector<float> in);
+    std::vector<float> intersectTest(std::vector<float> in);
 
     int pickedId;
 };

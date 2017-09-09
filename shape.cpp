@@ -1,8 +1,8 @@
 #include "shape.h"
 
-Shape::Shape(){
+/*Shape::Shape(){
 
-}
+}*/
 
 void Shape::top(int i, int j, float x, float y, float z){
     glBegin(GL_POLYGON);//a,b,f,e TOP
@@ -50,11 +50,11 @@ void Shape::front(float depth, int i, int j, float x, float y, float z){
 }
 
 void Shape::flatCube(float depth, int i, int j, float x, float y, float z){
-    top(i,j, x,y,z);
-    left(depth, i,j, x,y,z);
-    back(depth, i,j, x,y,z);
-    right(depth, i,j, x,y,z);
-    front(depth, i,j, x,y,z);
+    Shape::top(i,j, x,y,z);
+    Shape::left(depth, i,j, x,y,z);
+    Shape::back(depth, i,j, x,y,z);
+    Shape::right(depth, i,j, x,y,z);
+    Shape::front(depth, i,j, x,y,z);
 }
 
 void Shape::corpus(std::vector<std::vector<std::vector<float>>> &construct, int i, float x, float y, float z, float xPos, float zPos){
@@ -65,7 +65,7 @@ void Shape::corpus(std::vector<std::vector<std::vector<float>>> &construct, int 
         glVertex3f(xPos+x+construct[i][3][0], y+construct[i][3][1], zPos+z+construct[i][3][2]);
 }
 
-void Shape::wireToken(std::vector<std::vector<std::vector<float>>> token, float clip, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles){
+/*void Shape::wireToken(std::vector<std::vector<std::vector<float>>> token, float clip, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles){
     //float clip = 0.5;
     for(int i=0; i<(int)token.size(); i++){
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -84,4 +84,4 @@ void Shape::wireToken(std::vector<std::vector<std::vector<float>>> token, float 
             glVertex3f(offX+clip+x+token[i][3][0], token[i][3][1], offZ+clip+z+token[i][3][2]);
         glEnd();
     }
-}
+}*/

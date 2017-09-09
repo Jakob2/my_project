@@ -6,7 +6,7 @@
 #include "db.h"
 #include "shape.h"
 
-class Construction : public Db, public Shape
+class Construction// : public Db//, private Shape
 {
 public:
     QString id();

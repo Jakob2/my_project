@@ -23,11 +23,11 @@ void Construction::selectConstructs(QString map){
     int index = 0;
     int range;
     QSqlQuery query;
-    if(query.exec("SELECT COUNT(*) FROM "+mapTable+" WHERE map="+map+"")) std::cout<<"construct range selected"<<std::endl;
+    if(query.exec("SELECT COUNT(*) FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"construct range selected"<<std::endl;
     else qDebug()<<"construct range error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) range = query.value(0).toInt();
     setConstruct(range);
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b FROM "+mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
     else qDebug()<<"select construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Construction::construct[index][0][0] = query.value(0).toFloat(); //ax
@@ -74,7 +74,7 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
     int range = 0;
     QString mid = id();
     QSqlQuery query;
-    query.exec("SELECT ax FROM "+constructsTable+" WHERE name="+name+"");
+    query.exec("SELECT ax FROM "+Db::constructsTable+" WHERE name="+name+"");
     while(query.next()){
         range++;
     }
@@ -83,7 +83,7 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
     for(int i=0; i<range; i++){
         test[i].resize(15);
     }
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
     else qDebug()<<"select name error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         for(int i=0; i<15; i++){
@@ -112,27 +112,27 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
         g = QString::number(test[i][13]);
         b = QString::number(test[i][14]);
 
-        if(query.exec("INSERT INTO "+mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"inserted"<<std::endl;
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"inserted"<<std::endl;
         else qDebug()<<"insert mappart error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
 
 void Construction::updateTilesOpen(QString x, QString z){
     QSqlQuery query;
-    if(query.exec("update tiles set open = 0 where x = "+x+" and z = "+z)) std::cout<<"tiles open updated"<<std::endl;
+    if(query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z)) std::cout<<"tiles open updated"<<std::endl;
     else qDebug()<<"update tiles open error"<<query.lastError()<<" / "<<query.lastQuery();
 }
 
 void Construction::deleteConstruct(QString id){
     QSqlQuery query;
-    if(query.exec("delete from map where id = "+id)) std::cout<<"construct deleted"<<std::endl;
+    if(query.exec("delete from "+Db::mapTable+" where id = "+id)) std::cout<<"construct deleted"<<std::endl;
     else qDebug()<<"delete construct error"<<query.lastError()<<" / "<<query.lastQuery();
 }
 
 QString Construction::id(){
     int id = 0;
     QSqlQuery query;
-    if(query.exec("SELECT MAX(id) FROM "+mapTable+"")) std::cout<<"max id selected"<<std::endl;
+    if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
     else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) id = query.value(0).toInt();
     return QString::number(id+1);
@@ -172,7 +172,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             glRotatef(turn,0,1,0);
             glTranslatef(-xPos-x,-y,-zPos-z);
             glColor3f(0,1,1);
-            corpus(construct, i, x,y,z, xPos, zPos);
+            Shape::corpus(construct, i, x,y,z, xPos, zPos);
             //setToken(i, construct);
         }else{
             glTranslatef(xPos+x,y,zPos+z);
@@ -182,7 +182,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::buildingOption = construct[i][5][0];
             else glColor3f(r,g,b);
             glColor3f(r,g,b);
-            corpus(construct, i, x,y,z, xPos, zPos);
+            Shape::corpus(construct, i, x,y,z, xPos, zPos);
         }
         glEnd();
         glPopMatrix();
@@ -205,13 +205,13 @@ void Construction::selectToken(QString constructId){
     int index = 0;
     int size = 0;
     QSqlQuery query;
-    if(query.exec("select count(ax) from "+constructsTable+" where name= "+constructId)) std::cout<<"distinct token parts selected"<<std::endl;
+    if(query.exec("select count(ax) from "+Db::constructsTable+" where name= "+constructId)) std::cout<<"distinct token parts selected"<<std::endl;
     else qDebug()<<"select distinct token parts error"<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         size = query.value(0).toInt();
     }
     initToken(size);
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+constructsTable+" WHERE name="+constructId+"")) std::cout<<"token selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name="+constructId+"")) std::cout<<"token selected"<<std::endl;
     else qDebug()<<"select token error"<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         token[index][0][0] = query.value(0).toFloat();
@@ -275,8 +275,8 @@ void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token,
 }
 
 void Construction::updateOpen(QString x, QString z, QString state){
-    std::cout<<"UPDATE OPEN X/Y "<<x.toStdString()<<"/"<<z.toStdString()<<std::endl;
+    //std::cout<<"UPDATE OPEN X/Y "<<x.toStdString()<<"/"<<z.toStdString()<<std::endl;
     QSqlQuery query;
-    if(query.exec("UPDATE "+tilesTable+" SET open = "+state+" WHERE x = "+x+" AND z ="+z)) std::cout<<"tiles open updated"<<std::endl;
+    if(query.exec("UPDATE "+Db::tilesTable+" SET open = "+state+" WHERE x = "+x+" AND z ="+z)) std::cout<<"tiles open updated"<<std::endl;
     else qDebug()<<"update tile open error: "<<query.lastError()<<" / "<<query.lastQuery();
 }

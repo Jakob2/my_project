@@ -6,14 +6,20 @@
 class Db
 {
 public:
-    Db();
+    //Db();
 
-    void connectDatabase();
-    QString database = "map";
-    QString mapTable = "map";
-    QString constructsTable = "polysd3";
-    QString tilesTable = "tiles";
-    QString iconsTable = "icon";
+    static void initDb();
+    static void connectDatabase();
+    /*static QString database = "map";
+    static QString mapTable = "map";
+    static QString constructsTable = "polysd3";
+    static QString tilesTable = "tiles";
+    static QString iconsTable = "icon";*/
+    static QString database;
+    static QString mapTable;
+    static QString constructsTable;
+    static QString tilesTable;
+    static QString iconsTable;
 };
 
 #endif // DB_H

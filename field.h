@@ -6,12 +6,12 @@
 #include "db.h"
 #include "shape.h"
 
-class Field : public Db, public Shape
+class Field// : public Db//, private Shape
 {
 public:
     Field();
 
-    void selectFieldSet();
+    //void selectFieldSet();
     void selectField(QString name);
     void insertFieldPart(QString map, QString name, std::vector<std::vector<std::vector<float>>> &field, int xLow, int xHigh, int zLow, int zHigh);
     void fieldarea(std::vector<std::vector<std::vector<float>>> &field, float xPos, float zPos);

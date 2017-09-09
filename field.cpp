@@ -22,7 +22,7 @@ void Field::setField(int size){
 }
 
 
-void Field::selectFieldSet(){
+/*void Field::selectFieldSet(){
     QSqlQuery query;
     Field::fieldSet.clear();
     if(query.exec("SELECT DISTINCT name FROM "+constructsTable+" WHERE field = 1")) std::cout<<"fieldset selected"<<std::endl;
@@ -30,21 +30,20 @@ void Field::selectFieldSet(){
     while(query.next()){
         Field::fieldSet.push_back(query.value(0).toInt());
     }
-}
+}*/
 
 void Field::selectField(QString name){
-    //Db::field.clear();
-    //setField();
+    Field::field.clear();
+    setField(1);
     int index, range;
     index = 0;
     QSqlQuery query;
-    if(query.exec("SELECT COUNT(*) FROM "+constructsTable+" WHERE name="+name+"")) std::cout<<"field range selected"<<std::endl;
+    if(query.exec("SELECT COUNT(*) FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"field range selected"<<std::endl;
     else qDebug()<<"field range error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) range = query.value(0).toInt();
     setField(range);
 
-
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+constructsTable+" WHERE name="+name+"")) std::cout<<"field selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"field selected"<<std::endl;
     else qDebug()<<"select field error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Field::field[index][0][0] = query.value(0).toFloat();
@@ -71,7 +70,7 @@ void Field::selectField(QString name){
 }
 
 void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<std::vector<float>>> &field, int xLow, int xHigh, int zLow, int zHigh){
-    if(World::areaX<World::tile[4] && World::areaZ<World::tile[5]){
+    if(World::areaX<World::tile[2] && World::areaZ<World::tile[3]){
         for(int x=xLow; x<=xHigh; x++){
             for(int z=zLow; z<=zHigh; z++){
                 if(fieldValidation(x, z)){
@@ -82,7 +81,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX>World::tile[4] && World::areaZ<World::tile[5]){
+    else if(World::areaX>World::tile[2] && World::areaZ<World::tile[3]){
         for(int x=xHigh; x<=xLow; x++){
            for(int z=zLow; z<=zHigh; z++){
                if(fieldValidation(x, z)){
@@ -93,7 +92,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX>World::tile[4] && World::areaZ>World::tile[5]){
+    else if(World::areaX>World::tile[2] && World::areaZ>World::tile[3]){
         for(int x=xHigh; x<=xLow; x++){
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
@@ -104,7 +103,7 @@ void Field::insertFieldPart(QString map, QString name, std::vector<std::vector<s
             }
         }
     }
-    else if(World::areaX<World::tile[4] && World::areaZ>World::tile[5]){
+    else if(World::areaX<World::tile[2] && (World::areaZ>World::tile[3])){
         for(int x=xLow; x<=xHigh; x++){
             for(int z=zHigh; z<=zLow; z++){
                 if(fieldValidation(x, z)){
@@ -127,13 +126,13 @@ void Field::fieldarea(std::vector<std::vector<std::vector<float>>> &field, float
     glPushMatrix();
     glColor3f(r,g,b);
     for(int f=0; f<(int)field.size(); f++){
-        if(World::tile[4] > World::areaX && World::tile[5] > World::areaZ)
+        if(World::tile[2] > World::areaX && World::tile[3] > World::areaZ)
             southarea(field, f, xPos,zPos);
-        else if(World::tile[4] < World::areaX && World::tile[5] > World::areaZ)
+        else if(World::tile[2] < World::areaX && World::tile[3] > World::areaZ)
             westarea(field, f, xPos,zPos);
-        else if(World::tile[4] > World::areaX && World::tile[5] < World::areaZ)
+        else if(World::tile[2] > World::areaX && World::tile[3] < World::areaZ)
             eastarea(field, f, xPos,zPos);
-        else if(World::tile[4] < World::areaX && World::tile[5] < World::areaZ)
+        else if(World::tile[2] < World::areaX && World::tile[3] < World::areaZ)
             northarea(field, f, xPos,zPos);
     }
     glPopMatrix();
@@ -141,13 +140,13 @@ void Field::fieldarea(std::vector<std::vector<std::vector<float>>> &field, float
 
 void Field::southarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[4]-xPos); i++){
+    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[5]-zPos); j++){
+        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
-            corpus(field,f, x,0,z, xPos,zPos);
+            Shape::corpus(field,f, x,0,z, xPos,zPos);
             glEnd();
         }
     }
@@ -155,13 +154,13 @@ void Field::southarea(std::vector<std::vector<std::vector<float>>> &field, int f
 
 void Field::westarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::tile[4]-xPos); i<ceil(World::areaX-xPos); i++){
+    for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[5]-zPos); j++){
+        for(int j=floor(World::areaZ-zPos); j<ceil(World::tile[3]-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
-            corpus(field,f, x,0,z, xPos,zPos);
+            Shape::corpus(field,f, x,0,z, xPos,zPos);
             glEnd();
         }
     }
@@ -169,13 +168,13 @@ void Field::westarea(std::vector<std::vector<std::vector<float>>> &field, int f,
 
 void Field::northarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::tile[4]-xPos); i<ceil(World::areaX-xPos); i++){
+    for(int i=floor(World::tile[2]-xPos); i<ceil(World::areaX-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::tile[5]-zPos); j<ceil(World::areaZ-zPos); j++){
+        for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
-            corpus(field,f, x,0,z, xPos,zPos);
+            Shape::corpus(field,f, x,0,z, xPos,zPos);
             glEnd();
         }
     }
@@ -183,13 +182,13 @@ void Field::northarea(std::vector<std::vector<std::vector<float>>> &field, int f
 
 void Field::eastarea(std::vector<std::vector<std::vector<float>>> &field, int f, float xPos, float zPos){
     float x, z;
-    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[4]-xPos); i++){
+    for(int i=floor(World::areaX-xPos); i<ceil(World::tile[2]-xPos); i++){
         x=i+0.5;
-        for(int j=floor(World::tile[5]-zPos); j<ceil(World::areaZ-zPos); j++){
+        for(int j=floor(World::tile[3]-zPos); j<ceil(World::areaZ-zPos); j++){
             z=j+0.5;
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             glLineWidth(2.0);
-            corpus(field,f, x,0,z, xPos,zPos);
+            Shape::corpus(field,f, x,0,z, xPos,zPos);
             glEnd();
         }
     }
@@ -221,16 +220,16 @@ void Field::fieldSQL(QString map, QString name, std::vector<std::vector<std::vec
         b = QString::number(field[index][4][2]);
 
         //cout<<"x: "<<x<<" / z: "<<z<<endl;
-        query.exec("INSERT INTO "+mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )");
-        //if(query.exec("INSERT INTO "+mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) cout<<"field inserted"<<endl;
-        //else qDebug()<<"insert field error: "<<query.lastError()<<" / "<<query.lastQuery();
+        //query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )");
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"field inserted"<<std::endl;
+        else qDebug()<<"insert field error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
 
 int Field::fieldValidation(int x, int z){
     int open = 1;
     QSqlQuery query;
-    if(query.exec("SELECT open FROM "+tilesTable+" WHERE x="+QString::number(x-1)+" AND z="+QString::number(z-1)+"")) std::cout<<"field open selected"<<std::endl;
+    if(query.exec("SELECT open FROM "+Db::tilesTable+" WHERE x="+QString::number(x-1)+" AND z="+QString::number(z-1)+"")) std::cout<<"field open selected"<<std::endl;
     else qDebug()<<"select field open error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
        if(!query.value(0).toInt()) open = 0;
@@ -243,7 +242,7 @@ int Field::fieldValidation(int x, int z){
 QString Field::id(){
     int id = 0;
     QSqlQuery query;
-    if(query.exec("SELECT MAX(id) FROM "+mapTable+"")) std::cout<<"max id selected"<<std::endl;
+    if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
     else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) id = query.value(0).toInt();
     return QString::number(id+1);

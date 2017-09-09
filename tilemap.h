@@ -3,11 +3,12 @@
 
 #include "general.h"
 #include "world.h"
-//#include "db.h"
+#include "db.h"
 //#include "shape.h"
 #include "construction.h"
+#include "field.h"
 
-class Tilemap : public Construction //public Db, public Shape,
+class Tilemap : public Construction, public Field //public Db, public Shape,
 {
 public:
     Tilemap();

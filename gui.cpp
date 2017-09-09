@@ -366,4 +366,60 @@ void Gui::calcCameraMoveUnits(){
     //cout<<"x: "<<x<<", z: "<<z<<endl;
 }
 
+bool Gui::hoverGui(int x, int y){
+    switch(World::pickedColor){
+    case 1703936:
+        World::hoverBuilding = 0;
+        return true;
+        break;
+    case 3342336:
+        World::hoverBuilding = 1;
+        return true;
+        break;
+    case 19456:
+        World::hoverBuilding = 2;
+        return true;
+        break;
+    case 26112:
+        World::hoverBuilding = 3;
+        return true;
+        break;
+    case 128:
+        World::hoverBuilding = 4;
+        //World::pullField = true;
+        //World::field[0] = true;
+        return true;
+        break;
+    case 153:
+        World::hoverBuilding = 5;
+        return true;
+        break;
+    case 255:
+        World::hoverCompass = 1;
+        return true;
+        break;
+    case 65280:
+        World::hoverZoom = 0;
+        return true;
+        break;
+    case 16711680:
+        World::hoverZoom = 1;
+        return true;
+        break;
+    case 32896:
+        //std::cout<<"HOVERCOLOR"<<std::endl;
+        return true;
+        break;
+    default:
+        World::hoverBuilding = -1;
+        World::buildingOption = -1;
+        World::hoverZoom = -1;
+        World::hoverCompass = -1;
+        //World::pullField = false;
+        //World::field[0] = false;
+        return false;
+        break;
+    }
+    //std::cout<<"BUILDING OPTION ID: "<<World::buildingOption<<" / "<<World::hoverBuilding<<std::endl;
+}
 

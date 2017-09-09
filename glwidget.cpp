@@ -10,6 +10,7 @@ void GlWidget::initializeGL(){
     glClearColor(0.5, 0.5, 0.5, 1);
     glEnable(GL_DEPTH_TEST);
     setMouseTracking(true);
+    //Db::initDb();
 }
 
 void GlWidget::paintGL(){
@@ -31,6 +32,9 @@ void GlWidget::paintGL(){
     if(World::token){
         wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
     }
+    if(World::field[1]){
+        fieldarea(Field::field, World::x,World::z);
+    }
 
     /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     ddd();
@@ -46,7 +50,7 @@ void GlWidget::resizeGL(int w, int h){
 }
 
 void GlWidget::ddd(){
-    glViewport(0, 0, World::width, World::height);
+    glViewport(0,0, World::width,World::height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0, (float)World::width/World::height, 0.01, 100.0);
@@ -54,7 +58,7 @@ void GlWidget::ddd(){
 }
 
 void GlWidget::dd(){
-    glViewport(0, 0, World::width, World::height);
+    glViewport(0,0, World::width,World::height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0,1,0,1);
@@ -65,6 +69,15 @@ void GlWidget::setIntersection(int mouseX, int mouseY){
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
     calculateGLCoords(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
+    glClear(GL_DEPTH_BUFFER_BIT);
+    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    std::vector<float> out;
+    out = calculateGLCoordsTest(mouseX,mouseY);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    return out;
 }
 
 bool GlWidget::onTilemap(int mouseX, int mouseY){
@@ -115,6 +128,7 @@ void GlWidget::crackHouse(){
     updateOpen(QString::number(World::tile[4]), QString::number(World::tile[5]), QString::number(1));
     selectMapTiles();
     World::token = false;
+    std::cout<<"CRACK ID: "<<World::buildingOption<<std::endl;
 }
 
 void GlWidget::keyPressEvent(QKeyEvent *event){
@@ -136,7 +150,11 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::x -= camMoveUnit[1];
         World::z -= camMoveUnit[0];
         break;
+    case Qt::Key_Escape:
+        World::constructId = -1;
+        break;
     }
+    std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
     paintGL();
 }
 
@@ -148,9 +166,47 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(World::hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
     if(World::hoverZoom == 0 || World::hoverZoom == 1) zoom();
+    //plant a field
+    if(onMenu(pressWinX) && World::hoverBuilding == 4){
+        selectField(QString::number(6));
+        World::field[0] ? World::field[0] = false : World::field[0] = true;
+        World::field[1] = false;
+        World::field[2] = true;
+        if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
+        else std::cout<<"END THE FIELD 0"<<std::endl;
+    }
+    if(onTilemap(pressWinX,pressWinY)){
+        if(World::field[0]){
+
+            World::field[1] ? World::field[1] = false : World::field[1] = true;
+
+            if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
+            else std::cout<<"END THE FIELD 1"<<std::endl;
+
+            if(World::field[2]){
+                testIntersection = setIntersectionTest(pressWinX,pressWinY);
+                World::areaX = testIntersection[0];
+                World::areaZ = testIntersection[2];
+            }
+            World::field[2] = false;
+
+            if(!World::field[1]){
+                std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
+                //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+                insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
+                //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
+                selectConstructs(QString::number(World::map));
+                selectMapTiles();
+                World::field[1] = false;
+                World::field[2] = true;
+            }
+        }
+    }
+
+    //build a house
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace) buildAHouse();
+    //if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && !World::field[0]) buildAHouse();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -167,4 +223,9 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
             setIntersection(moveWinX,moveWinY);
         }
     }
+    /*if(World::field[1]){
+        if(onTilemap(moveWinX,moveWinY)){
+            setIntersection(moveWinX,moveWinY);
+        }
+    }*/
 }

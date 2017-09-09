@@ -21,7 +21,7 @@ void Tilemap::selectMapTiles(){
     setMapTiles();
     int x, z, color, open, traverse;
     QSqlQuery query;
-    if(query.exec("SELECT x, z, color, open, traverse FROM "+tilesTable+"")) std::cout<<"tiles selected"<<std::endl;
+    if(query.exec("SELECT x, z, color, open, traverse FROM "+Db::tilesTable+"")) std::cout<<"tiles selected"<<std::endl;
     else qDebug()<<"select tiles error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         x = query.value(0).toInt();
@@ -46,11 +46,11 @@ void Tilemap::ground(float x, float z, std::vector<std::vector<std::vector<int>>
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 selectionColor(i,j, ii, jj, mapTiles[i][j][0]);
                 y = sink(mapTiles[i][j][0]);
-                    flatCube(0.5, i,j, x,y,z);
+                    Shape::flatCube(0.5, i,j, x,y,z);
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                 glLineWidth(2.0);
                 glColor3f(0,0,0);
-                    flatCube(0.5, i,j, x,y,z);
+                    Shape::flatCube(0.5, i,j, x,y,z);
         }
     }
     glPopMatrix();
@@ -64,7 +64,7 @@ void Tilemap::unsunkenGround(float x, float z, std::vector<std::vector<std::vect
         for(float j=0; j<World::range; j++){
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glColor3f(0,0,0);
-            top(i,j,x,y,z);
+            Shape::top(i,j,x,y,z);
         }
     }
     glPopMatrix();

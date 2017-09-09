@@ -26,13 +26,15 @@ int World::map;
 bool World::moveConstruct;
 int World::constructId;
 bool World::token;
+int World::pickedColor;
+std::vector<bool> World::field;
 
 World::World(){
     //World::width = 701;
     //World::height = 381;
     World::width = 800;
     World::height = 600;
-    World::zoom = 0.2;
+    World::zoom = 0.1;
     World::eyeX = 1;
     World::eyeY = 1;
     World::eyeZ = 1;
@@ -53,5 +55,10 @@ World::World(){
     World::moveConstruct = false;
     World::constructId = -1;
     World::token = false;
+    //World::pullField = false;
+    World::field.resize(3);
+    World::field[0] = false;
+    World::field[1] = false;
+    World::field[2] = false;
 }
 

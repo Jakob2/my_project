@@ -34,6 +34,9 @@ public:
     static bool moveConstruct;
     static int constructId;
     static bool token;
+    static int pickedColor;
+    //static bool pullField;
+    static std::vector<bool> field;
 };
 
 #endif // WORLD_H
