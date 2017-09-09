@@ -61,6 +61,6 @@ World::World(){
     World::field[0] = false;
     World::field[1] = false;
     World::field[2] = false;
-    World::way = {0,0};
+    World::way = {0,0,0,0,0};
 }
 

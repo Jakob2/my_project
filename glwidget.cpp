@@ -35,6 +35,12 @@ void GlWidget::paintGL(){
     if(World::field[1]){
         fieldarea(Field::field, World::x,World::z);
     }
+    if(World::way[3]){
+       //fixedWayPos();
+       if(World::tile[4]+1>=0 && World::tile[4]+1<World::range && World::tile[5]+1>=0 && World::tile[5]+1<World::range){
+           drawWay(Way::way, Tilemap::mapTiles);
+       }
+    }
 
     /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     ddd();
@@ -206,10 +212,44 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //plant a field
     if(onMenu(pressWinX) && World::hoverBuilding == 4) activateField();
     if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 6) plantField();
+    //build a way
+    if(onMenu(pressWinX) && World::hoverBuilding == 3){
+        selectWay();
+        World::way[2] ? World::way[2] = 0 : World::way[2] = 1;
+        World::way[3] = false;
+        World::way[4] = true;
+        if(World::way[2]) std::cout<<"START THE WAY 2(activate)"<<std::endl;
+        else std::cout<<"END THE WAY 2(activate)"<<std::endl;
+    }
+    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 7){
+        if(World::way[2]){
+
+            World::way[3] ? World::way[3] = 0 : World::way[3] = 1;
+
+            if(World::way[3]) std::cout<<"START THE WAY 3"<<std::endl;
+            else std::cout<<"END THE WAY 3"<<std::endl;
+
+            if(World::way[4]){
+                testIntersection = setIntersectionTest(pressWinX,pressWinY);
+                World::way[0] = testIntersection[0];
+                World::way[1] = testIntersection[2];
+            }
+            World::way[4] = false;
+
+            if(!World::way[3]){
+                std::cout<<"BUILD THE DAMN WAY"<<std::endl;
+                /*insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+                selectConstructs(QString::number(World::map));
+                selectMapTiles();*/
+                World::way[3] = false;
+                World::way[4] = true;
+            }
+        }
+    }
     //build a house
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && World::buildingOption != 6) buildAHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && World::buildingOption != 6 && World::buildingOption != 7) buildAHouse();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

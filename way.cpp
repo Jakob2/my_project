@@ -3,7 +3,7 @@
 std::vector<std::vector<std::vector<float>>> Way::way;
 
 Way::Way(){
-
+    setWay(2);
 }
 
 void Way::setWay(int size){
@@ -87,8 +87,8 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     int x, z, xx, zz;
     x = World::way[0];
     z = World::way[1];
-    xx = World::tile[4];
-    zz = World::tile[5];
+    xx = ceil(World::tile[2]);
+    zz = ceil(World::tile[3]);
     std::cout<<"x: "<<x<<" / z: "<<z<<" - xx: "<<xx<<" / zz: "<<zz<<std::endl;
     calcAngle();
     if(xx>=x && zz>=z) waySouth(way,mapTiles,x,z,xx,zz);
@@ -117,9 +117,9 @@ void Way::calcAngle(){
     //std::cout<<start[0]<<" / "<<start[2]<<std::endl;
 
     std::vector<float> goal;
-    goal.push_back(World::tile[4]);
+    goal.push_back(World::tile[2]-World::x);
     goal.push_back(0);
-    goal.push_back(World::tile[5]);
+    goal.push_back(World::tile[3]-World::z);
 
     float av;
     av = Vector::absolute(Vector::direction(goal, start));
