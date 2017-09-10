@@ -16,62 +16,32 @@ void GlWidget::initializeGL(){
 void GlWidget::paintGL(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     resizeGL(0,0);
-
-
     dd();
     drawMenu();
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //uniqueColoredOptions();
-
-    //glClear(GL_DEPTH_BUFFER_BIT);
     ddd();
-    //glScalef(World::zoom, World::zoom, World::zoom);
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::x, World::z);
-    //if(World::tile[4]>=0 && World::tile[4]<World::range && World::tile[5]>0 && World::tile[5]<World::range){
-        if(World::token){ // && onTilemap(moveWinX,moveWinY)
-            wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
-        }
-        //if(World::field[1]){
-        if(fieldstuff.build){
-            fieldarea(Field::field, World::x,World::z);
-        }
-        //if(World::way[3]){
-        if(waystuff.build){
-            drawWay(Way::way, Tilemap::mapTiles);
-        }
-    //}
-
-    /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    ddd();
-    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
-    dd();
-    uniqueColoredOptions();*/
-
+    if(World::token) wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
+    if(fieldstuff.build) fieldarea(Field::field, World::x,World::z);
+    if(waystuff.build) drawWay(Way::way, Tilemap::mapTiles);
 }
 
 void GlWidget::resizeGL(int w, int h){
-    /*World::height = GlWidget::height();
-    World::width = GlWidget::width();*/
     World::view.height = GlWidget::height();
     World::view.width = GlWidget::width();
 }
 
 void GlWidget::ddd(){
-    //glViewport(0,0, World::width,World::height);
     glViewport(0,0, World::view.width,World::view.height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    //gluPerspective(60.0, (float)World::width/World::height, 0.01, 100.0);
     gluPerspective(60.0, (float)World::view.width/World::view.height, 0.01, 100.0);
-    //gluLookAt(World::eyeX,World::eyeY,World::eyeZ, 0,0,0, 0,1,0);
     gluLookAt(World::view.eyeX,World::view.eyeY,World::view.eyeZ, 0,0,0, 0,1,0);
 }
 
 void GlWidget::dd(){
-    //glViewport(0,0, World::width,World::height);
     glViewport(0,0, World::view.width,World::view.height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -91,7 +61,6 @@ std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
     std::vector<float> out;
     out = calculateGLCoordsTest(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
-    //paintGL();
     return out;
 }
 
@@ -102,14 +71,8 @@ bool GlWidget::onTilemap(int mouseX, int mouseY){
     uniqueColoredCompass();
     uniqueColoredZoom();
     ddd();
-    //glScalef(World::zoom, World::zoom, World::zoom);
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
-    /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    dd();
-    uniqueColoredOptions();
-    ddd();
-    unsunkenGround(World::x, World::z, Tilemap::mapTiles);*/
     return checkIfOnTilemap(mouseX, mouseY);
 }
 
@@ -122,7 +85,6 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     uniqueColoredCompass();
     readPixelColor(x,y);
     hoverGui(x,y);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void GlWidget::createToken(QMouseEvent *event){

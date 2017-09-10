@@ -13,7 +13,6 @@ void Mouseray::calculateGLCoords(int x, int y){
     winY = (float)viewport[3] - (float)y;
     glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
-    //e = {World::eyeX, World::eyeY, World::eyeZ};
     e = {World::view.eyeX, World::view.eyeY, World::view.eyeZ};
     p = {(float)posX, (float)posY, (float)posZ};
     intersect(Vector::direction(e,p));
@@ -27,7 +26,6 @@ std::vector<float> Mouseray::calculateGLCoordsTest(int x, int y){
     winY = (float)viewport[3] - (float)y;
     glReadPixels(x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
     gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
-    //e = {World::eyeX, World::eyeY, World::eyeZ};
     e = {World::view.eyeX, World::view.eyeY, World::view.eyeZ};
     p = {(float)posX, (float)posY, (float)posZ};
     return intersectTest(Vector::direction(e,p));
@@ -38,17 +36,11 @@ void Mouseray::intersect(std::vector<float> in){
     x = in[0];
     y = in[1];
     z = in[2];
-    /*r = ((-World::eyeY*x) + (y*World::eyeX)) / y;
-    t = (World::eyeX-r) / -x;
-    xx = World::eyeX + (t * x);
-    yy = World::eyeY + (t * y);
-    zz = World::eyeZ + (t * z);*/
     r = ((-World::view.eyeY*x) + (y*World::view.eyeX)) / y;
     t = (World::view.eyeX-r) / -x;
     xx = World::view.eyeX + (t * x);
     yy = World::view.eyeY + (t * y);
     zz = World::view.eyeZ + (t * z);
-
 
     float txx, tzz;
     txx = floor(xx-World::x);
@@ -57,7 +49,6 @@ void Mouseray::intersect(std::vector<float> in){
     if(txx > 9) txx = 9;
     if(tzz < 0) tzz = 0;
     if(tzz > 9) tzz = 9;
-    //World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz,(float)floor(xx-World::x),(float)floor(zz-World::z)};
     World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz,txx,tzz};
 
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
@@ -69,18 +60,11 @@ std::vector<float> Mouseray::intersectTest(std::vector<float> in){
     x = in[0];
     y = in[1];
     z = in[2];
-    /*r = ((-World::eyeY*x) + (y*World::eyeX)) / y;
-    t = (World::eyeX-r) / -x;
-    xx = World::eyeX + (t * x);
-    yy = World::eyeY + (t * y);
-    zz = World::eyeZ + (t * z);*/
     r = ((-World::view.eyeY*x) + (y*World::view.eyeX)) / y;
     t = (World::view.eyeX-r) / -x;
     xx = World::view.eyeX + (t * x);
     yy = World::view.eyeY + (t * y);
     zz = World::view.eyeZ + (t * z);
-
-
     //return {(float)floor(xx-World::x),yy,(float)floor(zz-World::z)};
     std::vector<float> out = {xx,yy,zz};
     return out;
@@ -116,66 +100,12 @@ bool Mouseray::checkIfOnTilemap(int x, int y){
     }
 }
 
-/*bool Mouseray::hoverGui(int x, int y){
-    switch(pickedId){
-    case 1703936:
-        World::hoverBuilding = 0;
-        return true;
-        break;
-    case 3342336:
-        World::hoverBuilding = 1;
-        return true;
-        break;
-    case 19456:
-        World::hoverBuilding = 2;
-        return true;
-        break;
-    case 26112:
-        World::hoverBuilding = 3;
-        return true;
-        break;
-    case 128:
-        World::hoverBuilding = 4;
-        return true;
-        break;
-    case 153:
-        World::hoverBuilding = 5;
-        return true;
-        break;
-    case 255:
-        World::hoverCompass = 1;
-        return true;
-        break;
-    case 65280:
-        World::hoverZoom = 0;
-        return true;
-        break;
-    case 16711680:
-        World::hoverZoom = 1;
-        return true;
-        break;
-    case 32896:
-        //std::cout<<"HOVERCOLOR"<<std::endl;
-        return true;
-        break;
-    default:
-        World::hoverBuilding = -1;
-        World::hoverZoom = -1;
-        World::hoverCompass = -1;
-        return false;
-        break;
-    }
-    //std::cout<<"BUILDING OPTION ID: "<<World::buildingOption<<" / "<<World::hoverBuilding<<std::endl;
-}*/
-
 void Mouseray::readPixelColor(int x, int y){
     //glFlush();
     //glFinish();
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     unsigned char pixelcolor[3];
-    //glReadPixels(x,World::height-y, 1,1, GL_RGB,GL_UNSIGNED_BYTE, pixelcolor);
     glReadPixels(x,World::view.height-y, 1,1, GL_RGB,GL_UNSIGNED_BYTE, pixelcolor);
-    //std::cout<<pixelcolor[0]<<"-"<<pixelcolor[1]<<"-"<<pixelcolor[2]<<"-"<<pixelcolor[3]<<"-"<<std::endl;
     pickedId = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
     World::pickedColor = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
     //std::cout<<"PIXELID: "<<pickedId<<std::endl;
