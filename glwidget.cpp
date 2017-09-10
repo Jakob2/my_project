@@ -144,47 +144,25 @@ void GlWidget::crackHouse(){
 
 void GlWidget::activateField(){
     selectField(QString::number(6));
-    /*World::field[0] ? World::field[0] = false : World::field[0] = true;
-    World::field[1] = false;
-    World::field[2] = true;
-    if(World::field[0]) std::cout<<"START THE FIELD 0"<<std::endl;
-    else std::cout<<"END THE FIELD 0"<<std::endl;*/
     fieldstuff.activate ? fieldstuff.activate = false : fieldstuff.activate = true;
     fieldstuff.build = false;
     fieldstuff.init = true;
 }
 
 void GlWidget::plantField(){
-    //if(World::field[0]){
     if(fieldstuff.activate){
-        //World::field[1] ? World::field[1] = false : World::field[1] = true;
         fieldstuff.build ? fieldstuff.build = false : fieldstuff.build = true;
-
-        //if(World::field[1]) std::cout<<"START THE FIELD 1"<<std::endl;
-        //else std::cout<<"END THE FIELD 1"<<std::endl;
-
-        //if(World::field[2]){
         if(fieldstuff.init){
             testIntersection = setIntersectionTest(pressWinX,pressWinY);
-            //World::areaX = testIntersection[0];
-            //World::areaZ = testIntersection[2];
             fieldstuff.areaX = testIntersection[0];
             fieldstuff.areaZ  = testIntersection[2];
         }
-        //World::field[2] = false;
         fieldstuff.init = false;
-
-        //if(!World::field[1]){
         if(!fieldstuff.build){
-            std::cout<<"PLANT THE DAMN FIELD"<<std::endl;
-            //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX-World::x),ceil(World::tile[2]-World::x), ceil(World::areaZ-World::z),ceil(World::tile[3]-World::z));
+            std::cout<<"PLANT THE FIELD"<<std::endl;
             insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(fieldstuff.areaX-World::x),ceil(World::tile[2]-World::x), ceil(fieldstuff.areaZ-World::z),ceil(World::tile[3]-World::z));
-            //insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(World::areaX),ceil(World::tile[2]), ceil(World::areaZ),ceil(World::tile[3]));
-            //std::cout<<"AREAX: "<<floor(World::areaX)<<" - AREAZ: "<<floor(World::areaZ)<<" // TILEX: "<<ceil(World::tile[2])<<" - TILEZ: "<<ceil(World::tile[3])<<std::endl;
             selectConstructs(QString::number(World::map));
             selectMapTiles();
-            //World::field[1] = false;
-            //World::field[2] = true;
             fieldstuff.init = true;
         }
     }
@@ -240,40 +218,30 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //build a way
     if(onMenu(pressWinX) && World::hoverBuilding == 3){
         selectWay();
-        /*World::way[2] ? World::way[2] = 0 : World::way[2] = 1;
-        World::way[3] = false;
-        World::way[4] = true;*/
         waystuff.active ? waystuff.active = false : waystuff.active = true;
         waystuff.build = false;
         waystuff.init = true;
-        /*if(World::way[2]) std::cout<<"START THE WAY 2(activate)"<<std::endl;
-        else std::cout<<"END THE WAY 2(activate)"<<std::endl;*/
     }
     if(onTilemap(moveWinX,moveWinY) && World::buildingOption == 7){
-        //if(World::way[2]){
         if(waystuff.active){
-            //World::way[3] ? World::way[3] = 0 : World::way[3] = 1;
             waystuff.build ? waystuff.build = false : waystuff.build = true;
-
-            /*if(World::way[3]) std::cout<<"START THE WAY 3"<<std::endl;
-            else std::cout<<"END THE WAY 3"<<std::endl;*/
-
-            //if(World::way[4] && onTilemap(moveWinX,moveWinY)){
             if(waystuff.init && onTilemap(moveWinX,moveWinY)){
                 testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                /*World::way[0] = ceil(testIntersection[0]-World::x);
-                World::way[1] = ceil(testIntersection[2]-World::z);*/
                 waystuff.x = ceil(testIntersection[0]-World::x)-1;
                 waystuff.z = ceil(testIntersection[2]-World::z)-1;
             }
-            //World::way[4] = false;
             waystuff.init = false;
-
-            //if(!World::way[3]){
             if(!waystuff.build){
-                std::cout<<"BUILD THE DAMN WAY"<<std::endl;
-                /*World::way[3] = false;
-                World::way[4] = true;*/
+                std::cout<<"BUILD THE WAY"<<std::endl;
+                for(auto i : waystuff.spanZ) std::cout<<"way x: "<<i.toStdString()<<std::endl;
+                for(int x=0; x<(int)waystuff.spanX.size(); x++){
+                    insertWay(QString::number(World::map), Way::way, waystuff.spanX[x],waystuff.baseZ, QString::number(90));
+                }
+                for(int z=0; z<(int)waystuff.spanZ.size(); z++){
+                    insertWay(QString::number(World::map), Way::way, waystuff.baseX, waystuff.spanZ[z], QString::number(0));
+                }
+                selectConstructs(QString::number(World::map));
+                selectMapTiles();
                 waystuff.init = true;
             }
         }

@@ -17,10 +17,15 @@ public:
         bool active = false;
         bool build = false;
         bool init = true;
+        QString baseX = 0;
+        QString baseZ = 0;
+        std::vector<QString> spanX;
+        std::vector<QString> spanZ;
     }waystuff;
 
     void selectWay();
-    void insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z);
+    void insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z, QString turn);
+    //void insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString xz);
 
     void drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles);
     void calcAngle();

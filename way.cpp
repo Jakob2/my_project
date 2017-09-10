@@ -51,7 +51,8 @@ void Way::selectWay(){
     std::cout<<"WAY COLOR: "<<Way::way[1][4][0]<<std::endl;
 }
 
-void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z){
+void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z, QString turn){
+//void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString xz){
     QSqlQuery query;
     QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
     mid = id();
@@ -79,7 +80,7 @@ void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &w
       //  }
     /*}*/
 
-    if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"way inserted"<<std::endl;
+    if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+" )")) std::cout<<"way inserted"<<std::endl;
     else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
 }
 
@@ -155,21 +156,24 @@ void Way::waySouth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
         for(int i=x; i<=xx; i++){
            //colorway(i, zz-1);
            drawStraight(way,mapTiles,i,zz+1,90,1);
-           //setWaySpanX(zz,x,xx);
+           setWaySpanX(zz+1,x+1,xx+1);
         }
         for(int j=z; j<=zz; j++){
            //colorway(x, j);
            drawStraight(way,mapTiles,x,j,0,0);
+           setWaySpanZ(x+1,z+1,zz+1);
         }
     }
     else if(angle>45 && angle<90){
         for(int i=x; i<=xx; i++){
            //colorway(i, z);
            drawStraight(way,mapTiles,i,z+1,90,1);
+           setWaySpanX(z+1,x+1,xx+1);
         }
         for(int j=z; j<=zz; j++){
            //colorway(xx-1, j);
            drawStraight(way,mapTiles,xx,j,0,0);
+           setWaySpanZ(xx+1,z+1,zz+1);
         }
     }
 }
@@ -296,16 +300,18 @@ void Way::drawStraight(std::vector<std::vector<std::vector<float>>> &way, std::v
 }*/
 
 void Way::setWaySpanX(int bZ, int sX, int sXX){
-    baseZ = bZ;
-    for(int i=sX; i<sXX; i++){
-        spanX.push_back(i);
+    waystuff.spanX.clear();
+    waystuff.baseZ = QString::number(bZ);
+    for(int i=sX; i<=sXX; i++){
+        waystuff.spanX.push_back(QString::number(i));
     }
 }
 
 void Way::setWaySpanZ(int bX, int sZ, int sZZ){
-    baseX = bX;
-    for(int i=sZ; i<sZZ; i++){
-        spanZ.push_back(i);
+    waystuff.spanZ.clear();
+    waystuff.baseX = QString::number(bX);
+    for(int i=sZ; i<=sZZ; i++){
+        waystuff.spanZ.push_back(QString::number(i));
     }
 }
 
