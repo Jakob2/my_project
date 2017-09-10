@@ -38,6 +38,9 @@ public:
     //static bool pullField;
     //static std::vector<bool> field;
     //static std::vector<float> way;
+    static struct structTest{
+        int test;
+    }muh;
 };
 
 #endif // WORLD_H

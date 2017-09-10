@@ -23,7 +23,7 @@ void Way::selectWay(){
     QSqlQuery query;
     int index;
     index = 0;
-    setWay(2);
+    setWay(6);
     if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name = 7")) std::cout<<"way selected"<<std::endl;
     else qDebug()<<"select way error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
@@ -56,32 +56,33 @@ void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &w
     QSqlQuery query;
     QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
     mid = id();
-    //for(int x=0; x<(int)Db::way.size(); x++){
-        /*for(int z=0; z<(int)Db::way[x].size(); z++){*/
-            ax = QString::number(way[1][0][0]);
-            ay = QString::number(way[1][0][1]);
-            az = QString::number(way[1][0][2]);
+    for(int i=0; i<(int)Way::way.size(); i++){
+        //for(int zz=0; zz<(int)Way::way[x].size(); zz++){
+            //ax = QString::number(way[1][0][0]);
+            ax = QString::number(way[i][0][0]);
+            ay = QString::number(way[i][0][1]);
+            az = QString::number(way[i][0][2]);
 
-            bx = QString::number(way[1][1][0]);
-            by = QString::number(way[1][1][1]);
-            bz = QString::number(way[1][1][2]);
+            bx = QString::number(way[i][1][0]);
+            by = QString::number(way[i][1][1]);
+            bz = QString::number(way[i][1][2]);
 
-            cx = QString::number(way[1][2][0]);
-            cy = QString::number(way[1][2][1]);
-            cz = QString::number(way[1][2][2]);
+            cx = QString::number(way[i][2][0]);
+            cy = QString::number(way[i][2][1]);
+            cz = QString::number(way[i][2][2]);
 
-            dx = QString::number(way[1][3][0]);
-            dy = QString::number(way[1][3][1]);
-            dz = QString::number(way[1][3][2]);
+            dx = QString::number(way[i][3][0]);
+            dy = QString::number(way[i][3][1]);
+            dz = QString::number(way[i][3][2]);
 
-            r = QString::number(way[1][4][0]);
-            g = QString::number(way[1][4][1]);
-            b = QString::number(way[1][4][2]);
-      //  }
-    /*}*/
+            r = QString::number(way[i][4][0]);
+            g = QString::number(way[i][4][1]);
+            b = QString::number(way[i][4][2]);
 
-    if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+" )")) std::cout<<"way inserted"<<std::endl;
-    else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
+            if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+" )")) std::cout<<"way inserted"<<std::endl;
+            else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
+        //}
+    }
 }
 
 void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles){
@@ -109,7 +110,7 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     //straightWay(way,mapTiles,x,z,xx,zz);
 }
 
-void Way::colorway(int x, int z){
+/*void Way::colorway(int x, int z){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBegin(GL_POLYGON);
     glColor3f(0.5,0.1,0.2);
@@ -119,7 +120,7 @@ void Way::colorway(int x, int z){
         glVertex3f(World::x+x+0,0.01,World::z+z+1);
         glEnd();
     //cout<<"OFF_X: "<<X<<endl;
-}
+}*/
 
 void Way::calcAngle(){
     std::vector<float> start;
