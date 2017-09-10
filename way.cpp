@@ -91,6 +91,14 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     z = waystuff.z;
     xx = floor(World::tile[2]-World::x);
     zz = floor(World::tile[3]-World::z);
+    if(x < 0) x = 0;
+    if(x > 9) x = 9;
+    if(xx < 0) xx = 0;
+    if(xx > 9) xx = 9;
+    if(z < 0) z = 0;
+    if(z > 9) z = 9;
+    if(zz < 0) zz = 0;
+    if(zz > 9) zz = 9;
     std::cout<<"x: "<<x<<" - xx: "<<xx<<" / z: "<<z<<" - zz: "<<zz<<std::endl;
     calcAngle();
     if(xx>=x && zz>=z) waySouth(way,mapTiles,x,z,xx,zz);

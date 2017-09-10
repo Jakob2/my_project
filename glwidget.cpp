@@ -29,7 +29,7 @@ void GlWidget::paintGL(){
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::x, World::z);
-    if(World::tile[4]>0 && World::tile[4]<World::range && World::tile[5]>0 && World::tile[5]<World::range){
+    //if(World::tile[4]>=0 && World::tile[4]<World::range && World::tile[5]>0 && World::tile[5]<World::range){
         if(World::token){ // && onTilemap(moveWinX,moveWinY)
             wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
         }
@@ -41,7 +41,7 @@ void GlWidget::paintGL(){
         if(waystuff.build){
             drawWay(Way::way, Tilemap::mapTiles);
         }
-    }
+    //}
 
     /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     ddd();
