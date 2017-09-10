@@ -26,7 +26,8 @@ private:
     std::vector<int> mouse;// Stores The X And Y Coords For The Current Mouse Position
     GLfloat winX, winY, winZ;// Holds Our X, Y and Z Coordinates
     GLdouble posX, posY, posZ;
-    std::vector<float> e = {World::eyeX, World::eyeY, World::eyeZ};
+    //std::vector<float> e = {World::eyeX, World::eyeY, World::eyeZ};
+    std::vector<float> e = {World::view.eyeX, World::view.eyeY, World::view.eyeZ};
     std::vector<float> p = {0,0,0};
     void intersect(std::vector<float> in);
     std::vector<float> intersectTest(std::vector<float> in);

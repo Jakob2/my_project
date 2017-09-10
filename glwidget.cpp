@@ -25,7 +25,8 @@ void GlWidget::paintGL(){
 
     //glClear(GL_DEPTH_BUFFER_BIT);
     ddd();
-    glScalef(World::zoom, World::zoom, World::zoom);
+    //glScalef(World::zoom, World::zoom, World::zoom);
+    glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     ground(World::x, World::z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::x, World::z);
@@ -52,20 +53,26 @@ void GlWidget::paintGL(){
 }
 
 void GlWidget::resizeGL(int w, int h){
-    World::height = GlWidget::height();
-    World::width = GlWidget::width();
+    /*World::height = GlWidget::height();
+    World::width = GlWidget::width();*/
+    World::view.height = GlWidget::height();
+    World::view.width = GlWidget::width();
 }
 
 void GlWidget::ddd(){
-    glViewport(0,0, World::width,World::height);
+    //glViewport(0,0, World::width,World::height);
+    glViewport(0,0, World::view.width,World::view.height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0, (float)World::width/World::height, 0.01, 100.0);
-    gluLookAt(World::eyeX,World::eyeY,World::eyeZ, 0,0,0, 0,1,0);
+    //gluPerspective(60.0, (float)World::width/World::height, 0.01, 100.0);
+    gluPerspective(60.0, (float)World::view.width/World::view.height, 0.01, 100.0);
+    //gluLookAt(World::eyeX,World::eyeY,World::eyeZ, 0,0,0, 0,1,0);
+    gluLookAt(World::view.eyeX,World::view.eyeY,World::view.eyeZ, 0,0,0, 0,1,0);
 }
 
 void GlWidget::dd(){
-    glViewport(0,0, World::width,World::height);
+    //glViewport(0,0, World::width,World::height);
+    glViewport(0,0, World::view.width,World::view.height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0,1,0,1);
@@ -95,7 +102,8 @@ bool GlWidget::onTilemap(int mouseX, int mouseY){
     uniqueColoredCompass();
     uniqueColoredZoom();
     ddd();
-    glScalef(World::zoom, World::zoom, World::zoom);
+    //glScalef(World::zoom, World::zoom, World::zoom);
+    glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     unsunkenGround(World::x, World::z, Tilemap::mapTiles);
     /*glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     dd();
@@ -139,6 +147,7 @@ void GlWidget::crackHouse(){
     updateOpen(QString::number(World::tile[4]), QString::number(World::tile[5]), QString::number(1));
     selectMapTiles();
     World::token = false;
+    World::buildingOption = -1;
     std::cout<<"CRACK ID: "<<World::buildingOption<<std::endl;
 }
 

@@ -41,6 +41,7 @@ public:
 private:
     void background();
     std::vector<float> backgroundColor = {.8,.8,.8};
+    std::vector<float> hoverColor = {.5,.5,0};
     float menuWidth = .25;
     std::vector<float> menuX = {1-menuWidth,1};
     std::vector<float> menuY = {0,1};

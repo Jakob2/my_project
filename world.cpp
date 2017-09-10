@@ -1,18 +1,11 @@
 #include "world.h"
 
-int World::width;
-int World::height;
-float World::zoom;
-float World::eyeX;
-float World::eyeY;
-float World::eyeZ;
+World::View World::view;
 int World::range;
 bool World::validPlace;
 float World::x;
 float World::z;
 int World::areaOption;
-//float World::areaX;
-//float World::areaZ;
 float World::pi;
 bool World::mousePressed;
 float World::cameraMove;
@@ -20,26 +13,20 @@ std::vector<float> World::tile;
 int World::hoverBuilding;
 int World::hoverZoom;
 int World::hoverCompass;
-std::vector<float> World::hoverColor;
 int World::buildingOption;
 int World::map;
 bool World::moveConstruct;
 int World::constructId;
 bool World::token;
 int World::pickedColor;
-//std::vector<bool> World::field;
-//std::vector<float> World::way;
-World::structTest World::muh;
 
 World::World(){
-    //World::width = 701;
-    //World::height = 381;
-    World::width = 800;
-    World::height = 600;
-    World::zoom = 0.1;
-    World::eyeX = 1;
-    World::eyeY = 1;
-    World::eyeZ = 1;
+    World::view.width = 800;
+    World::view.height = 600;
+    World::view.eyeX = 1;
+    World::view.eyeY = 1;
+    World::view.eyeZ = 1;
+    World::view.zoom = .1;
     World::range = 10;
     World::x = 0;
     World::z = 0;
@@ -51,18 +38,10 @@ World::World(){
     World::hoverBuilding = -1;
     World::hoverZoom = -1;
     World::hoverCompass = -1;
-    World::hoverColor = {.5,.5,0}; //only used in gui class, refactor it ...
     World::buildingOption = -1;
     World::map = 1;
     World::moveConstruct = false;
     World::constructId = -1;
     World::token = false;
-    //World::pullField = false;
-    /*World::field.resize(3);
-    World::field[0] = false;
-    World::field[1] = false;
-    World::field[2] = false;*/
-    //World::way = {0,0,0,0,0};
-    World::muh.test = 2;
 }
 

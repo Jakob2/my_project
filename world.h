@@ -9,38 +9,32 @@ public:
     World();
 
     static float pi;
-    static int width;
-    static int height;
-    static float zoom;
-    static float eyeX;
-    static float eyeY;
-    static float eyeZ;
+    static struct View{
+        int width;
+        int height;
+        float eyeX;
+        float eyeY;
+        float eyeZ;
+        float zoom;
+    }view;
+
     static int range;
     static bool validPlace;
     static float x;
     static float z;
-    static int areaOption;//???
-    //static float areaX;
-    //static float areaZ;
+    static int areaOption;//selectionColor ??
     static bool mousePressed;
     static float cameraMove;
     static std::vector<float> tile;
     static int hoverBuilding;
     static int hoverZoom;
     static int hoverCompass;
-    static std::vector<float> hoverColor;
     static int buildingOption;
     static int map;
     static bool moveConstruct;
     static int constructId;
     static bool token;
     static int pickedColor;
-    //static bool pullField;
-    //static std::vector<bool> field;
-    //static std::vector<float> way;
-    static struct structTest{
-        int test;
-    }muh;
 };
 
 #endif // WORLD_H

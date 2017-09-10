@@ -19,8 +19,11 @@ void Gui::drawMenu(){
 std::vector<float> Gui::mouseToMenuGrid(int mouseX, int mouseY){
     std::vector<float> res;
     res.resize(3);
-    res[0] = (float)mouseX/World::width;
-    res[1] = 1-(float)mouseY/World::height;
+    //res[0] = (float)mouseX/World::width;
+    //res[1] = 1-(float)mouseY/World::height;
+    res[0] = (float)mouseX/World::view.width;
+    res[1] = 1-(float)mouseY/World::view.height;
+
     res[2] = 0;
     //std::cout<<res[0]<<"-"<<res[1]<<"-"<<res[2]<<std::endl;
     return res;
@@ -28,7 +31,8 @@ std::vector<float> Gui::mouseToMenuGrid(int mouseX, int mouseY){
 
 bool Gui::onMenu(float mouseX){
     float gridX;
-    gridX = mouseX/World::width;
+    //gridX = mouseX/World::width;
+    gridX = mouseX/World::view.width;
     if(gridX > menuX[0]) return true;
     else return false;
 }
@@ -55,7 +59,7 @@ void Gui::options(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     for(int xx=0; xx<2; xx++){
         id = xx;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -69,7 +73,7 @@ void Gui::options(){
     y = -(v[1]*2+f);
     for(int xx=0; xx<2; xx++){
         id = xx+2;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -83,7 +87,7 @@ void Gui::options(){
     y = -(v[1]*4+f*2);
     for(int xx=0; xx<2; xx++){
         id = xx+4;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(0,0,.75);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -106,7 +110,7 @@ void Gui::uniqueColoredOptions(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     for(int xx=0; xx<2; xx++){
         id = xx;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(0,0,.1*(id+1));
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -120,7 +124,7 @@ void Gui::uniqueColoredOptions(){
     y = -(v[1]*2+f);
     for(int xx=0; xx<2; xx++){
         id = xx+2;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(0,.1*(id+1),0);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -134,7 +138,7 @@ void Gui::uniqueColoredOptions(){
     y = -(v[1]*4+f*2);
     for(int xx=0; xx<2; xx++){
         id = xx+4;
-        if(id == World::hoverBuilding) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+        if(id == World::hoverBuilding) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
         else glColor3f(.1*(id+1),0,0);
         glBegin(GL_POLYGON);
         glVertex2f(m[0]+-v[0]+x, m[1]+v[1]+y);
@@ -213,13 +217,13 @@ void Gui::drawIcon(){
 void Gui::zoom(){
     switch(World::hoverZoom){
     case 0:
-        if(World::zoom<1) World::zoom += .1;
+        if(World::view.zoom<1) World::view.zoom += .1;
         break;
     case 1:
-        if(World::zoom>0.2) World::zoom -= .1;
+        if(World::view.zoom>0.2) World::view.zoom -= .1;
         break;
     }
-    std::cout<<"ZOOM: "<<World::zoom<<std::endl;
+    std::cout<<"ZOOM: "<<World::view.zoom<<std::endl;
 }
 
 void Gui::drawZoom(){
@@ -236,7 +240,7 @@ void Gui::uniqueColoredZoom(){
 
 void Gui::plus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 0) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverZoom == 0) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     glVertex2f(f+mid[0]+-v[0], mid[1]+-v[1]*weight);
@@ -254,7 +258,7 @@ void Gui::plus(){
 
 void Gui::minus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverZoom == 1) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     glVertex2f(f*2+mid[2]+-v[0], mid[3]+-v[1]*weight);
@@ -266,7 +270,7 @@ void Gui::minus(){
 
 void Gui::uniqueColoredPlus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 0) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverZoom == 0) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(0,1,0);
     glBegin(GL_POLYGON);
     glVertex2f(f+mid[0]+-v[0], mid[1]+-v[1]*weight);
@@ -284,7 +288,7 @@ void Gui::uniqueColoredPlus(){
 
 void Gui::uniqueColoredMinus(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverZoom == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverZoom == 1) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(0,0,1);
     glBegin(GL_POLYGON);
     glVertex2f(f*2+mid[2]+-v[0], mid[3]+-v[1]*weight);
@@ -296,7 +300,7 @@ void Gui::uniqueColoredMinus(){
 
 void Gui::drawCompass(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverCompass == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverCompass == 1) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(0,0,0);
     glBegin(GL_POLYGON);
     //for(float i=0; i<2*World::pi; i+=World::pi/12)
@@ -307,7 +311,7 @@ void Gui::drawCompass(){
 
 void Gui::uniqueColoredCompass(){
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if(World::hoverCompass == 1) glColor3f(World::hoverColor[0],World::hoverColor[1],World::hoverColor[2]);
+    if(World::hoverCompass == 1) glColor3f(hoverColor[0],hoverColor[1],hoverColor[2]);
     else glColor3f(1,0,0);
     glBegin(GL_POLYGON);
     for(int i=0; i<360; i++)
@@ -352,9 +356,12 @@ void Gui::calcNeedlePos(){
 
 void Gui::turn(){
     float r;
-    r = sqrt(pow(World::eyeX,2)+pow(World::eyeZ,2));
-    World::eyeX = cos(angle*World::pi/180) * r;
-    World::eyeZ = sin(angle*World::pi/180) * r;
+    //r = sqrt(pow(World::eyeX,2)+pow(World::eyeZ,2));
+    //World::eyeX = cos(angle*World::pi/180) * r;
+    //World::eyeZ = sin(angle*World::pi/180) * r;
+    r = sqrt(pow(World::view.eyeX,2)+pow(World::view.eyeZ,2));
+    World::view.eyeX = cos(angle*World::pi/180) * r;
+    World::view.eyeZ = sin(angle*World::pi/180) * r;
 }
 
 void Gui::calcCameraMoveUnits(){
@@ -414,11 +421,8 @@ bool Gui::hoverGui(int x, int y){
         break;
     default:
         World::hoverBuilding = -1;
-        //World::buildingOption = -1;
         World::hoverZoom = -1;
         World::hoverCompass = -1;
-        //World::pullField = false;
-        //World::field[0] = false;
         return false;
         break;
     }
