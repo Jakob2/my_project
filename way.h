@@ -41,6 +41,7 @@ private:
 
     void drawStraight(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int angle, int flag);
     //void drawStraightZ(vector<vector<vector<float>>> &way, int x, int z);
+    void straightWay(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz);
 
     void setWaySpanX(int bZ, int sX, int sXX);
     void setWaySpanZ(int bX, int sZ, int sZZ);

@@ -37,6 +37,7 @@ public:
     void calcCameraMoveUnits();
 
     bool hoverGui(int x, int y);
+
 private:
     void background();
     std::vector<float> backgroundColor = {.8,.8,.8};

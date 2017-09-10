@@ -41,7 +41,14 @@ void Mouseray::intersect(std::vector<float> in){
     xx = World::eyeX + (t * x);
     yy = World::eyeY + (t * y);
     zz = World::eyeZ + (t * z);
+    float txx, tzz;
+    txx = floor(xx-World::x);
+    tzz = floor(zz-World::z);
+    if(txx<0) txx = 0;
+    if(tzz<0) tzz = 0;
     World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz,(float)floor(xx-World::x),(float)floor(zz-World::z)};
+    //World::tile = {(float)floor(xx),(float)floor(zz),(float)xx,(float)zz,txx,tzz};
+
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
     //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
