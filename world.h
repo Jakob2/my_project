@@ -17,20 +17,22 @@ public:
         float eyeZ;
         float zoom;
     }view;
+    static struct Tile{
+        int map;
+        int range;
+        bool valid;
+        float x;
+        float z;
+        std::vector<float> tile;
+    }map;
 
-    static int range;
-    static bool validPlace;
-    static float x;
-    static float z;
     static int areaOption;//selectionColor ??
     static bool mousePressed;
     static float cameraMove;
-    static std::vector<float> tile;
     static int hoverBuilding;
     static int hoverZoom;
     static int hoverCompass;
     static int buildingOption;
-    static int map;
     static bool moveConstruct;
     static int constructId;
     static bool token;

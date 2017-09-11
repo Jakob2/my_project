@@ -8,10 +8,10 @@ Tilemap::Tilemap(){
 
 void Tilemap::setMapTiles(){
     Tilemap::mapTiles.clear();
-    Tilemap::mapTiles.resize(World::range);
-    for(int x=0; x<World::range; x++){
-        Tilemap::mapTiles[x].resize(World::range);
-        for(int z=0; z<World::range; z++){
+    Tilemap::mapTiles.resize(World::map.range);
+    for(int x=0; x<World::map.range; x++){
+        Tilemap::mapTiles[x].resize(World::map.range);
+        for(int z=0; z<World::map.range; z++){
             Tilemap::mapTiles[x][z].resize(3);
         }
     }
@@ -39,9 +39,9 @@ void Tilemap::ground(float x, float z, std::vector<std::vector<std::vector<int>>
     float y;
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    for(float i=0; i<World::range; i++){
+    for(float i=0; i<World::map.range; i++){
         int ii = i+1;
-        for(float j=0; j<World::range; j++){
+        for(float j=0; j<World::map.range; j++){
             int jj = j+1;
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 selectionColor(i,j, ii, jj, mapTiles[i][j][0]);
@@ -60,8 +60,8 @@ void Tilemap::unsunkenGround(float x, float z, std::vector<std::vector<std::vect
     float y = 0;
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    for(float i=0; i<World::range; i++){
-        for(float j=0; j<World::range; j++){
+    for(float i=0; i<World::map.range; i++){
+        for(float j=0; j<World::map.range; j++){
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glColor3f(0,0,0);
             Shape::top(i,j,x,y,z);
@@ -98,12 +98,12 @@ void Tilemap::selectionColor(int i, int j, int ii, int jj, int clr){
 
 void Tilemap::area(int i, int ii, int j, int jj, int clr){
     float QX, X, AREA_X, QZ, Z, AREA_Z;
-    QX = World::tile[2];
-    X = World::x;
+    QX = World::map.tile[2];
+    X = World::map.x;
     //AREA_X = World::areaX;
     AREA_X = fieldstuff.areaX;
-    QZ = World::tile[3];
-    Z = World::z;
+    QZ = World::map.tile[3];
+    Z = World::map.z;
     //AREA_Z = World::areaZ;
     AREA_Z = fieldstuff.areaZ;
     if((i<QX-X && ii>floor(AREA_X-X)) && (j<QZ-Z && jj>floor(AREA_Z-Z))){
@@ -126,10 +126,10 @@ void Tilemap::area(int i, int ii, int j, int jj, int clr){
 
 void Tilemap::single(int i, int ii, int j, int jj, int clr){
     float qx, x, qz, z;
-    qx = World::tile[2];
-    qz = World::tile[3];
-    x = World::x;
-    z = World::z;
+    qx = World::map.tile[2];
+    qz = World::map.tile[3];
+    x = World::map.x;
+    z = World::map.z;
 
     if((i<qx-x && ii>qx-x) && (j<qz-z && jj>qz-z)){
         glColor3f(select[0],select[1],select[2]);

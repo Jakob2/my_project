@@ -91,8 +91,8 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     z = World::way[1];*/
     x = waystuff.x;
     z = waystuff.z;
-    xx = floor(World::tile[2]-World::x);
-    zz = floor(World::tile[3]-World::z);
+    xx = floor(World::map.tile[2]-World::map.x);
+    zz = floor(World::map.tile[3]-World::map.z);
     if(x < 0) x = 0;
     if(x > 9) x = 9;
     if(xx < 0) xx = 0;
@@ -133,9 +133,9 @@ void Way::calcAngle(){
     //std::cout<<start[0]<<" / "<<start[2]<<std::endl;
 
     std::vector<float> goal;
-    goal.push_back(World::tile[2]-World::x);
+    goal.push_back(World::map.tile[2]-World::map.x);
     goal.push_back(0);
-    goal.push_back(World::tile[3]-World::z);
+    goal.push_back(World::map.tile[3]-World::map.z);
 
     float av;
     av = Vector::absolute(Vector::direction(goal, start));
@@ -145,8 +145,8 @@ void Way::calcAngle(){
     angle = asin(d[0]/av) * (180/World::pi) * -1;
     //if((World::tile[3]-World::z)<World::way[1]+0.5) angle = 180 - angle;
     //if((World::tile[2]-World::x)<World::way[0]+0.5 && (World::tile[3]-World::z)>World::way[1]+0.5) angle = 360 + angle;
-    if((World::tile[3]-World::z)<waystuff.z+0.5) angle = 180 - angle;
-    if((World::tile[2]-World::x)<waystuff.x+0.5 && (World::tile[3]-World::z)>waystuff.z+0.5) angle = 360 + angle;
+    if((World::map.tile[3]-World::map.z)<waystuff.z+0.5) angle = 180 - angle;
+    if((World::map.tile[2]-World::map.x)<waystuff.x+0.5 && (World::map.tile[3]-World::map.z)>waystuff.z+0.5) angle = 360 + angle;
 
     std::cout<<"angle: "<<angle<<std::endl;
 }
@@ -259,9 +259,9 @@ void Way::drawStraight(std::vector<std::vector<std::vector<float>>> &way, std::v
     b = way[1][4][2];
 
     glPushMatrix();
-    glTranslatef(World::x+x,0,World::z+z);
+    glTranslatef(World::map.x+x,0,World::map.z+z);
     glRotatef(angle,0,1,0);
-    glTranslatef(-World::x-x,0,-World::z-z);
+    glTranslatef(-World::map.x-x,0,-World::map.z-z);
     glBegin(GL_POLYGON);
     glColor3f(r,g,b);
     switch(flag){
@@ -272,10 +272,10 @@ void Way::drawStraight(std::vector<std::vector<std::vector<float>>> &way, std::v
         if(!mapTiles[x][z-1][1]) glColor3f(1,0,0);
         break;
     }
-    glVertex3f(World::x+x+way[1][0][0]+.5,way[1][0][1]+.01,World::z+z+way[1][0][2]+.5);
-    glVertex3f(World::x+x+way[1][1][0]+.5,way[1][1][1]+.01,World::z+z+way[1][1][2]+.5);
-    glVertex3f(World::x+x+way[1][2][0]+.5,way[1][2][1]+.01,World::z+z+way[1][2][2]+.5);
-    glVertex3f(World::x+x+way[1][3][0]+.5,way[1][3][1]+.01,World::z+z+way[1][3][2]+.5);
+    glVertex3f(World::map.x+x+way[1][0][0]+.5,way[1][0][1]+.01,World::map.z+z+way[1][0][2]+.5);
+    glVertex3f(World::map.x+x+way[1][1][0]+.5,way[1][1][1]+.01,World::map.z+z+way[1][1][2]+.5);
+    glVertex3f(World::map.x+x+way[1][2][0]+.5,way[1][2][1]+.01,World::map.z+z+way[1][2][2]+.5);
+    glVertex3f(World::map.x+x+way[1][3][0]+.5,way[1][3][1]+.01,World::map.z+z+way[1][3][2]+.5);
     glEnd();
     glPopMatrix();
 }

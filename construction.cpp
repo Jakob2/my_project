@@ -140,10 +140,10 @@ QString Construction::id(){
 
 void Construction::constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos){
     float QX, QZ, X, Z;
-    QX = World::tile[2];
-    QZ = World::tile[3];
-    X = World::x;
-    Z = World::z;
+    QX = World::map.tile[2];
+    QZ = World::map.tile[3];
+    X = World::map.x;
+    Z = World::map.z;
     float x,y,z, r, g, b, xx, zz;
     int turn;
     tIndex = 0;
@@ -162,7 +162,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        if(construct[i][4][0]-1 == World::tile[4] && construct[i][4][2]-1 == World::tile[5]) World::constructId = construct[i][5][0];
+        if(construct[i][4][0]-1 == World::map.tile[4] && construct[i][4][2]-1 == World::map.tile[5]) World::constructId = construct[i][5][0];
         //else World::constructId = -1;
         //if(World::constructId != -1) std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
 
@@ -258,11 +258,11 @@ void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token,
     for(int i=0; i<(int)token.size(); i++){
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     if(!mapTiles[x][z][1]){
-        World::validPlace = false;
+        World::map.valid = false;
         glColor3f(1,0,0);
     }
     else{
-        World::validPlace = true;
+        World::map.valid = true;
         glColor3f(0.9,0.9,0.9);
     }
     glBegin(GL_POLYGON);

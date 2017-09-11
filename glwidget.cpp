@@ -20,11 +20,11 @@ void GlWidget::paintGL(){
     drawMenu();
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
-    ground(World::x, World::z, Tilemap::mapTiles);
+    ground(World::map.x, World::map.z, Tilemap::mapTiles);
     crossfade();
-    constructs(Construction::construct, World::x, World::z);
-    if(World::token) wireToken(token, World::tile[4], World::tile[5], World::x, World::z, Tilemap::mapTiles);
-    if(fieldstuff.build) fieldarea(Field::field, World::x,World::z);
+    constructs(Construction::construct, World::map.x, World::map.z);
+    if(World::token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
+    if(fieldstuff.build) fieldarea(Field::field, World::map.x,World::map.z);
     if(waystuff.build) drawWay(Way::way, Tilemap::mapTiles);
 }
 
@@ -50,14 +50,14 @@ void GlWidget::dd(){
 
 void GlWidget::setIntersection(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
-    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
     calculateGLCoords(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
-    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
     std::vector<float> out;
     out = calculateGLCoordsTest(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -72,7 +72,7 @@ bool GlWidget::onTilemap(int mouseX, int mouseY){
     uniqueColoredZoom();
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
-    unsunkenGround(World::x, World::z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
     return checkIfOnTilemap(mouseX, mouseY);
 }
 
@@ -96,8 +96,8 @@ void GlWidget::createToken(QMouseEvent *event){
 }
 
 void GlWidget::buildAHouse(){
-    insertConstruct(QString::number(World::map), QString::number(World::buildingOption),QString::number(World::tile[4]+1),QString::number(World::tile[5]+1));
-    updateTilesOpen(QString::number(World::tile[4]), QString::number(World::tile[5]));
+    insertConstruct(QString::number(World::map.map), QString::number(World::buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
+    updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]));
     selectConstructs(QString::number(1));
     selectMapTiles();
     World::token = false;
@@ -105,8 +105,8 @@ void GlWidget::buildAHouse(){
 
 void GlWidget::crackHouse(){
     deleteConstruct(QString::number(World::constructId));
-    selectConstructs(QString::number(World::map));
-    updateOpen(QString::number(World::tile[4]), QString::number(World::tile[5]), QString::number(1));
+    selectConstructs(QString::number(World::map.map));
+    updateOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]), QString::number(1));
     selectMapTiles();
     World::token = false;
     World::buildingOption = -1;
@@ -131,8 +131,8 @@ void GlWidget::plantField(){
         fieldstuff.init = false;
         if(!fieldstuff.build){
             std::cout<<"PLANT THE FIELD"<<std::endl;
-            insertFieldPart(QString::number(World::map), QString::number(6), Field::field, ceil(fieldstuff.areaX-World::x),ceil(World::tile[2]-World::x), ceil(fieldstuff.areaZ-World::z),ceil(World::tile[3]-World::z));
-            selectConstructs(QString::number(World::map));
+            insertFieldPart(QString::number(World::map.map), QString::number(6), Field::field, ceil(fieldstuff.areaX-World::map.x),ceil(World::map.tile[2]-World::map.x), ceil(fieldstuff.areaZ-World::map.z),ceil(World::map.tile[3]-World::map.z));
+            selectConstructs(QString::number(World::map.map));
             selectMapTiles();
             fieldstuff.init = true;
         }
@@ -152,20 +152,20 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     calcCameraMoveUnits();
     switch(event->key()){
     case Qt::Key_A:
-        World::x += camMoveUnit[0];
-        World::z -= camMoveUnit[1];
+        World::map.x += camMoveUnit[0];
+        World::map.z -= camMoveUnit[1];
         break;
     case Qt::Key_D:
-        World::x -= camMoveUnit[0];
-        World::z += camMoveUnit[1];
+        World::map.x -= camMoveUnit[0];
+        World::map.z += camMoveUnit[1];
         break;
     case Qt::Key_W:
-        World::x += camMoveUnit[1];
-        World::z += camMoveUnit[0];
+        World::map.x += camMoveUnit[1];
+        World::map.z += camMoveUnit[0];
         break;
     case Qt::Key_S:
-        World::x -= camMoveUnit[1];
-        World::z -= camMoveUnit[0];
+        World::map.x -= camMoveUnit[1];
+        World::map.z -= camMoveUnit[0];
         break;
     case Qt::Key_Escape:
         World::constructId = -1;
@@ -198,20 +198,20 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
             waystuff.build ? waystuff.build = false : waystuff.build = true;
             if(waystuff.init && onTilemap(moveWinX,moveWinY)){
                 testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                waystuff.x = ceil(testIntersection[0]-World::x)-1;
-                waystuff.z = ceil(testIntersection[2]-World::z)-1;
+                waystuff.x = ceil(testIntersection[0]-World::map.x)-1;
+                waystuff.z = ceil(testIntersection[2]-World::map.z)-1;
             }
             waystuff.init = false;
             if(!waystuff.build){
                 std::cout<<"BUILD THE WAY"<<std::endl;
                 for(auto i : waystuff.spanZ) std::cout<<"way x: "<<i.toStdString()<<std::endl;
                 for(int x=0; x<(int)waystuff.spanX.size(); x++){
-                    insertWay(QString::number(World::map), Way::way, waystuff.spanX[x],waystuff.baseZ, QString::number(90));
+                    insertWay(QString::number(World::map.map), Way::way, waystuff.spanX[x],waystuff.baseZ, QString::number(90));
                 }
                 for(int z=0; z<(int)waystuff.spanZ.size(); z++){
-                    insertWay(QString::number(World::map), Way::way, waystuff.baseX, waystuff.spanZ[z], QString::number(0));
+                    insertWay(QString::number(World::map.map), Way::way, waystuff.baseX, waystuff.spanZ[z], QString::number(0));
                 }
-                selectConstructs(QString::number(World::map));
+                selectConstructs(QString::number(World::map.map));
                 selectMapTiles();
                 waystuff.init = true;
             }
@@ -220,7 +220,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     //build a house
     if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::token && World::validPlace && World::buildingOption != 6 && World::buildingOption != 7) buildAHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::token && World::map.valid && World::buildingOption != 6 && World::buildingOption != 7) buildAHouse();
 
 }
 
