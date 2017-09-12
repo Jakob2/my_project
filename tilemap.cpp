@@ -85,7 +85,7 @@ float Tilemap::sink(int type){
 }
 
 void Tilemap::selectionColor(int i, int j, int ii, int jj, int clr){
-    switch(World::areaOption){
+    switch(World::gui.areaOption){
     case 0:
     case 1:
         single(i, ii, j, jj, clr);

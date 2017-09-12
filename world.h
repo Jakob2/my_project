@@ -9,6 +9,12 @@ public:
     World();
 
     static float pi;
+
+    static struct Mouse{
+        int pickedColor;
+        bool pressed;
+    }mouse;
+
     static struct View{
         int width;
         int height;
@@ -17,6 +23,7 @@ public:
         float eyeZ;
         float zoom;
     }view;
+
     static struct Tile{
         int map;
         int range;
@@ -24,19 +31,17 @@ public:
         float x;
         float z;
         std::vector<float> tile;
+        int constructId;
+        bool token;
     }map;
 
-    static int areaOption;//selectionColor ??
-    static bool mousePressed;
-    static float cameraMove;
-    static int hoverBuilding;
-    static int hoverZoom;
-    static int hoverCompass;
-    static int buildingOption;
-    static bool moveConstruct;
-    static int constructId;
-    static bool token;
-    static int pickedColor;
+    static struct Gui{
+        int hoverBuilding;
+        int hoverZoom;
+        int hoverCompass;
+        int buildingOption;
+        int areaOption;
+    }gui;
 };
 
 #endif // WORLD_H

@@ -139,12 +139,12 @@ QString Construction::id(){
 }
 
 void Construction::constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos){
-    float QX, QZ, X, Z;
+    /*float QX, QZ, X, Z;
     QX = World::map.tile[2];
     QZ = World::map.tile[3];
     X = World::map.x;
-    Z = World::map.z;
-    float x,y,z, r, g, b, xx, zz;
+    Z = World::map.z;*/
+    float x,y,z, r, g, b;//, xx, zz;
     int turn;
     tIndex = 0;
 
@@ -156,18 +156,18 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         r = construct[i][6][0];
         g = construct[i][6][1];
         b = construct[i][6][2];
-        xx = x+1;
-        zz = z+1;
+        //xx = x+1;
+        //zz = z+1;
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        if(construct[i][4][0]-1 == World::map.tile[4] && construct[i][4][2]-1 == World::map.tile[5]) World::constructId = construct[i][5][0];
+        if(construct[i][4][0]-1 == World::map.tile[4] && construct[i][4][2]-1 == World::map.tile[5]) World::map.constructId = construct[i][5][0];
         //else World::constructId = -1;
         //if(World::constructId != -1) std::cout<<"CONSTRUCT ID: "<<World::constructId<<std::endl;
 
         //if(construct[i][5][0] == World::buildingOption){
-        if(construct[i][5][0] == World::constructId){
+        if(construct[i][5][0] == World::map.constructId){
             glTranslatef(xPos+x,y,zPos+z);
             glRotatef(turn,0,1,0);
             glTranslatef(-xPos-x,-y,-zPos-z);
@@ -179,8 +179,9 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             glRotatef(turn,0,1,0);
             glTranslatef(-xPos-x,-y,-zPos-z);
 
-            if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::buildingOption = construct[i][5][0];
-            else glColor3f(r,g,b);
+            //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
+            //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
+            //else glColor3f(r,g,b);
             glColor3f(r,g,b);
             Shape::corpus(construct, i, x,y,z, xPos, zPos);
         }
@@ -256,20 +257,20 @@ void Construction::selectToken(QString constructId){
 void Construction::wireToken(std::vector<std::vector<std::vector<float>>> token, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles){
     float clip = 0.5;
     for(int i=0; i<(int)token.size(); i++){
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    if(!mapTiles[x][z][1]){
-        World::map.valid = false;
-        glColor3f(1,0,0);
-    }
-    else{
-        World::map.valid = true;
-        glColor3f(0.9,0.9,0.9);
-    }
-    glBegin(GL_POLYGON);
-        glVertex3f(offX+clip+x+token[i][0][0], token[i][0][1], offZ+clip+z+token[i][0][2]);
-        glVertex3f(offX+clip+x+token[i][1][0], token[i][1][1], offZ+clip+z+token[i][1][2]);
-        glVertex3f(offX+clip+x+token[i][2][0], token[i][2][1], offZ+clip+z+token[i][2][2]);
-        glVertex3f(offX+clip+x+token[i][3][0], token[i][3][1], offZ+clip+z+token[i][3][2]);
-    glEnd();
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        if(!mapTiles[x][z][1]){
+            World::map.valid = false;
+            glColor3f(1,0,0);
+        }
+        else{
+            World::map.valid = true;
+            glColor3f(0.9,0.9,0.9);
+        }
+        glBegin(GL_POLYGON);
+            glVertex3f(offX+clip+x+token[i][0][0], token[i][0][1], offZ+clip+z+token[i][0][2]);
+            glVertex3f(offX+clip+x+token[i][1][0], token[i][1][1], offZ+clip+z+token[i][1][2]);
+            glVertex3f(offX+clip+x+token[i][2][0], token[i][2][1], offZ+clip+z+token[i][2][2]);
+            glVertex3f(offX+clip+x+token[i][3][0], token[i][3][1], offZ+clip+z+token[i][3][2]);
+        glEnd();
     }
 }

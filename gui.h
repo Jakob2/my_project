@@ -32,7 +32,7 @@ public:
     void uniqueColoredCompass();
     void drawNeedle();
     float angle = 45;
-    std::vector<float> camMoveUnit = {World::cameraMove,World::cameraMove};
+    std::vector<float> camMoveUnit = {.5,.5};
     void turnCamera(std::vector<float> q);
     void calcCameraMoveUnits();
 

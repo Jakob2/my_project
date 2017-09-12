@@ -23,9 +23,9 @@ void GlWidget::paintGL(){
     ground(World::map.x, World::map.z, Tilemap::mapTiles);
     crossfade();
     constructs(Construction::construct, World::map.x, World::map.z);
-    if(World::token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
+    if(World::map.token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
     if(fieldstuff.build) fieldarea(Field::field, World::map.x,World::map.z);
-    if(waystuff.build) drawWay(Way::way, Tilemap::mapTiles);
+    if(waystuff.build && World::map.token) drawWay(Way::way, Tilemap::mapTiles);
 }
 
 void GlWidget::resizeGL(int w, int h){
@@ -89,28 +89,41 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
 
 void GlWidget::createToken(QMouseEvent *event){
     panelBuildings(event);
-    selectToken(QString::number(World::buildingOption));
-    World::token ? World::token = false : World::token = true;
-    if(World::token) std::cout<<"TRUE TOKEN"<<std::endl;
+    selectToken(QString::number(World::gui.buildingOption));
+    World::map.token ? World::map.token = false : World::map.token = true;
+    if(World::map.token) std::cout<<"TRUE TOKEN"<<std::endl;
     else std::cout<<"FALSE TOKEN"<<std::endl;
+    //waystuff.active = false;
+    //waystuff.build = false;
+
+    waystuff.active = false;
+    waystuff.build = false;
+    waystuff.init = true;
+
+
+    fieldstuff.activate = false;
+    fieldstuff.build = false;
+    fieldstuff.init = true;
 }
 
 void GlWidget::buildAHouse(){
-    insertConstruct(QString::number(World::map.map), QString::number(World::buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
+    insertConstruct(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
     updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]));
     selectConstructs(QString::number(1));
     selectMapTiles();
-    World::token = false;
+    World::map.token = false;
 }
 
 void GlWidget::crackHouse(){
-    deleteConstruct(QString::number(World::constructId));
+    deleteConstruct(QString::number(World::map.constructId));
     selectConstructs(QString::number(World::map.map));
     updateOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]), QString::number(1));
     selectMapTiles();
-    World::token = false;
-    World::buildingOption = -1;
-    std::cout<<"CRACK ID: "<<World::buildingOption<<std::endl;
+    World::map.token = false;
+    World::gui.buildingOption = -1;
+    std::cout<<"CRACK ID: "<<World::gui.buildingOption<<std::endl;
+
+
 }
 
 void GlWidget::activateField(){
@@ -168,7 +181,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::map.z -= camMoveUnit[0];
         break;
     case Qt::Key_Escape:
-        World::constructId = -1;
+        World::map.constructId = -1;
         break;
     }
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
@@ -176,24 +189,41 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
 }
 
 void GlWidget::mousePressEvent(QMouseEvent *event){
-    World::mousePressed = true;
+    World::mouse.pressed = true;
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
     //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
-    if(World::hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
+    if(World::gui.hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
     if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
-    if(World::hoverZoom == 0 || World::hoverZoom == 1) zoom();
+    if(World::gui.hoverZoom == 0 || World::gui.hoverZoom == 1) zoom();
+    if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
     //plant a field
-    if(onMenu(pressWinX) && World::hoverBuilding == 4) activateField();
-    if(onTilemap(pressWinX,pressWinY) && World::buildingOption == 6) plantField();
+    if(onMenu(pressWinX) && World::gui.hoverBuilding == 4){
+        //panelBuildings(event);
+        activateField();
+    }
+    if(onTilemap(pressWinX,pressWinY) && World::gui.buildingOption == 6) plantField();
     //build a way
-    if(onMenu(pressWinX) && World::hoverBuilding == 3){
+
+    /*if(World::gui.buildingOption != 7){
+        waystuff.active = false;
+        //waystuff.active ? waystuff.active = false : waystuff.active = true;
+
+        waystuff.build = false;
+        std::cout<<"SET WAY FALSE"<<std::endl;
+    }*/
+
+    if(onMenu(pressWinX) && World::gui.hoverBuilding == 3){
+        //panelBuildings(event);
         selectWay();
         waystuff.active ? waystuff.active = false : waystuff.active = true;
         waystuff.build = false;
         waystuff.init = true;
+
+        std::cout<<"WAYSTUFF active: "<<waystuff.active<<std::endl;
+        std::cout<<"WAYSTUFF build: "<<waystuff.build<<std::endl;
     }
-    if(onTilemap(moveWinX,moveWinY) && World::buildingOption == 7){
+    if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7){
         if(waystuff.active){
             waystuff.build ? waystuff.build = false : waystuff.build = true;
             if(waystuff.init && onTilemap(moveWinX,moveWinY)){
@@ -218,22 +248,30 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
         }
     }
     //build a house
-    if(onMenu(pressWinX) && World::hoverBuilding != -1 && World::hoverBuilding != 999) createToken(event);
-    if(onMenu(pressWinX) && World::buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::token && World::map.valid && World::buildingOption != 6 && World::buildingOption != 7) buildAHouse();
+    //if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
+    if(onMenu(pressWinX) && World::gui.buildingOption == 999) crackHouse();
+    if(onTilemap(pressWinX,pressWinY) && World::map.token && World::map.valid && World::gui.buildingOption != 6 && World::gui.buildingOption != 7) buildAHouse();
+
+
+
+    /*if(World::gui.buildingOption != 6){
+        fieldstuff.activate = false;
+        fieldstuff.build = false;
+    }*/
+    //std::cout<<"STUFF: "<<fieldstuff.build<<std::endl;
 
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
-    World::mousePressed = false;
+    World::mouse.pressed = false;
 }
 
 void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
-    if(World::hoverCompass == 1 && World::mousePressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(World::gui.hoverCompass == 1 && World::mouse.pressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
     if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
-    if(World::token){
+    if(World::map.token){
         if(onTilemap(moveWinX,moveWinY)){
             setIntersection(moveWinX,moveWinY);
         }

@@ -101,8 +101,9 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     if(z > 9) z = 9;
     if(zz < 0) zz = 0;
     if(zz > 9) zz = 9;
-    std::cout<<"x: "<<x<<" - xx: "<<xx<<" / z: "<<z<<" - zz: "<<zz<<std::endl;
+    //std::cout<<"x: "<<x<<" - xx: "<<xx<<" / z: "<<z<<" - zz: "<<zz<<std::endl;
     calcAngle();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     if(xx>=x && zz>=z) waySouth(way,mapTiles,x,z,xx,zz);
     if(xx<=x && zz>=z) wayWest(way,mapTiles,x,z,xx,zz);
     if(xx<=x && zz<=z) wayNorth(way,mapTiles,x,z,xx,zz);
@@ -148,11 +149,11 @@ void Way::calcAngle(){
     if((World::map.tile[3]-World::map.z)<waystuff.z+0.5) angle = 180 - angle;
     if((World::map.tile[2]-World::map.x)<waystuff.x+0.5 && (World::map.tile[3]-World::map.z)>waystuff.z+0.5) angle = 360 + angle;
 
-    std::cout<<"angle: "<<angle<<std::endl;
+    //std::cout<<"angle: "<<angle<<std::endl;
 }
 
 void Way::waySouth(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz){
-    std::cout<<"SOUTHWAY"<<std::endl;
+    //std::cout<<"SOUTHWAY"<<std::endl;
     if(angle>0 && angle<45){
         for(int i=x; i<=xx; i++){
            //colorway(i, zz-1);
@@ -180,7 +181,7 @@ void Way::waySouth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
 }
 
 void Way::wayWest(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz){
-    std::cout<<"WESTWAY"<<std::endl;
+    //std::cout<<"WESTWAY"<<std::endl;
     if(angle>270 && angle<315){
         for(int i=xx; i<x+1; i++){
            //colorway(i, z);
@@ -205,7 +206,7 @@ void Way::wayWest(std::vector<std::vector<std::vector<float>>> &way, std::vector
 }
 
 void Way::wayNorth(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz){
-    std::cout<<"NORTHWAY"<<std::endl;
+    //std::cout<<"NORTHWAY"<<std::endl;
     if(angle>180 && angle<225){
         for(int i=xx; i<x+1; i++){
            //colorway(i, zz-1);
@@ -229,7 +230,7 @@ void Way::wayNorth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
 }
 
 void Way::wayEast(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz){
-    std::cout<<"WESTWAY"<<std::endl;
+    //std::cout<<"WESTWAY"<<std::endl;
     if(angle>90 && angle<135){
         for(int i=x; i<=xx; i++){
            //colorway(i, z);

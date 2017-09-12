@@ -107,6 +107,6 @@ void Mouseray::readPixelColor(int x, int y){
     unsigned char pixelcolor[3];
     glReadPixels(x,World::view.height-y, 1,1, GL_RGB,GL_UNSIGNED_BYTE, pixelcolor);
     pickedId = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
-    World::pickedColor = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
+    World::mouse.pickedColor = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
     //std::cout<<"PIXELID: "<<pickedId<<std::endl;
 }
