@@ -94,13 +94,13 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     xx = floor(World::map.tile[2]-World::map.x);
     zz = floor(World::map.tile[3]-World::map.z);
     if(x < 0) x = 0;
-    if(x > 9) x = 9;
+    if(x > World::map.range-1) x = World::map.range-1;
     if(xx < 0) xx = 0;
-    if(xx > 9) xx = 9;
+    if(xx > World::map.range-1) xx = World::map.range-1;
     if(z < 0) z = 0;
-    if(z > 9) z = 9;
+    if(z > World::map.range-1) z = World::map.range-1;
     if(zz < 0) zz = 0;
-    if(zz > 9) zz = 9;
+    if(zz > World::map.range-1) zz = World::map.range-1;
     //std::cout<<"x: "<<x<<" - xx: "<<xx<<" / z: "<<z<<" - zz: "<<zz<<std::endl;
     calcAngle();
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -264,7 +264,8 @@ void Way::drawStraight(std::vector<std::vector<std::vector<float>>> &way, std::v
     glRotatef(angle,0,1,0);
     glTranslatef(-World::map.x-x,0,-World::map.z-z);
     glBegin(GL_POLYGON);
-    glColor3f(r,g,b);
+    //glColor3f(r,g,b);
+    glColor3f(0.9,0.9,0.9);
     switch(flag){
     case 0:
         if(!mapTiles[x][z][1]) glColor3f(1,0,0);

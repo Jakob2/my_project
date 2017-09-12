@@ -24,7 +24,6 @@ public:
     //void setToken(int i, std::vector<std::vector<std::vector<float>>> &construct);
     void wireToken(std::vector<std::vector<std::vector<float>>> token, int x, int z, float offX, float offZ, std::vector<std::vector<std::vector<int>>> &mapTiles);
 
-
 private:
     int tIndex = 0;
     const float clip = 0.5;

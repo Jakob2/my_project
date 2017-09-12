@@ -6,12 +6,12 @@
 #include "db.h"
 #include "shape.h"
 
-class Field// : public Db//, private Shape
+class Field
 {
 public:
     Field();
 
-    struct fieldstruct{
+    struct{
         float areaX = .0;
         float areaZ = .0;
         bool activate = false;

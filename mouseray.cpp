@@ -46,9 +46,9 @@ void Mouseray::intersect(std::vector<float> in){
     txx = floor(xx-World::map.x);
     tzz = floor(zz-World::map.z);
     if(txx < 0) txx = 0;
-    if(txx > 9) txx = 9;
+    if(txx > World::map.range-1) txx = World::map.range-1;
     if(tzz < 0) tzz = 0;
-    if(tzz > 9) tzz = 9;
+    if(tzz > World::map.range-1) tzz = World::map.range-1;
     World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};
 
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;

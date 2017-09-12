@@ -93,13 +93,10 @@ void GlWidget::createToken(QMouseEvent *event){
     World::map.token ? World::map.token = false : World::map.token = true;
     if(World::map.token) std::cout<<"TRUE TOKEN"<<std::endl;
     else std::cout<<"FALSE TOKEN"<<std::endl;
-    //waystuff.active = false;
-    //waystuff.build = false;
 
     waystuff.active = false;
     waystuff.build = false;
     waystuff.init = true;
-
 
     fieldstuff.activate = false;
     fieldstuff.build = false;
@@ -153,7 +150,10 @@ void GlWidget::plantField(){
 }
 
 void GlWidget::activateWay(){
-
+    selectWay();
+    waystuff.active ? waystuff.active = false : waystuff.active = true;
+    waystuff.build = false;
+    waystuff.init = true;
 }
 
 void GlWidget::buildWay()
@@ -198,30 +198,15 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(World::gui.hoverZoom == 0 || World::gui.hoverZoom == 1) zoom();
     if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
     //plant a field
-    if(onMenu(pressWinX) && World::gui.hoverBuilding == 4){
-        //panelBuildings(event);
-        activateField();
-    }
+    if(onMenu(pressWinX) && World::gui.hoverBuilding == 4) activateField();
     if(onTilemap(pressWinX,pressWinY) && World::gui.buildingOption == 6) plantField();
     //build a way
-
-    /*if(World::gui.buildingOption != 7){
-        waystuff.active = false;
-        //waystuff.active ? waystuff.active = false : waystuff.active = true;
-
-        waystuff.build = false;
-        std::cout<<"SET WAY FALSE"<<std::endl;
-    }*/
-
     if(onMenu(pressWinX) && World::gui.hoverBuilding == 3){
-        //panelBuildings(event);
-        selectWay();
+        activateWay();
+        /*selectWay();
         waystuff.active ? waystuff.active = false : waystuff.active = true;
         waystuff.build = false;
-        waystuff.init = true;
-
-        std::cout<<"WAYSTUFF active: "<<waystuff.active<<std::endl;
-        std::cout<<"WAYSTUFF build: "<<waystuff.build<<std::endl;
+        waystuff.init = true;*/
     }
     if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7){
         if(waystuff.active){
