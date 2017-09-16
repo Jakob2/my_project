@@ -10,6 +10,7 @@ World::World(){
     World::pi = 3.14159265;
 
     World::mouse.pressed = false;
+    World::mouse.pickedColor = 0;
 
     World::view.width = 800;
     World::view.height = 600;
@@ -33,4 +34,3 @@ World::World(){
     World::gui.buildingOption = -1;
     World::gui.areaOption = 0;
 }
-

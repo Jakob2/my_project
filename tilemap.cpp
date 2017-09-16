@@ -56,7 +56,7 @@ void Tilemap::ground(float x, float z, std::vector<std::vector<std::vector<int>>
     glPopMatrix();
 }
 
-void Tilemap::unsunkenGround(float x, float z, std::vector<std::vector<std::vector<int> > > &mapTiles){
+void Tilemap::unsunkenGround(float x, float z){//, std::vector<std::vector<std::vector<int> > > &mapTiles){
     float y = 0;
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();

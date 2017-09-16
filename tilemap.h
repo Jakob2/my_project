@@ -17,7 +17,7 @@ public:
     void selectMapTiles();
     static std::vector<std::vector<std::vector<int>>> mapTiles;
     void ground(float x, float z, std::vector<std::vector<std::vector<int>>> &mapTiles);
-    void unsunkenGround(float x, float z, std::vector<std::vector<std::vector<int>>> &mapTiles);
+    void unsunkenGround(float x, float z);//, std::vector<std::vector<std::vector<int>>> &mapTiles);
 
     /*void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos);
 

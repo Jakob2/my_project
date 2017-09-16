@@ -50,14 +50,14 @@ void GlWidget::dd(){
 
 void GlWidget::setIntersection(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
-    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
     calculateGLCoords(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT);
-    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
     std::vector<float> out;
     out = calculateGLCoordsTest(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -72,7 +72,7 @@ bool GlWidget::onTilemap(int mouseX, int mouseY){
     uniqueColoredZoom();
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
-    unsunkenGround(World::map.x, World::map.z, Tilemap::mapTiles);
+    unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
     return checkIfOnTilemap(mouseX, mouseY);
 }
 
@@ -84,7 +84,7 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     uniqueColoredMinus();
     uniqueColoredCompass();
     readPixelColor(x,y);
-    hoverGui(x,y);
+    hoverGui();
 }
 
 void GlWidget::createToken(QMouseEvent *event){

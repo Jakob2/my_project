@@ -376,7 +376,7 @@ void Gui::calcCameraMoveUnits(){
     //cout<<"x: "<<x<<", z: "<<z<<endl;
 }
 
-bool Gui::hoverGui(int x, int y){
+bool Gui::hoverGui(){
     switch(World::mouse.pickedColor){
     case 1703936:
         World::gui.hoverBuilding = 0;
@@ -396,9 +396,6 @@ bool Gui::hoverGui(int x, int y){
         break;
     case 128:
         World::gui.hoverBuilding = 4;
-        //std::cout<<"HOVER FIELD OPTION"<<std::endl;
-        //World::pullField = true;
-        //World::field[0] = true;
         return true;
         break;
     case 153:
@@ -428,6 +425,5 @@ bool Gui::hoverGui(int x, int y){
         return false;
         break;
     }
-    //std::cout<<"BUILDING OPTION ID: "<<World::buildingOption<<" / "<<World::hoverBuilding<<std::endl;
 }
 

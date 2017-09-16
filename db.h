@@ -22,6 +22,7 @@ public:
     static QString iconsTable;
 
     static void updateOpen(QString x, QString z, QString state);
+    //static QString id();
 };
 
 #endif // DB_H

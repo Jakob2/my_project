@@ -33,4 +33,12 @@ void Db::updateOpen(QString x, QString z, QString state){
     else qDebug()<<"update tile open error: "<<query.lastError()<<" / "<<query.lastQuery();
 }
 
+/*QString Db::id(){
+    int id = 0;
+    QSqlQuery query;
+    if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
+    else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
+    while(query.next()) id = query.value(0).toInt();
+    return QString::number(id+1);
+}*/
 

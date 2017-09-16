@@ -36,7 +36,7 @@ public:
     void turnCamera(std::vector<float> q);
     void calcCameraMoveUnits();
 
-    bool hoverGui(int x, int y);
+    bool hoverGui();
 
 private:
     void background();
