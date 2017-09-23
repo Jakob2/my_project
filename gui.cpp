@@ -153,7 +153,8 @@ void Gui::uniqueColoredOptions(){
 
 
 void Gui::panelBuildings(QMouseEvent *event){
-    if(event->buttons() == Qt::LeftButton && World::gui.hoverBuilding != -1) World::gui.buildingOption = buildingId[World::gui.hoverBuilding];
+    if(event->buttons() == Qt::LeftButton && World::gui.hoverBuilding != -1)
+        World::gui.buildingOption = buildingId[World::gui.hoverBuilding];
     //World::map.token = false;
     std::cout<<"BUILDING OPTION: "<<World::gui.buildingOption<<std::endl;
 }
@@ -330,7 +331,6 @@ void Gui::drawNeedle(){
         glVertex2f(needleX+.005, needleY+.01);
         glVertex2f(needleX+.005, needleY-.01);
     glEnd();
-
 }
 
 void Gui::turnCamera(std::vector<float> q){

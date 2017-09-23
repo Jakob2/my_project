@@ -148,6 +148,11 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
     int turn;
     tIndex = 0;
 
+
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+
+
     for(int i=0; i<(int)construct.size(); i++){
         x = construct[i][4][0]-0.5;
         y = construct[i][4][1];
@@ -158,9 +163,18 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         b = construct[i][6][2];
         //xx = x+1;
         //zz = z+1;
-        glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+
+        glTranslatef(xPos+x,y,zPos+z);
+        glRotatef(turn,0,1,0);
+        glTranslatef(-xPos-x,-y,-zPos-z);
+
+        const GLfloat light_position[] = { .0f, .0f, .0f, .5f };
+        glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+
 
         if(construct[i][4][0]-1 == World::map.tile[4] && construct[i][4][2]-1 == World::map.tile[5]) World::map.constructId = construct[i][5][0];
         //else World::constructId = -1;
@@ -168,16 +182,16 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
 
         //if(construct[i][5][0] == World::buildingOption){
         if(construct[i][5][0] == World::map.constructId){
-            glTranslatef(xPos+x,y,zPos+z);
+            /*glTranslatef(xPos+x,y,zPos+z);
             glRotatef(turn,0,1,0);
-            glTranslatef(-xPos-x,-y,-zPos-z);
+            glTranslatef(-xPos-x,-y,-zPos-z);*/
             glColor3f(0,1,1);
             Shape::corpus(construct, i, x,y,z, xPos, zPos);
             //setToken(i, construct);
         }else{
-            glTranslatef(xPos+x,y,zPos+z);
+            /*glTranslatef(xPos+x,y,zPos+z);
             glRotatef(turn,0,1,0);
-            glTranslatef(-xPos-x,-y,-zPos-z);
+            glTranslatef(-xPos-x,-y,-zPos-z);*/
 
             //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
             //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
@@ -185,9 +199,20 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             glColor3f(r,g,b);
             Shape::corpus(construct, i, x,y,z, xPos, zPos);
         }
+
         glEnd();
         glPopMatrix();
+        glLoadIdentity();
+        //glPushMatrix(); // push under the stack the current modeview matrix
+
+
     }
+
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
+
+
+
 }
 
 void Construction::initToken(int size){

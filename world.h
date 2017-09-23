@@ -41,6 +41,7 @@ public:
         int hoverCompass;
         int buildingOption;
         int areaOption;
+        bool selected;
     }gui;
 };
 

@@ -33,4 +33,5 @@ World::World(){
     World::gui.hoverCompass = -1;
     World::gui.buildingOption = -1;
     World::gui.areaOption = 0;
+    World::gui.selected = false;
 }

@@ -43,6 +43,8 @@ private:
 
     void activateWay();
     void buildWay();
+
+    void resetGuiSelection();
 };
 
 #endif // GLWIDGET_H

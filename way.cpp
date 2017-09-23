@@ -103,7 +103,7 @@ void Way::drawWay(std::vector<std::vector<std::vector<float>>> &way, std::vector
     if(zz > World::map.range-1) zz = World::map.range-1;
     //std::cout<<"x: "<<x<<" - xx: "<<xx<<" / z: "<<z<<" - zz: "<<zz<<std::endl;
     calcAngle();
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);    
     if(xx>=x && zz>=z) waySouth(way,mapTiles,x,z,xx,zz);
     if(xx<=x && zz>=z) wayWest(way,mapTiles,x,z,xx,zz);
     if(xx<=x && zz<=z) wayNorth(way,mapTiles,x,z,xx,zz);
