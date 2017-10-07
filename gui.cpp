@@ -422,6 +422,7 @@ bool Gui::hoverGui(){
         World::gui.hoverBuilding = -1;
         World::gui.hoverZoom = -1;
         World::gui.hoverCompass = -1;
+        //World::gui.selected ? World::gui.selected = false : World::gui.selected = true;
         return false;
         break;
     }

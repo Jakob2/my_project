@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     construction.cpp \
     gui.cpp \
     field.cpp \
-    way.cpp
+    way.cpp \
+    shader.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -38,7 +39,8 @@ HEADERS  += mainwindow.h \
     construction.h \
     gui.h \
     field.h \
-    way.h
+    way.h \
+    shader.h
 
 FORMS    += mainwindow.ui
 

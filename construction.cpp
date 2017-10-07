@@ -153,6 +153,7 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
     //glLoadIdentity();
 
 
+
     for(int i=0; i<(int)construct.size(); i++){
         x = construct[i][4][0]-0.5;
         y = construct[i][4][1];
@@ -202,16 +203,8 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
 
         glEnd();
         glPopMatrix();
-        glLoadIdentity();
-        //glPushMatrix(); // push under the stack the current modeview matrix
-
-
+        //glLoadIdentity();
     }
-
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-
-
 
 }
 

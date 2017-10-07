@@ -8,6 +8,8 @@ class World
 public:
     World();
 
+    static float candleHeight;
+
     static float pi;
 
     static struct Mouse{

@@ -47,46 +47,7 @@ void GlWidget::ddd(){
     glLoadIdentity();
     gluPerspective(60.0, (float)World::view.width/World::view.height, 0.01, 100.0);
     gluLookAt(World::view.eyeX,World::view.eyeY,World::view.eyeZ, 0,0,0, 0,1,0);
-
-    const GLfloat light_ambient[]  = { 0.3f, 0.3f, 0.3f, 1.0f }; // 0
-    const GLfloat light_diffuse[]  = { 0.7f, 0.7f, 0.7f, 1.0f }; // 1
-    const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    const GLfloat light_position[] = { .0f, .0f, .0f, 1.0f };
-
-    const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
-    const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
-    const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
-    const GLfloat high_shininess[] = { 100.0f };
-
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_BACK);
-
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-
-    //glMatrixMode(GL_MODELVIEW);
-    //glPushMatrix(); // push under the stack the current modeview matrix
-    //glLoadIdentity(); // reset all transformations
-
-
-    glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
-
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  light_diffuse);
-    //glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT,   mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,   mat_diffuse);
-    //glMaterialfv(GL_FRONT, GL_SPECULAR,  mat_specular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
-
-
-    //glPopMatrix();
-
+    lightsOn();
 }
 
 void GlWidget::dd(){
@@ -95,7 +56,6 @@ void GlWidget::dd(){
     glDisable(GL_NORMALIZE);
     glDisable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
-
 
     glViewport(0,0, World::view.width,World::view.height);
     glMatrixMode(GL_PROJECTION);
@@ -122,9 +82,9 @@ std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
 bool GlWidget::onTilemap(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     dd();
-    uniqueColoredOptions();
+    /*uniqueColoredOptions();
     uniqueColoredCompass();
-    uniqueColoredZoom();
+    uniqueColoredZoom();*/
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
@@ -140,6 +100,7 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     uniqueColoredCompass();
     readPixelColor(x,y);
     hoverGui();
+    paintGL();
 }
 
 void GlWidget::createToken(QMouseEvent *event){
@@ -265,6 +226,12 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         break;
     case Qt::Key_Escape:
         World::map.constructId = -1;
+        break;
+    case Qt::Key_U:
+        World::candleHeight += 0.05;
+        break;
+    case Qt::Key_J:
+        World::candleHeight -= 0.05;
         break;
     }
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;

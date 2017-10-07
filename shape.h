@@ -3,6 +3,7 @@
 
 #include "general.h"
 #include "world.h"
+#include "vector.h"
 
 class Shape
 {

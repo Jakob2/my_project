@@ -6,8 +6,9 @@
 #include "tilemap.h"
 #include "mouseray.h"
 #include "gui.h"
+#include "shader.h"
 
-class GlWidget : public QGLWidget, public Tilemap, public Mouseray, public Gui
+class GlWidget : public QGLWidget, public Tilemap, public Mouseray, public Gui, public Shader
 {
 public:
     explicit GlWidget(QWidget * parent = 0);

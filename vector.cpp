@@ -29,3 +29,25 @@ float Vector::absolute(std::vector<float> in){
     return res;
 }
 
+std::vector<float> Vector::normal(std::vector<float> a, std::vector<float> b){
+    std::vector<float> out;
+    out.resize(3);
+    float x,y,z;
+    //x = a[1]*b[2] - a[2]*b[1];
+    x = a[2]*b[1] - a[1]*b[2];
+    y = a[2]*b[0] - a[0]*b[2];
+    z = a[0]*b[1] - a[1]*b[0];
+    return out = {x,y,z};
+}
+
+std::vector<float> Vector::normalize(std::vector<float> a){
+    std::vector<float> out;
+    out.resize(3);
+    float x,y,z, abs;
+    abs =  Vector::absolute(a);
+    x = a[0] / abs;
+    y = a[1] / abs;
+    z = a[2] / abs;
+    return out = {x,y,z};
+}
+

@@ -156,19 +156,16 @@ void Way::waySouth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
     //std::cout<<"SOUTHWAY"<<std::endl;
     if(angle>0 && angle<45){
         for(int i=x; i<=xx; i++){
-           //colorway(i, zz-1);
            drawStraight(way,mapTiles,i,zz+1,90,1);
            setWaySpanX(zz+1,x+1,xx+1);
         }
         for(int j=z; j<=zz; j++){
-           //colorway(x, j);
            drawStraight(way,mapTiles,x,j,0,0);
            setWaySpanZ(x+1,z+1,zz+1);
         }
     }
     else if(angle>45 && angle<90){
         for(int i=x; i<=xx; i++){
-           //colorway(i, z);
            drawStraight(way,mapTiles,i,z+1,90,1);
            setWaySpanX(z+1,x+1,xx+1);
         }
@@ -184,22 +181,21 @@ void Way::wayWest(std::vector<std::vector<std::vector<float>>> &way, std::vector
     //std::cout<<"WESTWAY"<<std::endl;
     if(angle>270 && angle<315){
         for(int i=xx; i<x+1; i++){
-           //colorway(i, z);
+           setWaySpanX(z+1,xx+1,x+1);
            drawStraight(way,mapTiles,i,z+1,90,1);
         }
         for(int j=z; j<=zz; j++){
-           //colorway(xx-1, j);
+           setWaySpanZ(xx+1,z+1,zz+1);
            drawStraight(way,mapTiles,xx,j,0,0);
         }
     }
     else if(angle>315 && angle<360){
-        //std::cout<<"WESTWAY 360"<<std::endl;
         for(int i=xx; i<x+1; i++){
-           //colorway(i, zz-1);
+           setWaySpanX(zz+1,xx+1,x+1);
            drawStraight(way,mapTiles,i,zz+1,90,1);
         }
         for(int j=z; j<=zz; j++){
-           //colorway(x, j);
+           setWaySpanZ(x+1,z+1,zz+1);
            drawStraight(way,mapTiles,x,j,0,0);
         }
     }
@@ -209,21 +205,21 @@ void Way::wayNorth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
     //std::cout<<"NORTHWAY"<<std::endl;
     if(angle>180 && angle<225){
         for(int i=xx; i<x+1; i++){
-           //colorway(i, zz-1);
+           setWaySpanX(zz+1,xx+1,x+1);
            drawStraight(way,mapTiles,i,zz+1,90,1);
         }
         for(int j=zz; j<z+1; j++){
-           //colorway(x, j);
+           setWaySpanZ(x+1,zz+1,z+1);
            drawStraight(way,mapTiles,x,j,0,0);
         }
     }
     else if(angle>225 && angle<270){
         for(int i=xx; i<x+1; i++){
-           //colorway(i, z);
+           setWaySpanX(z+1,xx+1,x+1);
            drawStraight(way,mapTiles,i,z+1,90,1);
         }
         for(int j=zz; j<z+1; j++){
-           //colorway(xx-1, j);
+           setWaySpanZ(xx+1,zz+1,z+1);
            drawStraight(way,mapTiles,xx,j,0,0);
         }
     }
@@ -231,24 +227,25 @@ void Way::wayNorth(std::vector<std::vector<std::vector<float>>> &way, std::vecto
 
 void Way::wayEast(std::vector<std::vector<std::vector<float>>> &way, std::vector<std::vector<std::vector<int>>> &mapTiles, int x, int z, int xx, int zz){
     //std::cout<<"WESTWAY"<<std::endl;
+    std::cout<<"angle: "<<angle<<" / x: "<<x<<" - z: "<<z<<" / xx: "<<xx<<" - zz: "<<zz<<std::endl;
     if(angle>90 && angle<135){
         for(int i=x; i<=xx; i++){
-           //colorway(i, z);
-           drawStraight(way,mapTiles,i,z+1,90,1);
+            setWaySpanX(z+1,x+1,xx+1);
+            drawStraight(way,mapTiles,i,z+1,90,1);
         }
         for(int j=zz; j<z+1; j++){
-           //colorway(xx-1, j);
-           drawStraight(way,mapTiles,xx,j,0,0);
+            setWaySpanZ(xx+1,zz+1,z+1);
+            drawStraight(way,mapTiles,xx,j,0,0);
         }
     }
     else if(angle>135 && angle<180){
         for(int i=x; i<=xx; i++){
-           //colorway(i, zz-1);
-           drawStraight(way,mapTiles,i,zz+1,90,1);
+            setWaySpanX(zz+1,x+1,xx+1);
+            drawStraight(way,mapTiles,i,zz+1,90,1);
         }
         for(int j=zz; j<z+1; j++){
-           //colorway(x, j);
-           drawStraight(way,mapTiles,x,j,0,0);
+            setWaySpanZ(x+1,zz+1,z+1);
+            drawStraight(way,mapTiles,x,j,0,0);
         }
     }
 }

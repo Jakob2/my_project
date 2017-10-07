@@ -1,5 +1,7 @@
 #include "world.h"
 
+float World::candleHeight;
+
 float World::pi;
 World::View World::view;
 World::Tile World::map;
@@ -7,6 +9,8 @@ World::Gui World::gui;
 World::Mouse World::mouse;
 
 World::World(){
+    World::candleHeight = 1.0;
+
     World::pi = 3.14159265;
 
     World::mouse.pressed = false;
