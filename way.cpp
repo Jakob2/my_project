@@ -10,7 +10,7 @@ void Way::setWay(int size){
     Way::way.clear();
     for(int i=0; i<size; i++){
         Way::way.push_back(std::vector<std::vector<float>>());
-        for(int j=0; j<5; j++){
+        for(int j=0; j<6; j++){
             Way::way[i].push_back(std::vector<float>());
             for(int k=0; k<3; k++){
                 Way::way[i][j].push_back(0);
@@ -24,7 +24,7 @@ void Way::selectWay(){
     int index;
     index = 0;
     setWay(6);
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name = 7")) std::cout<<"way selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name = 7")) std::cout<<"way selected"<<std::endl;
     else qDebug()<<"select way error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Way::way[index][0][0] = query.value(0).toFloat();
@@ -46,6 +46,10 @@ void Way::selectWay(){
         Way::way[index][4][0] = query.value(12).toFloat();
         Way::way[index][4][1] = query.value(13).toFloat();
         Way::way[index][4][2] = query.value(14).toFloat();
+
+        Way::way[index][5][0] = query.value(15).toFloat();
+        Way::way[index][5][1] = query.value(16).toFloat();
+        Way::way[index][5][2] = query.value(17).toFloat();
         index++;
     }
     std::cout<<"WAY COLOR: "<<Way::way[1][4][0]<<std::endl;
@@ -54,7 +58,7 @@ void Way::selectWay(){
 void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString x, QString z, QString turn){
 //void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &way, QString xz){
     QSqlQuery query;
-    QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
+    QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ;
     mid = id();
     for(int i=0; i<(int)Way::way.size(); i++){
         //for(int zz=0; zz<(int)Way::way[x].size(); zz++){
@@ -79,7 +83,11 @@ void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &w
             g = QString::number(way[i][4][1]);
             b = QString::number(way[i][4][2]);
 
-            if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+" )")) std::cout<<"way inserted"<<std::endl;
+            nX = QString::number(way[i][5][0]);
+            nY = QString::number(way[i][5][1]);
+            nZ = QString::number(way[i][5][2]);
+
+            if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn, nX,nY,nZ) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+", "+nX+","+nY+","+nZ+" )")) std::cout<<"way inserted"<<std::endl;
             else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
         //}
     }

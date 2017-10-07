@@ -246,7 +246,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::light.diffuse -= 0.05;
         break;
     }
-    //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
+    std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
     paintGL();
 }

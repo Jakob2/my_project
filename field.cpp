@@ -12,7 +12,7 @@ void Field::setField(int size){
     Field::field.clear();
     for(int i=0; i<size; i++){
         Field::field.push_back(std::vector<std::vector<float>>());
-        for(int j=0; j<7; j++){
+        for(int j=0; j<8; j++){
             Field::field[i].push_back(std::vector<float>());
             for(int k=0; k<3; k++){
                 Field::field[i][j].push_back(0);
@@ -43,7 +43,7 @@ void Field::selectField(QString name){
     while(query.next()) range = query.value(0).toInt();
     setField(range);
 
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"field selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"field selected"<<std::endl;
     else qDebug()<<"select field error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Field::field[index][0][0] = query.value(0).toFloat();
@@ -65,6 +65,11 @@ void Field::selectField(QString name){
         Field::field[index][4][0] = query.value(12).toFloat();
         Field::field[index][4][1] = query.value(13).toFloat();
         Field::field[index][4][2] = query.value(14).toFloat();
+
+        Field::field[index][5][0] = query.value(15).toFloat();
+        Field::field[index][5][1] = query.value(16).toFloat();
+        Field::field[index][5][2] = query.value(17).toFloat();
+
         index++;
     }
 }
@@ -211,7 +216,7 @@ void Field::eastarea(std::vector<std::vector<std::vector<float>>> &field, int f,
 
 void Field::fieldSQL(QString map, QString name, std::vector<std::vector<std::vector<float>>> &field, int x, int z){
     QSqlQuery query;
-    QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
+    QString mid, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ;
     mid = id();
     for(int index=0; index<(int)field.size(); index++){
         ax = QString::number(field[index][0][0]);
@@ -234,9 +239,12 @@ void Field::fieldSQL(QString map, QString name, std::vector<std::vector<std::vec
         g = QString::number(field[index][4][1]);
         b = QString::number(field[index][4][2]);
 
+        nX = QString::number(field[index][5][0]);
+        nY = QString::number(field[index][5][1]);
+        nZ = QString::number(field[index][5][2]);
         //cout<<"x: "<<x<<" / z: "<<z<<endl;
         //query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )");
-        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"field inserted"<<std::endl;
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+QString::number(x)+",0,"+QString::number(z)+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nY+","+nX+","+nZ+" )")) std::cout<<"field inserted"<<std::endl;
         else qDebug()<<"insert field error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
