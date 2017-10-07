@@ -228,12 +228,25 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::map.constructId = -1;
         break;
     case Qt::Key_U:
-        World::candleHeight += 0.05;
+        World::light.height += 0.05;
         break;
     case Qt::Key_J:
-        World::candleHeight -= 0.05;
+        World::light.height -= 0.05;
+        break;
+    case Qt::Key_M:
+        World::light.ambient += 0.05;
+        break;
+    case Qt::Key_N:
+        World::light.ambient -= 0.05;
+        break;
+    case Qt::Key_B:
+        World::light.diffuse += 0.05;
+        break;
+    case Qt::Key_V:
+        World::light.diffuse -= 0.05;
         break;
     }
+    //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
     paintGL();
 }
@@ -253,31 +266,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(onTilemap(pressWinX,pressWinY) && World::gui.buildingOption == 6 && World::gui.selected) plantField();
     //build a way
     if(onMenu(pressWinX) && World::gui.hoverBuilding == 3) activateWay();
-    if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7 && World::gui.selected){
-        buildWay();
-        /*if(waystuff.active){
-            waystuff.build ? waystuff.build = false : waystuff.build = true;
-            if(waystuff.init && onTilemap(moveWinX,moveWinY)){
-                testIntersection = setIntersectionTest(pressWinX,pressWinY);
-                waystuff.x = ceil(testIntersection[0]-World::map.x)-1;
-                waystuff.z = ceil(testIntersection[2]-World::map.z)-1;
-            }
-            waystuff.init = false;
-            if(!waystuff.build){
-                std::cout<<"BUILD THE WAY"<<std::endl;
-                for(auto i : waystuff.spanZ) std::cout<<"way x: "<<i.toStdString()<<std::endl;
-                for(int x=0; x<(int)waystuff.spanX.size(); x++){
-                    insertWay(QString::number(World::map.map), Way::way, waystuff.spanX[x],waystuff.baseZ, QString::number(90));
-                }
-                for(int z=0; z<(int)waystuff.spanZ.size(); z++){
-                    insertWay(QString::number(World::map.map), Way::way, waystuff.baseX, waystuff.spanZ[z], QString::number(0));
-                }
-                selectConstructs(QString::number(World::map.map));
-                selectMapTiles();
-                waystuff.init = true;
-            }
-        }*/
-    }
+    if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7 && World::gui.selected) buildWay();
     //build a house
     //if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::gui.buildingOption == 999) crackHouse();

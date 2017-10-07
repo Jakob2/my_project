@@ -8,7 +8,7 @@ class World
 public:
     World();
 
-    static float candleHeight;
+    //static float candleHeight;
 
     static float pi;
 
@@ -45,6 +45,12 @@ public:
         int areaOption;
         bool selected;
     }gui;
+
+    static struct Light{
+        float ambient;
+        float diffuse;
+        float height;
+    }light;
 };
 
 #endif // WORLD_H

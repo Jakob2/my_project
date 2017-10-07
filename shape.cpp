@@ -59,7 +59,7 @@ void Shape::flatCube(float depth, int i, int j, float x, float y, float z){
 }
 
 void Shape::corpus(std::vector<std::vector<std::vector<float>>> &construct, int i, float x, float y, float z, float xPos, float zPos){
-    std::vector<float> a;
+    /*std::vector<float> a;
     std::vector<float> b;
     std::vector<float> d;
     std::vector<float> vb;
@@ -70,10 +70,14 @@ void Shape::corpus(std::vector<std::vector<std::vector<float>>> &construct, int 
     d = {xPos+x+construct[i][3][0], y+construct[i][3][1], zPos+z+construct[i][3][2]};
     vb = Vector::direction(a,b);
     vd = Vector::direction(a,d);
-    k = Vector::normalize(Vector::normal(vd,vb));
+    k = Vector::normalize(Vector::normal(vd,vb));*/
+    float nx,ny,nz;
+    nx = construct[i][7][0]*-1;
+    ny = construct[i][7][1]*-1;
+    nz = construct[i][7][2]*-1;
     //std::cout<<"i: "<<i<<" / "<<k[0]<<" / "<<k[1]<<" / "<<k[2]<<std::endl;
     glBegin(GL_POLYGON);
-        glNormal3f(k[0], k[1], k[2]);
+        glNormal3f(nx, ny, nz);
         glVertex3f(xPos+x+construct[i][0][0], y+construct[i][0][1], zPos+z+construct[i][0][2]);
         glVertex3f(xPos+x+construct[i][1][0], y+construct[i][1][1], zPos+z+construct[i][1][2]);
         glVertex3f(xPos+x+construct[i][2][0], y+construct[i][2][1], zPos+z+construct[i][2][2]);

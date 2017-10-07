@@ -1,15 +1,16 @@
 #include "world.h"
 
-float World::candleHeight;
+//float World::candleHeight;
 
 float World::pi;
 World::View World::view;
 World::Tile World::map;
 World::Gui World::gui;
 World::Mouse World::mouse;
+World::Light World::light;
 
 World::World(){
-    World::candleHeight = 1.0;
+    //World::candleHeight = 1.0;
 
     World::pi = 3.14159265;
 
@@ -38,4 +39,8 @@ World::World(){
     World::gui.buildingOption = -1;
     World::gui.areaOption = 0;
     World::gui.selected = false;
+
+    World::light.ambient = .1;
+    World::light.diffuse = .9;
+    World::light.height = 1.0;
 }

@@ -13,7 +13,7 @@ QString Db::iconsTable;
 void Db::initDb(){
     Db::database = "map";
     Db::mapTable = "map";
-    Db::constructsTable = "polysd3";
+    Db::constructsTable = "polysd4";
     Db::tilesTable = "tiles";
     Db::iconsTable = "icon";
     connectDatabase();

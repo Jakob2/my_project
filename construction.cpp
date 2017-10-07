@@ -10,7 +10,7 @@ void Construction::setConstruct(int size){
     Construction::construct.clear();
     for(int i=0; i<size; i++){
         Construction::construct.push_back(std::vector<std::vector<float>>());
-        for(int j=0; j<7; j++){
+        for(int j=0; j<8; j++){
             Construction::construct[i].push_back(std::vector<float>());
             for(int k=0; k<3; k++){
                 Construction::construct[i][j].push_back(0);
@@ -27,7 +27,7 @@ void Construction::selectConstructs(QString map){
     else qDebug()<<"construct range error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) range = query.value(0).toInt();
     setConstruct(range);
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b, nX,nY,nZ FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
     else qDebug()<<"select construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Construction::construct[index][0][0] = query.value(0).toFloat(); //ax
@@ -56,19 +56,23 @@ void Construction::selectConstructs(QString map){
         Construction::construct[index][6][0] = query.value(17).toFloat(); //r
         Construction::construct[index][6][1] = query.value(18).toFloat(); //g
         Construction::construct[index][6][2] = query.value(19).toFloat(); //b
+
+        Construction::construct[index][7][0] = query.value(20).toFloat(); //nX
+        Construction::construct[index][7][1] = query.value(21).toFloat(); //nY
+        Construction::construct[index][7][2] = query.value(22).toFloat(); //nZ
         index++;
     }
-    /*for(int i=0; i<(int)Db::construct.size(); i++){
-           for(int j=0; j<(int)Db::construct[i].size(); j++){
-               for(int k=0; k<(int)Db::construct[i][j].size(); k++){
-                   cout<<i<<"/"<<j<<"/"<<k<<"/"<<Db::construct[i][j][k]<<endl;
+    for(int i=0; i<(int)Construction::construct.size(); i++){
+           for(int j=0; j<(int)Construction::construct[i].size(); j++){
+               for(int k=0; k<(int)Construction::construct[i][j].size(); k++){
+                   std::cout<<i<<"/"<<j<<"/"<<k<<"/"<<Construction::construct[i][j][k]<<std::endl;
                }
            }
-    }*/
+    }
 }
 
 void Construction::insertConstruct(QString map, QString name, QString x, QString z){
-    QString ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b;
+    QString ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ;
     std::vector<std::vector<float>> test;
     int index = 0;
     int range = 0;
@@ -81,12 +85,12 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
     //test.clear();
     test.resize(range);
     for(int i=0; i<range; i++){
-        test[i].resize(15);
+        test[i].resize(18);
     }
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
     else qDebug()<<"select name error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
-        for(int i=0; i<15; i++){
+        for(int i=0; i<18; i++){
             test[index][i] = query.value(i).toFloat();
         }
         index++;
@@ -112,7 +116,13 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
         g = QString::number(test[i][13]);
         b = QString::number(test[i][14]);
 
-        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+" )")) std::cout<<"construct inserted"<<std::endl;
+        nX = QString::number(test[i][15]);
+        nY = QString::number(test[i][16]);
+        nZ = QString::number(test[i][17]);
+
+        std::cout<<"NORMALS "<<nX.toStdString()<<" - "<<nY.toStdString()<<" - "<<nZ.toStdString()<<std::endl;
+
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )")) std::cout<<"construct inserted"<<std::endl;
         else qDebug()<<"insert construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }

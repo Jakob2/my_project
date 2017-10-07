@@ -13,15 +13,19 @@ Shader::Shader(){
 }
 
 void Shader::lightsOn(){
-    const GLfloat light_ambient[]  = { .1f, .1f, .1f, 1.0f }; // 0
-    const GLfloat light_diffuse[]  = { .9f, .9f, .9f, 1.0f }; // 1
-    const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    GLfloat light_position[] = { -0.5f, World::candleHeight, -0.5f, 1.0f };
+    //const GLfloat light_ambient[]  = { .1f, .1f, .1f, 1.0f }; // 0
+    //const GLfloat light_diffuse[]  = { .3f, .3f, .3f, 1.0f }; // 1
+    const GLfloat light_ambient[]  = { World::light.ambient, World::light.ambient, World::light.ambient, 1.0f }; // 0
+    const GLfloat light_diffuse[]  = { World::light.diffuse, World::light.diffuse, World::light.diffuse, 1.0f }; // 1
 
-    const GLfloat mat_ambient[]    = { 0.2f, 0.2f, 0.2f, 1.0f };
+    //const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    //GLfloat light_position[] = { -0.5f, World::candleHeight, -0.5f, 1.0f };
+    GLfloat light_position[] = { 0, World::light.height, 0, 1.0f };
+
+    /*const GLfloat mat_ambient[]    = { 0.2f, 0.2f, 0.2f, 1.0f };
     const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
     const GLfloat mat_specular[]   = { 1.0f, 1.0f, 1.0f, 1.0f };
-    const GLfloat high_shininess[] = { 100.0f };
+    const GLfloat high_shininess[] = { 100.0f };*/
 
     //glEnable(GL_CULL_FACE);
     //glCullFace(GL_BACK);
