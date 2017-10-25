@@ -34,8 +34,14 @@ bool Gui::onMenu(float mouseX){
     float gridX;
     //gridX = mouseX/World::width;
     gridX = mouseX/World::view.width;
-    if(gridX > menuX[0]) return true;
-    else return false;
+    if(gridX > menuX[0]){
+        World::mouse.onMenu = true;
+        return true;
+    }
+    else{
+        World::mouse.onMenu = false;
+        return false;
+    }
 }
 
 void Gui::background(){
@@ -378,7 +384,7 @@ void Gui::calcCameraMoveUnits(){
 
 bool Gui::hoverGui(){
     switch(World::mouse.pickedColor){
-    case 1703936:
+    case 1638400:
         World::gui.hoverBuilding = 0;
         return true;
         break;

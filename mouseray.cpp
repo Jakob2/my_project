@@ -52,7 +52,7 @@ void Mouseray::intersect(std::vector<float> in){
     World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};
 
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
-    //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
+    std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
 
 std::vector<float> Mouseray::intersectTest(std::vector<float> in){
@@ -88,14 +88,15 @@ void Mouseray::crossfade(){
     glEnd();
 }
 
-bool Mouseray::checkIfOnTilemap(int x, int y){
-    readPixelColor(x,y);
+//bool Mouseray::checkIfOnTilemap(int x, int y){
+bool Mouseray::checkIfOnTilemap(){
+    //readPixelColor(x,y);
     if(!pickedId){
-        //std::cout<<"ON TILEMAP !!!"<<std::endl;
+        std::cout<<"ON TILEMAP !!!"<<std::endl;
         return true;
     }
     else{
-        //std::cout<<"NOT ON TILEMAP !!!"<<std::endl;
+        std::cout<<"NOT ON TILEMAP !!!"<<std::endl;
         return false;
     }
 }
@@ -108,5 +109,5 @@ void Mouseray::readPixelColor(int x, int y){
     glReadPixels(x,World::view.height-y, 1,1, GL_RGB,GL_UNSIGNED_BYTE, pixelcolor);
     pickedId = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
     World::mouse.pickedColor = pixelcolor[0] + pixelcolor[1] * 256 + pixelcolor[2] * 256*256;
-    //std::cout<<"PIXELID: "<<pickedId<<std::endl;
+    std::cout<<"PIXELID: "<<pickedId<<std::endl;
 }

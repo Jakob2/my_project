@@ -21,6 +21,7 @@ void GlWidget::paintGL(){
     resizeGL(0,0);
     dd();
     drawMenu();
+    //drawUniqueColoredGui(0,0);
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     ground(World::map.x, World::map.z, Tilemap::mapTiles);
@@ -68,6 +69,7 @@ void GlWidget::setIntersection(int mouseX, int mouseY){
     unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
     calculateGLCoords(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
+    paintGL();
 }
 
 std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
@@ -76,20 +78,23 @@ std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
     std::vector<float> out;
     out = calculateGLCoordsTest(mouseX,mouseY);
     glClear(GL_DEPTH_BUFFER_BIT);
+    paintGL();
     return out;
 }
 
-bool GlWidget::onTilemap(int mouseX, int mouseY){
+/*bool GlWidget::onTilemap(int mouseX, int mouseY){
     glClear(GL_DEPTH_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    dd();
+    //dd();
     /*uniqueColoredOptions();
     uniqueColoredCompass();
-    uniqueColoredZoom();*/
+    uniqueColoredZoom();
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
     unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
-    return checkIfOnTilemap(mouseX, mouseY);
-}
+    //readPixelColor(pressWinX,pressWinY);
+    //return checkIfOnTilemap(mouseX, mouseY);
+    return checkIfOnTilemap();
+}*/
 
 void GlWidget::drawUniqueColoredGui(int x, int y){
     dd();
@@ -176,7 +181,8 @@ void GlWidget::activateWay(){
 void GlWidget::buildWay(){
     if(waystuff.active){
         waystuff.build ? waystuff.build = false : waystuff.build = true;
-        if(waystuff.init && onTilemap(moveWinX,moveWinY)){
+        //if(waystuff.init && onTilemap(moveWinX,moveWinY)){
+        if(waystuff.init && !World::mouse.onMenu){
             testIntersection = setIntersectionTest(pressWinX,pressWinY);
             waystuff.x = ceil(testIntersection[0]-World::map.x)-1;
             waystuff.z = ceil(testIntersection[2]-World::map.z)-1;
@@ -246,7 +252,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
         World::light.diffuse -= 0.05;
         break;
     }
-    std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
+    //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
     paintGL();
 }
@@ -256,21 +262,28 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     pressWinX = event->pos().x();
     pressWinY = event->pos().y();
 
+    //onTilemap(pressWinX, pressWinY);
+    drawUniqueColoredGui(pressWinX,pressWinY);
+
     //std::cout<<"PRESSWIN: "<<pressWinX<<"-"<<pressWinY<<std::endl;
     if(World::gui.hoverCompass == 1 && onMenu(moveWinX)) turnCamera(mouseToMenuGrid(pressWinX,pressWinY));
-    if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
+    //if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && onTilemap(pressWinX,pressWinY)) setIntersection(pressWinX,pressWinY);
+    if(panelWorld(mouseToMenuGrid(pressWinX,pressWinY)) && !World::mouse.onMenu) setIntersection(pressWinX,pressWinY);
     if(World::gui.hoverZoom == 0 || World::gui.hoverZoom == 1) zoom();
     if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
     //plant a field
     if(onMenu(pressWinX) && World::gui.hoverBuilding == 4) activateField();
-    if(onTilemap(pressWinX,pressWinY) && World::gui.buildingOption == 6 && World::gui.selected) plantField();
+    //if(onTilemap(pressWinX,pressWinY) && World::gui.buildingOption == 6 && World::gui.selected) plantField();
+    if(!World::mouse.onMenu && World::gui.buildingOption == 6 && World::gui.selected) plantField();
     //build a way
     if(onMenu(pressWinX) && World::gui.hoverBuilding == 3) activateWay();
-    if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7 && World::gui.selected) buildWay();
+    //if(onTilemap(moveWinX,moveWinY) && World::gui.buildingOption == 7 && World::gui.selected) buildWay();
+    if(!World::mouse.onMenu && World::gui.buildingOption == 7 && World::gui.selected) buildWay();
     //build a house
     //if(onMenu(pressWinX) && World::gui.hoverBuilding != -1 && World::gui.hoverBuilding != 999) createToken(event);
     if(onMenu(pressWinX) && World::gui.buildingOption == 999) crackHouse();
-    if(onTilemap(pressWinX,pressWinY) && World::map.token && World::map.valid && World::gui.buildingOption != 6 && World::gui.buildingOption != 7) buildAHouse();
+    //if(onTilemap(pressWinX,pressWinY) && World::map.token && World::map.valid && World::gui.buildingOption != 6 && World::gui.buildingOption != 7) buildAHouse();
+    if(!World::mouse.onMenu && World::map.token && World::map.valid && World::gui.buildingOption != 6 && World::gui.buildingOption != 7) buildAHouse();
 
     resetGuiSelection();
 }
@@ -282,11 +295,12 @@ void GlWidget::mouseReleaseEvent(QMouseEvent *event){
 void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
+    onMenu(moveWinX);
     if(World::gui.hoverCompass == 1 && World::mouse.pressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
-    if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
-    if(World::map.token){
-        if(onTilemap(moveWinX,moveWinY)){
+    //if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
+    if(World::map.token && !World::mouse.onMenu){
+        //if(onTilemap(moveWinX,moveWinY)){
             setIntersection(moveWinX,moveWinY);
-        }
+        //}
     }
 }

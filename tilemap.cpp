@@ -62,6 +62,7 @@ void Tilemap::unsunkenGround(float x, float z){//, std::vector<std::vector<std::
     glPushMatrix();
     for(float i=0; i<World::map.range; i++){
         for(float j=0; j<World::map.range; j++){
+            glColor3f(0,0,0);
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glColor3f(0,0,0);
             Shape::top(i,j,x,y,z);

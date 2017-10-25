@@ -62,13 +62,13 @@ void Construction::selectConstructs(QString map){
         Construction::construct[index][7][2] = query.value(22).toFloat(); //nZ
         index++;
     }
-    for(int i=0; i<(int)Construction::construct.size(); i++){
+    /*for(int i=0; i<(int)Construction::construct.size(); i++){
            for(int j=0; j<(int)Construction::construct[i].size(); j++){
                for(int k=0; k<(int)Construction::construct[i][j].size(); k++){
                    std::cout<<i<<"/"<<j<<"/"<<k<<"/"<<Construction::construct[i][j][k]<<std::endl;
                }
            }
-    }
+    }*/
 }
 
 void Construction::insertConstruct(QString map, QString name, QString x, QString z){

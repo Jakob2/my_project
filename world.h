@@ -15,6 +15,7 @@ public:
     static struct Mouse{
         int pickedColor;
         bool pressed;
+        bool onMenu;
     }mouse;
 
     static struct View{

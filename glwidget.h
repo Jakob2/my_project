@@ -32,7 +32,7 @@ private:
 
     void setIntersection(int mouseX, int mouseY);
     std::vector<float> setIntersectionTest(int mouseX, int mouseY);
-    bool onTilemap(int mouseX, int mouseY);
+    //bool onTilemap(int mouseX, int mouseY);
     void drawUniqueColoredGui(int x, int y);
 
     void createToken(QMouseEvent *event);

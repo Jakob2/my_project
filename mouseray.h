@@ -13,7 +13,9 @@ public:
     std::vector<float> calculateGLCoordsTest(int x, int y);
     bool panelWorld(std::vector<float> in);
     void crossfade();
-    bool checkIfOnTilemap(int x, int y);
+    //bool checkIfOnTilemap(int x, int y);
+    bool checkIfOnTilemap();
+
     //bool hoverGui(int x, int y);
 
     void readPixelColor(int x, int y);

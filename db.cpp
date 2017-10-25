@@ -21,7 +21,7 @@ void Db::initDb(){
 
 void Db::connectDatabase(){
     QSqlDatabase m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("/home/ok/jakob/QT4/DATABASES/"+Db::database);
+    m_db.setDatabaseName("/home/jakob/QT/DATABASES/"+Db::database);
     if(!m_db.open()) std::cout<< "Error: connection with database fail"<<std::endl;
     else std::cout<< "Database: connection ok"<<std::endl;
 }
