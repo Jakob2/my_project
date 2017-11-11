@@ -28,6 +28,8 @@ private:
     int tIndex = 0;
     const float clip = 0.5;
     QString id();
+
+    bool lightRadius(float x, float z);
 };
 
 #endif // CONSTRUCTION_H

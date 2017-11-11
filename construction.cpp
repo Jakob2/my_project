@@ -148,6 +148,18 @@ QString Construction::id(){
     return QString::number(id+1);
 }
 
+bool Construction::lightRadius(float x, float z){
+    if(sqrt(pow(x,2))>4 || sqrt(pow(z,2))>4){
+        World::light.ambient = 0;
+        World::light.diffuse = 0;
+        return false;
+    }else{
+        World::light.ambient = .1;
+        World::light.diffuse = .9;
+        return true;
+    }
+}
+
 void Construction::constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos){
     /*float QX, QZ, X, Z;
     QX = World::map.tile[2];
@@ -157,7 +169,6 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
     float x,y,z, r, g, b;//, xx, zz;
     int turn;
     tIndex = 0;
-
 
     //glMatrixMode(GL_PROJECTION);
     //glLoadIdentity();
@@ -174,6 +185,8 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         b = construct[i][6][2];
         //xx = x+1;
         //zz = z+1;
+
+
         glPushMatrix();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -185,6 +198,10 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
         const GLfloat light_position[] = { .0f, .0f, .0f, .5f };
         glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
+        std::vector<float> d;
+        d = Vector::direction({0,0,0},{x+xPos,0,z+zPos});
+        float distance;
+        distance = Vector::absolute(d);
 
 
         if(construct[i][4][0]-1 == World::map.tile[4] && construct[i][4][2]-1 == World::map.tile[5]) World::map.constructId = construct[i][5][0];
@@ -207,7 +224,9 @@ void Construction::constructs(std::vector<std::vector<std::vector<float>>> &cons
             //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
             //if((x-clip<QX-X && xx-clip>QX-X) && (z-clip<QZ-Z && zz-clip>QZ-Z) && World::moveConstruct) World::gui.buildingOption = construct[i][5][0];
             //else glColor3f(r,g,b);
-            glColor3f(r,g,b);
+
+            if(distance > 4) glColor3f(r-.5,g-.5,b-.5);
+            else glColor3f(r,g,b);
             Shape::corpus(construct, i, x,y,z, xPos, zPos);
         }
 
