@@ -24,10 +24,14 @@ void GlWidget::paintGL(){
     //drawUniqueColoredGui(0,0);
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
-    ground(World::map.x, World::map.z, Tilemap::mapTiles);
+    //ground(World::map.x, World::map.z, Tilemap::mapTiles);
+    ground(0, 0, Tilemap::mapTiles);
+
     crossfade();
 
-    constructs(Construction::construct, World::map.x, World::map.z);
+    //constructs(Construction::construct, World::map.x, World::map.z);
+    constructs(Construction::construct, 0, 0);
+
 
     if(World::map.token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
     if(fieldstuff.build) fieldarea(Field::field, World::map.x,World::map.z);
@@ -47,7 +51,7 @@ void GlWidget::ddd(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0, (float)World::view.width/World::view.height, 0.01, 100.0);
-    gluLookAt(World::view.eyeX,World::view.eyeY,World::view.eyeZ, 0,0,0, 0,1,0);
+    gluLookAt(World::view.eyeX+World::map.x,World::view.eyeY,World::view.eyeZ+World::map.z, 0+World::map.x,0,0+World::map.z, 0,1,0);
     lightsOn();
 }
 
@@ -254,7 +258,6 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     }
     //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
-    paintGL();
 }
 
 void GlWidget::mousePressEvent(QMouseEvent *event){
