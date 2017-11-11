@@ -111,7 +111,8 @@ void GlWidget::drawUniqueColoredGui(int x, int y){
     uniqueColoredCompass();
     readPixelColor(x,y);
     hoverGui();
-    paintGL();
+    //paintGL();
+    updateGL();
 }
 
 void GlWidget::createToken(QMouseEvent *event){
@@ -260,6 +261,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     }
     //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
+    updateGL();
 }
 
 void GlWidget::mousePressEvent(QMouseEvent *event){
@@ -291,6 +293,7 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
     if(!World::mouse.onMenu && World::map.token && World::map.valid && World::gui.buildingOption != 6 && World::gui.buildingOption != 7) buildAHouse();
 
     resetGuiSelection();
+    updateGL();
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){
@@ -308,5 +311,5 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
             setIntersection(moveWinX,moveWinY);
         //}
     }
-    swapBuffers();
+    updateGL();
 }

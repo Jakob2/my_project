@@ -34,7 +34,7 @@ std::vector<float> Mouseray::calculateGLCoordsTest(int x, int y){
 }
 
 void Mouseray::intersect(std::vector<float> in){
-    float t,x,y,z;
+    /*float t,x,y,z;
     t = (-World::view.eyeY)/in[1];
     x = World::view.eyeX + (t*in[0]);
     y = 0;
@@ -46,9 +46,9 @@ void Mouseray::intersect(std::vector<float> in){
     if(z < 0) z = 0;
     if(z > World::map.range-1) z = World::map.range-1;
 
-    World::map.tile = {(float)floor(x),(float)floor(z), (float)x,(float)z, x,z};
+    World::map.tile = {(float)floor(x),(float)floor(z), (float)x,(float)z, x,z};*/
 
-    /*float x, y, z, r, t, xx, yy, zz;
+    float x, y, z, r, t, xx, yy, zz;
     x = in[0];
     y = in[1];
     z = in[2];
@@ -65,7 +65,7 @@ void Mouseray::intersect(std::vector<float> in){
     if(txx > World::map.range-1) txx = World::map.range-1;
     if(tzz < 0) tzz = 0;
     if(tzz > World::map.range-1) tzz = World::map.range-1;
-    World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};*/
+    World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};
 
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
     //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;

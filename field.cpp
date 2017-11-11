@@ -135,17 +135,17 @@ void Field::fieldarea(std::vector<std::vector<std::vector<float>>> &field, float
     glPushMatrix();
     glColor3f(r,g,b);
     for(int f=0; f<(int)field.size(); f++){
-        //if(World::tile[2] > World::areaX && World::tile[3] > World::areaZ)
         if(World::map.tile[2] > fieldstuff.areaX && World::map.tile[3] > fieldstuff.areaZ)
+        //if(World::map.tile[4] > fieldstuff.areaX && World::map.tile[5] > fieldstuff.areaZ)
             southarea(field, f, xPos,zPos);
-        //else if(World::tile[2] < World::areaX && World::tile[3] > World::areaZ)
         else if(World::map.tile[2] < fieldstuff.areaX && World::map.tile[3] > fieldstuff.areaZ)
+        //else if(World::map.tile[4] < fieldstuff.areaX && World::map.tile[5] > fieldstuff.areaZ)
             westarea(field, f, xPos,zPos);
-        //else if(World::tile[2] > World::areaX && World::tile[3] < World::areaZ)
         else if(World::map.tile[2] > fieldstuff.areaX && World::map.tile[3] < fieldstuff.areaZ)
+        //else if(World::map.tile[4] > fieldstuff.areaX && World::map.tile[5] < fieldstuff.areaZ)
             eastarea(field, f, xPos,zPos);
-        //else if(World::tile[2] < World::areaX && World::tile[3] < World::areaZ)
         else if(World::map.tile[2] < fieldstuff.areaX && World::map.tile[3] < fieldstuff.areaZ)
+        //else if(World::map.tile[4] < fieldstuff.areaX && World::map.tile[5] < fieldstuff.areaZ)
             northarea(field, f, xPos,zPos);
     }
     glPopMatrix();
