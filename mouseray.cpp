@@ -6,6 +6,8 @@ Mouseray::Mouseray(){
 
 void Mouseray::calculateGLCoords(int x, int y){
     //glClear(GL_DEPTH_BUFFER_BIT);
+    //glFlush();
+    //glFinish();
     glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
     glGetDoublev(GL_PROJECTION_MATRIX, projection);
     glGetIntegerv(GL_VIEWPORT, viewport);
@@ -32,7 +34,21 @@ std::vector<float> Mouseray::calculateGLCoordsTest(int x, int y){
 }
 
 void Mouseray::intersect(std::vector<float> in){
-    float x, y, z, r, t, xx, yy, zz;
+    float t,x,y,z;
+    t = (-World::view.eyeY)/in[1];
+    x = World::view.eyeX + (t*in[0]);
+    y = 0;
+    z = World::view.eyeZ + (t*in[2]);
+    x -= World::map.x;
+    z -= World::map.z;
+    if(x < 0) x = 0;
+    if(x > World::map.range-1) x = World::map.range-1;
+    if(z < 0) z = 0;
+    if(z > World::map.range-1) z = World::map.range-1;
+
+    World::map.tile = {(float)floor(x),(float)floor(z), (float)x,(float)z, x,z};
+
+    /*float x, y, z, r, t, xx, yy, zz;
     x = in[0];
     y = in[1];
     z = in[2];
@@ -49,10 +65,10 @@ void Mouseray::intersect(std::vector<float> in){
     if(txx > World::map.range-1) txx = World::map.range-1;
     if(tzz < 0) tzz = 0;
     if(tzz > World::map.range-1) tzz = World::map.range-1;
-    World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};
+    World::map.tile = {(float)floor(xx),(float)floor(zz), (float)xx,(float)zz, txx,tzz};*/
 
     //std::cout<<"TILE: "<<World::tile[0]<<"-"<<World::tile[1]<<" // "<<World::tile[2]<<"-"<<World::tile[3]<<" // "<<World::tile[4]<<"-"<<World::tile[5]<<std::endl;
-    std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
+    //std::cout<<"INTERSECTION: "<<xx<<"-"<<yy<<"-"<<zz<<std::endl;
 }
 
 std::vector<float> Mouseray::intersectTest(std::vector<float> in){

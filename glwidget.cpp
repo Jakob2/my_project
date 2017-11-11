@@ -2,7 +2,7 @@
 
 GlWidget::GlWidget(QWidget * parent) : QGLWidget(parent){
     setFocusPolicy(Qt::StrongFocus);
-    connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    connect(&timer, SIGNAL(timeout()), this, SLOT(paintGL()));
     timer.start(16);
 }
 
@@ -24,13 +24,13 @@ void GlWidget::paintGL(){
     //drawUniqueColoredGui(0,0);
     ddd();
     glScalef(World::view.zoom, World::view.zoom, World::view.zoom);
-    //ground(World::map.x, World::map.z, Tilemap::mapTiles);
-    ground(0, 0, Tilemap::mapTiles);
+    ground(World::map.x, World::map.z, Tilemap::mapTiles);
+    //ground(0, 0, Tilemap::mapTiles);
 
     crossfade();
 
-    //constructs(Construction::construct, World::map.x, World::map.z);
-    constructs(Construction::construct, 0, 0);
+    constructs(Construction::construct, World::map.x, World::map.z);
+    //constructs(Construction::construct, 0, 0);
 
 
     if(World::map.token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
@@ -51,7 +51,8 @@ void GlWidget::ddd(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(60.0, (float)World::view.width/World::view.height, 0.01, 100.0);
-    gluLookAt(World::view.eyeX+World::map.x,World::view.eyeY,World::view.eyeZ+World::map.z, 0+World::map.x,0,0+World::map.z, 0,1,0);
+    gluLookAt(World::view.eyeX,World::view.eyeY,World::view.eyeZ, 0,0,0, 0,1,0);
+    //gluLookAt(World::view.eyeX+World::map.x,World::view.eyeY,World::view.eyeZ+World::map.z, 0+World::map.x,0,0+World::map.z, 0,1,0);
     lightsOn();
 }
 
@@ -69,11 +70,12 @@ void GlWidget::dd(){
 }
 
 void GlWidget::setIntersection(int mouseX, int mouseY){
-    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     unsunkenGround(World::map.x, World::map.z);//, Tilemap::mapTiles);
     calculateGLCoords(mouseX,mouseY);
-    glClear(GL_DEPTH_BUFFER_BIT);
-    paintGL();
+    //glClear(GL_DEPTH_BUFFER_BIT);
+    //paintGL();
+    updateGL();
 }
 
 std::vector<float> GlWidget::setIntersectionTest(int mouseX, int mouseY){
@@ -306,4 +308,5 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
             setIntersection(moveWinX,moveWinY);
         //}
     }
+    swapBuffers();
 }
