@@ -6,7 +6,7 @@
 #include "db.h"
 #include "shape.h"
 
-class Construction// : public Db//, private Shape
+class Construction
 {
 public:
     Construction();
@@ -30,8 +30,6 @@ private:
     QString id();
 
     bool lightRadius(float x, float z);
-
-    //test
 };
 
 #endif // CONSTRUCTION_H

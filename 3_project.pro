@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     gui.cpp \
     field.cpp \
     way.cpp \
-    shader.cpp
+    shader.cpp \
+    house.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -40,7 +41,8 @@ HEADERS  += mainwindow.h \
     gui.h \
     field.h \
     way.h \
-    shader.h
+    shader.h \
+    house.h
 
 FORMS    += mainwindow.ui
 

@@ -2,8 +2,8 @@
 
 GlWidget::GlWidget(QWidget * parent) : QGLWidget(parent){
     setFocusPolicy(Qt::StrongFocus);
-    connect(&timer, SIGNAL(timeout()), this, SLOT(paintGL()));
-    timer.start(16);
+    //connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    //timer.start(16);
 }
 
 void GlWidget::initializeGL(){
@@ -14,6 +14,9 @@ void GlWidget::initializeGL(){
     glDepthFunc(GL_LESS);
     setMouseTracking(true);
     //Db::initDb();
+
+    House test(1);
+    housesOnMap.push_back(test);
 }
 
 void GlWidget::paintGL(){
@@ -31,6 +34,7 @@ void GlWidget::paintGL(){
 
     constructs(Construction::construct, World::map.x, World::map.z);
     //constructs(Construction::construct, 0, 0);
+    housesOnMap[0].renderHouse(World::map.x, World::map.z);
 
 
     if(World::map.token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
