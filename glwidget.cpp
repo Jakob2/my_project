@@ -196,7 +196,7 @@ void GlWidget::buildWay(){
         }
         waystuff.init = false;
         if(!waystuff.build){
-            std::cout<<"BUILD THE WAY"<<std::endl;
+            //std::cout<<"BUILD THE WAY"<<std::endl;
             for(auto i : waystuff.spanZ) std::cout<<"way x: "<<i.toStdString()<<std::endl;
             for(int x=0; x<(int)waystuff.spanX.size(); x++){
                 insertWay(QString::number(World::map.map), Way::way, waystuff.spanX[x],waystuff.baseZ, QString::number(90));
@@ -304,12 +304,18 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
     moveWinX = event->pos().x();
     moveWinY = event->pos().y();
     onMenu(moveWinX);
-    if(World::gui.hoverCompass == 1 && World::mouse.pressed) turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    if(World::gui.hoverCompass == 1 && World::mouse.pressed){
+        updateGL();
+        turnCamera(mouseToMenuGrid(moveWinX,moveWinY));
+    }
     //if(onMenu(moveWinX)) drawUniqueColoredGui(moveWinX,moveWinY);
     if(World::map.token && !World::mouse.onMenu){
         //if(onTilemap(moveWinX,moveWinY)){
             setIntersection(moveWinX,moveWinY);
+            swapBuffers();
         //}
     }
-    updateGL();
+    //swapBuffers();
+    //paintGL();
+    //updateGL();
 }

@@ -87,8 +87,9 @@ void Way::insertWay(QString map, std::vector<std::vector<std::vector<float>>> &w
             nY = QString::number(way[i][5][1]);
             nZ = QString::number(way[i][5][2]);
 
-            if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn, nX,nY,nZ) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+", "+nX+","+nY+","+nZ+" )")) std::cout<<"way inserted"<<std::endl;
-            else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
+            query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn, nX,nY,nZ) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+", "+nX+","+nY+","+nZ+" )");
+            //if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, turn, nX,nY,nZ) VALUES ("+mid+", "+map+", '7', "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+","+turn+", "+nX+","+nY+","+nZ+" )")) std::cout<<"way inserted"<<std::endl;
+            //else qDebug()<<"insert way error: "<<query.lastError()<<" / "<<query.lastQuery();
         //}
     }
 }
@@ -326,8 +327,9 @@ void Way::setWaySpanZ(int bX, int sZ, int sZZ){
 QString Way::id(){
     int id = 0;
     QSqlQuery query;
-    if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
-    else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("SELECT MAX(id) FROM "+Db::mapTable+"");
+    //if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
+    //else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) id = query.value(0).toInt();
     return QString::number(id+1);
 }

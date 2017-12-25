@@ -21,8 +21,9 @@ void Tilemap::selectMapTiles(){
     setMapTiles();
     int x, z, color, open, traverse;
     QSqlQuery query;
-    if(query.exec("SELECT x, z, color, open, traverse FROM "+Db::tilesTable+"")) std::cout<<"tiles selected"<<std::endl;
-    else qDebug()<<"select tiles error: "<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("SELECT x, z, color, open, traverse FROM "+Db::tilesTable+"");
+    //if(query.exec("SELECT x, z, color, open, traverse FROM "+Db::tilesTable+"")) std::cout<<"tiles selected"<<std::endl;
+    //else qDebug()<<"select tiles error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         x = query.value(0).toInt();
         z = query.value(1).toInt();

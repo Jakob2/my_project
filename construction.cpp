@@ -23,12 +23,14 @@ void Construction::selectConstructs(QString map){
     int index = 0;
     int range;
     QSqlQuery query;
-    if(query.exec("SELECT COUNT(*) FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"construct range selected"<<std::endl;
-    else qDebug()<<"construct range error: "<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("SELECT COUNT(*) FROM "+Db::mapTable+" WHERE map="+map+"");
+    //if(query.exec("SELECT COUNT(*) FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"construct range selected"<<std::endl;
+    //else qDebug()<<"construct range error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()) range = query.value(0).toInt();
     setConstruct(range);
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b, nX,nY,nZ FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
-    else qDebug()<<"select construct error: "<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b, nX,nY,nZ FROM "+Db::mapTable+" WHERE map="+map+"");
+    //if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b, nX,nY,nZ FROM "+Db::mapTable+" WHERE map="+map+"")) std::cout<<"constrcuts selected"<<std::endl;
+    //else qDebug()<<"select construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         Construction::construct[index][0][0] = query.value(0).toFloat(); //ax
         Construction::construct[index][0][1] = query.value(1).toFloat(); //ay
@@ -87,8 +89,9 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
     for(int i=0; i<range; i++){
         test[i].resize(18);
     }
-    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
-    else qDebug()<<"select name error: "<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name="+name+"");
+    //if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ FROM "+Db::constructsTable+" WHERE name="+name+"")) std::cout<<"name selected"<<std::endl;
+    //else qDebug()<<"select name error: "<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         for(int i=0; i<18; i++){
             test[index][i] = query.value(i).toFloat();
@@ -120,17 +123,19 @@ void Construction::insertConstruct(QString map, QString name, QString x, QString
         nY = QString::number(test[i][16]);
         nZ = QString::number(test[i][17]);
 
-        std::cout<<"NORMALS "<<nX.toStdString()<<" - "<<nY.toStdString()<<" - "<<nZ.toStdString()<<std::endl;
+        //std::cout<<"NORMALS "<<nX.toStdString()<<" - "<<nY.toStdString()<<" - "<<nZ.toStdString()<<std::endl;
 
-        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )")) std::cout<<"construct inserted"<<std::endl;
-        else qDebug()<<"insert construct error: "<<query.lastError()<<" / "<<query.lastQuery();
+        query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )");
+        //if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )")) std::cout<<"construct inserted"<<std::endl;
+        //else qDebug()<<"insert construct error: "<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
 
 void Construction::updateTilesOpen(QString x, QString z){
     QSqlQuery query;
-    if(query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z)) std::cout<<"tiles open updated"<<std::endl;
-    else qDebug()<<"update tiles open error"<<query.lastError()<<" / "<<query.lastQuery();
+    query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z);
+    //if(query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z)) std::cout<<"tiles open updated"<<std::endl;
+    //else qDebug()<<"update tiles open error"<<query.lastError()<<" / "<<query.lastQuery();
 }
 
 void Construction::deleteConstruct(QString id){
