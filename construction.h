@@ -9,6 +9,9 @@
 class Construction
 {
 public:
+    void selectAllConstructions();
+    std::vector<int> namesOnMap;
+
     Construction();
     static std::vector<std::vector<std::vector<float>>> construct;
     void setConstruct(int size);

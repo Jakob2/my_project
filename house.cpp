@@ -5,14 +5,15 @@ House::House(){
 }
 
 House::House(int name){
-    selectHouse(name);
+    selectHouse(name, 1);
 }
 
-void House::selectHouse(int name){
-    initPolygon(6);
+void House::selectHouse(int name, int map){
+    initPolygon(7);
     int index = 0;
     QSqlQuery query;
-    if(query.exec("select ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, ax,ay,az, ax,ax, r,g,b, nX,nY,nZ from "+Db::constructsTable+" where name = "+QString::number(name))) std::cout<<"house selected by name"<<std::endl;
+    //if(query.exec("select ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, ax,ay,az, ax,ax, r,g,b, nX,nY,nZ from "+Db::constructsTable+" where name = "+QString::number(name))) std::cout<<"house selected by name"<<std::endl;
+    if(query.exec("SELECT ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, x,y,z, id,turn, r,g,b, nX,nY,nZ FROM "+Db::mapTable+" WHERE name = "+QString::number(name)+" and map="+QString::number(map)+"")) std::cout<<"house selected by name"<<std::endl;
     else qDebug()<<"select house by name error"<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         polygon[index][0][0] = query.value(0).toFloat(); //ax
@@ -51,15 +52,16 @@ void House::selectHouse(int name){
 }
 
 void House::renderHouse(float xPos, float zPos){
+    std::cout<<"render call"<<std::endl;
     float x,y,z, r, g, b;
     int turn;
     for(int i=0; i<(int)polygon.size(); i++){
-        /*x = polygon[4][0]-0.5;
-        y = polygon[4][1];
-        z = polygon[4][2]-0.5;*/
-        x = .5;
+        x = polygon[i][4][0]-0.5;
+        y = polygon[i][4][1];
+        z = polygon[i][4][2]-0.5;
+        /*x = .5;
         y = 0;
-        z = .5;
+        z = .5;*/
         turn = polygon[i][5][1];
         r = polygon[i][6][0];
         g = polygon[i][6][1];
@@ -91,7 +93,7 @@ void House::renderHouse(float xPos, float zPos){
             corpus(i, x,y,z, xPos,zPos);
         }
 
-        glEnd();
+        //glEnd();
         glPopMatrix();
      }
 }

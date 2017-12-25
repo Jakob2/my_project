@@ -2,6 +2,27 @@
 
 std::vector<std::vector<std::vector<float>>> Construction::construct;
 
+void Construction::selectAllConstructions(){
+    std::vector<int> idsOnMap;
+    idsOnMap.clear();
+    namesOnMap.clear();
+    QSqlQuery query;
+    if(query.exec("select distinct(id) from "+Db::mapTable)) std::cout<<"ids on map selected"<<std::endl;
+    else qDebug()<<"select ids on map error"<<query.lastError()<<" / "<<query.lastQuery();
+    while(query.next()){
+        idsOnMap.push_back(query.value(0).toInt());
+        //std::cout<<"ids on map: "<<query.value(0).toInt()<<std::endl;
+    }
+    for(int i : idsOnMap){
+        if(query.exec("select distinct(name) from "+Db::mapTable+" where id = "+QString::number(i))) std::cout<<"name selected by id"<<std::endl;
+        else qDebug()<<"select name by id error"<<query.lastError()<<" / "<<query.lastQuery();
+        while(query.next()){
+            namesOnMap.push_back(query.value(0).toInt());
+            //std::cout<<"names on map: "<<query.value(0).toInt()<<std::endl;
+        }
+    }
+}
+
 Construction::Construction(){
     selectConstructs(QString::number(1));
 }

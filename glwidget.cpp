@@ -15,8 +15,14 @@ void GlWidget::initializeGL(){
     setMouseTracking(true);
     //Db::initDb();
 
-    House test(1);
-    housesOnMap.push_back(test);
+    //House test(1);
+    //housesOnMap.push_back(test);
+
+    selectAllConstructions();
+    for(int i : namesOnMap){
+        House test(i);
+        housesOnMap.push_back(test);
+    }
 }
 
 void GlWidget::paintGL(){
@@ -32,8 +38,11 @@ void GlWidget::paintGL(){
 
     crossfade();
 
-    constructs(Construction::construct, World::map.x, World::map.z);
+    //constructs(Construction::construct, World::map.x, World::map.z);
     //constructs(Construction::construct, 0, 0);
+    for(auto i : housesOnMap){
+        i.renderHouse(World::map.x, World::map.z);
+    }
     housesOnMap[0].renderHouse(World::map.x, World::map.z);
 
 

@@ -12,7 +12,7 @@ public:
     House();
     House(int name);
 
-    void selectHouse(int name);
+    void selectHouse(int name, int map);
     void renderHouse(float xPos, float zPos);
 
 private:
