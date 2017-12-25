@@ -10,17 +10,17 @@ class Construction
 {
 public:
     void selectAllConstructions();
-    std::vector<int> namesOnMap;
+    std::vector<int> idsOnMap;
 
     Construction();
-    static std::vector<std::vector<std::vector<float>>> construct;
-    void setConstruct(int size);
-    void selectConstructs(QString map);
+    static std::vector<std::vector<std::vector<float>>> construct; //deprecated
+    void setConstruct(int size); //deprecated
+    void selectConstructs(QString map); //deprecated
     void insertConstruct(QString map, QString name, QString x, QString z);
     void updateTilesOpen(QString x, QString z);
     void deleteConstruct(QString id);
 
-    void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos);
+    void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos); //deprecated
     std::vector<std::vector<std::vector<float>>> token;
     void initToken(int size);
     void selectToken(QString constructId);

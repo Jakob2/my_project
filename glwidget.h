@@ -13,6 +13,10 @@
 class GlWidget : public QGLWidget, public Tilemap, public Mouseray, public Gui, public Shader
 {
 public:
+    void refreshConstructionVectors();
+    std::vector<House> housesOnMap;
+    std::vector<NewHouse> newHousesOnMap;
+
     explicit GlWidget(QWidget * parent = 0);
 
     void initializeGL();
@@ -24,7 +28,6 @@ public:
     void mouseReleaseEvent(QMouseEvent * event);
     void mouseMoveEvent(QMouseEvent *event);
 
-    std::vector<House> housesOnMap;
 
 private:
     Tilemap tilemap;

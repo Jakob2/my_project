@@ -1,5 +1,14 @@
 #include "glwidget.h"
 
+void GlWidget::refreshConstructionVectors(){
+    housesOnMap.clear();
+    selectAllConstructions();
+    for(int i : idsOnMap){
+        House test(i);
+        housesOnMap.push_back(test);
+    }
+}
+
 GlWidget::GlWidget(QWidget * parent) : QGLWidget(parent){
     setFocusPolicy(Qt::StrongFocus);
     //connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
@@ -18,11 +27,7 @@ void GlWidget::initializeGL(){
     //House test(1);
     //housesOnMap.push_back(test);
 
-    selectAllConstructions();
-    for(int i : namesOnMap){
-        House test(i);
-        housesOnMap.push_back(test);
-    }
+    refreshConstructionVectors();
 }
 
 void GlWidget::paintGL(){
@@ -43,7 +48,11 @@ void GlWidget::paintGL(){
     for(auto i : housesOnMap){
         i.renderHouse(World::map.x, World::map.z);
     }
-    housesOnMap[0].renderHouse(World::map.x, World::map.z);
+    //housesOnMap[0].renderHouse(World::map.x, World::map.z);
+
+    for(auto i : newHousesOnMap){
+        i.renderNewHouse(World::map.x, World::map.z);
+    }
 
 
     if(World::map.token) wireToken(token, World::map.tile[4], World::map.tile[5], World::map.x, World::map.z, Tilemap::mapTiles);
@@ -145,11 +154,14 @@ void GlWidget::createToken(QMouseEvent *event){
 }
 
 void GlWidget::buildAHouse(){
-    insertConstruct(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
+    /*insertConstruct(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
     updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]));
-    selectConstructs(QString::number(1));
-    selectMapTiles();
+    //selectConstructs(QString::number(1));
+    refreshConstructionVectors();
+    selectMapTiles();*/
     World::map.token = false;
+    NewHouse house(World::gui.buildingOption);
+    newHousesOnMap.push_back(house);
 }
 
 void GlWidget::crackHouse(){
