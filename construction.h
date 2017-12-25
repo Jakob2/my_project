@@ -30,6 +30,8 @@ private:
     QString id();
 
     bool lightRadius(float x, float z);
+
+    //test
 };
 
 #endif // CONSTRUCTION_H
