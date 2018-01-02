@@ -160,18 +160,39 @@ void GlWidget::buildAHouse(){
     refreshConstructionVectors();
     selectMapTiles();*/
     World::map.token = false;
-    NewHouse house(World::gui.buildingOption);
+    int newId = idsOnMap[idsOnMap.size()-1];
+    newId++;
+    idsOnMap.push_back(newId);
+    std::cout<<"NEW HOUSE ID: "<<newId<<std::endl;
+    NewHouse house(World::gui.buildingOption, newId);
     newHousesOnMap.push_back(house);
 }
 
 void GlWidget::crackHouse(){
-    deleteConstruct(QString::number(World::map.constructId));
+    /*deleteConstruct(QString::number(World::map.constructId));
     selectConstructs(QString::number(World::map.map));
     updateOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]), QString::number(1));
     selectMapTiles();
     World::map.token = false;
     World::gui.buildingOption = -1;
-    std::cout<<"CRACK ID: "<<World::gui.buildingOption<<std::endl;
+    std::cout<<"CRACK ID: "<<World::gui.buildingOption<<std::endl;*/
+    std::cout<<"delete id: "<<World::map.constructId<<std::endl;
+    int index = 0;
+    for(auto i : housesOnMap){
+        if(i.houseId == World::map.constructId){
+            housesOnMap.erase(housesOnMap.begin() + index);
+        }
+        index++;
+    }
+    index = 0;
+    for(auto i : newHousesOnMap){
+        if(i.houseId == World::map.constructId){
+            newHousesOnMap.erase(newHousesOnMap.begin() + index);
+        }
+        index++;
+    }
+    World::map.token = false;
+    World::gui.buildingOption = -1;
 }
 
 void GlWidget::activateField(){
@@ -286,6 +307,7 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     case Qt::Key_L:
         for(auto i: newHousesOnMap){
             i.saveNewHouse(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
+            i.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]));
         }
         break;
     }
@@ -324,6 +346,9 @@ void GlWidget::mousePressEvent(QMouseEvent *event){
 
     resetGuiSelection();
     updateGL();
+
+    std::cout<<"delete id: "<<World::map.constructId<<std::endl;
+
 }
 
 void GlWidget::mouseReleaseEvent(QMouseEvent *event){

@@ -16,7 +16,7 @@ public:
     static std::vector<std::vector<std::vector<float>>> construct; //deprecated
     void setConstruct(int size); //deprecated
     void selectConstructs(QString map); //deprecated
-    void insertConstruct(QString map, QString name, QString x, QString z);
+    void insertConstruct(QString map, QString name, QString x, QString z); //deprecated
     void updateTilesOpen(QString x, QString z);
     void deleteConstruct(QString id);
 

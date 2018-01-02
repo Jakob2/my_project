@@ -2,6 +2,7 @@
 
 House::House(int id){
     selectHouse(id, 1);
+    houseId = id;
 }
 
 void House::selectHouse(int id, int map){
@@ -101,6 +102,7 @@ void House::corpus(int i, float x, float y, float z, float xPos, float zPos){
         glVertex3f(xPos+x+polygon[i][2][0], y+polygon[i][2][1], zPos+z+polygon[i][2][2]);
         glVertex3f(xPos+x+polygon[i][3][0], y+polygon[i][3][1], zPos+z+polygon[i][3][2]);
     glEnd();
+    if(polygon[i][4][0]-1 == World::map.tile[4] && polygon[i][4][2]-1 == World::map.tile[5]) World::map.constructId = polygon[i][5][0];
 }
 
 int House::sizeOfHousePolygon(int id){
@@ -128,7 +130,8 @@ void House::initPolygon(int size){
 }
 
 
-NewHouse::NewHouse(int name){
+NewHouse::NewHouse(int name, int id){
+    houseId = id;
     selectHouseByName(name);
 }
 
@@ -178,6 +181,7 @@ void NewHouse::renderNewHouse(float xPos, float zPos){
 void NewHouse::saveNewHouse(QString map, QString name, QString x, QString z){
     QSqlQuery query;
     QString ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, mid, r,g,b, nX,nY,nZ;
+    mid = id();
     for(int i=0; i<(int)polygon.size(); i++){
         ax = QString::number(polygon[i][0][0]);
         ay = QString::number(polygon[i][0][1]);
@@ -197,10 +201,14 @@ void NewHouse::saveNewHouse(QString map, QString name, QString x, QString z){
         nX = QString::number(polygon[i][7][0]);
         nY = QString::number(polygon[i][7][1]);
         nZ = QString::number(polygon[i][7][2]);
-        mid = id();
         if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )")) std::cout<<"house part inserted"<<std::endl;
         else qDebug()<<query.lastError()<<" / "<<query.lastQuery();
     }
+}
+
+void NewHouse::updateTilesOpen(QString x, QString z){
+    QSqlQuery query;
+    query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z);
 }
 
 void NewHouse::initPolygon(int size){
@@ -244,7 +252,7 @@ void NewHouse::selectHouseByName(int name){
         polygon[index][4][1] = 0; //map y
         polygon[index][4][2] = World::map.tile[5]+1; //map z
 
-        polygon[index][5][0] = -2; //id
+        polygon[index][5][0] = houseId; //id
         polygon[index][5][1] = 0; //turn
         polygon[index][5][2] = 0; //free slot
 
@@ -271,12 +279,13 @@ void NewHouse::corpus(int i, float x, float y, float z, float xPos, float zPos){
         glVertex3f(xPos+x+polygon[i][2][0], y+polygon[i][2][1], zPos+z+polygon[i][2][2]);
         glVertex3f(xPos+x+polygon[i][3][0], y+polygon[i][3][1], zPos+z+polygon[i][3][2]);
     glEnd();
+    if(polygon[i][4][0]-1 == World::map.tile[4] && polygon[i][4][2]-1 == World::map.tile[5]) World::map.constructId = polygon[i][5][0];
 }
 
 int NewHouse::sizeOfHousePolygon(int name){
-    int size;
+    int size = 0;
     QSqlQuery query;
-    if(query.exec("select count(ax) from "+Db::mapTable+" where id = "+QString::number(name))) std::cout<<"house polygon size selected"<<std::endl;
+    if(query.exec("select count(ax) from "+Db::constructsTable+" where name = "+QString::number(name))) std::cout<<"house polygon size selected"<<std::endl;
     else qDebug()<<"select house polygon size error"<<query.lastError()<<" / "<<query.lastQuery();
     while(query.next()){
         size = query.value(0).toInt();
