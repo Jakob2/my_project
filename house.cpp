@@ -90,6 +90,11 @@ void House::renderHouse(float xPos, float zPos){
     }
 }
 
+void House::updateTilesOpen(QString x, QString z, QString state){
+    QSqlQuery query;
+    query.exec("update "+Db::tilesTable+" set open = "+state+" where x = "+x+" and z = "+z);
+}
+
 void House::corpus(int i, float x, float y, float z, float xPos, float zPos){
     float nx,ny,nz;
     nx = polygon[i][7][0]*-1;
@@ -206,9 +211,9 @@ void NewHouse::saveNewHouse(QString map, QString name, QString x, QString z){
     }
 }
 
-void NewHouse::updateTilesOpen(QString x, QString z){
+void NewHouse::updateTilesOpen(QString x, QString z, QString state){
     QSqlQuery query;
-    query.exec("update "+Db::tilesTable+" set open = 0 where x = "+x+" and z = "+z);
+    query.exec("update "+Db::tilesTable+" set open = "+state+" where x = "+x+" and z = "+z);
 }
 
 void NewHouse::initPolygon(int size){

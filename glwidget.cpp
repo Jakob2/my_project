@@ -165,7 +165,9 @@ void GlWidget::buildAHouse(){
     idsOnMap.push_back(newId);
     std::cout<<"NEW HOUSE ID: "<<newId<<std::endl;
     NewHouse house(World::gui.buildingOption, newId);
+    house.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]), QString::number(0));
     newHousesOnMap.push_back(house);
+    selectMapTiles();
 }
 
 void GlWidget::crackHouse(){
@@ -181,6 +183,8 @@ void GlWidget::crackHouse(){
     for(auto i : housesOnMap){
         if(i.houseId == World::map.constructId){
             housesOnMap.erase(housesOnMap.begin() + index);
+            i.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]),QString::number(1));
+            selectMapTiles();
         }
         index++;
     }
@@ -188,6 +192,8 @@ void GlWidget::crackHouse(){
     for(auto i : newHousesOnMap){
         if(i.houseId == World::map.constructId){
             newHousesOnMap.erase(newHousesOnMap.begin() + index);
+            i.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]),QString::number(1));
+            selectMapTiles();
         }
         index++;
     }
@@ -304,10 +310,10 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     case Qt::Key_V:
         World::light.diffuse -= 0.05;
         break;
-    case Qt::Key_L:
+    case Qt::Key_F5:
         for(auto i: newHousesOnMap){
             i.saveNewHouse(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
-            i.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]));
+            i.updateTilesOpen(QString::number(World::map.tile[4]), QString::number(World::map.tile[5]),QString::number(0));
         }
         break;
     }

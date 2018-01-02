@@ -12,6 +12,7 @@ public:
     House(int id);
     void renderHouse(float xPos, float zPos);
     int houseId;
+    void updateTilesOpen(QString x, QString z, QString state);
 
 private:
     int vectorMainSize = 8;
@@ -29,7 +30,7 @@ public:
     NewHouse(int name, int id);
     void renderNewHouse(float xPos, float zPos);
     void saveNewHouse(QString map, QString name, QString x, QString z);
-    void updateTilesOpen(QString x, QString z);
+    void updateTilesOpen(QString x, QString z, QString state);
     int houseId;
 
 private:

@@ -17,8 +17,8 @@ public:
     void setConstruct(int size); //deprecated
     void selectConstructs(QString map); //deprecated
     void insertConstruct(QString map, QString name, QString x, QString z); //deprecated
-    void updateTilesOpen(QString x, QString z);
-    void deleteConstruct(QString id);
+    void updateTilesOpen(QString x, QString z); //deprecated
+    void deleteConstruct(QString id); //deprecated
 
     void constructs(std::vector<std::vector<std::vector<float>>> &construct, float xPos, float zPos); //deprecated
     std::vector<std::vector<std::vector<float>>> token;
