@@ -6,7 +6,6 @@
 #include "db.h"
 #include "shape.h"
 
-
 class House
 {
 public:
@@ -28,6 +27,7 @@ class NewHouse
 public:
     NewHouse(int name);
     void renderNewHouse(float xPos, float zPos);
+    void saveNewHouse(QString map, QString name, QString x, QString z);
 
 private:
     int vectorMainSize = 8;
@@ -37,6 +37,7 @@ private:
     void selectHouseByName(int name);
     void corpus(int i, float x, float y, float z, float xPos, float zPos);
     int sizeOfHousePolygon(int name);
+    QString id();
 };
 
 #endif // HOUSE_H

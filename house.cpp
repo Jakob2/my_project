@@ -166,11 +166,40 @@ void NewHouse::renderNewHouse(float xPos, float zPos){
         }else{
             //if(distance > 4) glColor3f(r-.5,g-.5,b-.5);
             //else glColor3f(r,g,b);
-            glColor3f(r,g,b);
+            glColor3f(r,g,b
+                      );
             corpus(i, x,y,z, xPos,zPos);
         }
 
      glPopMatrix();
+    }
+}
+
+void NewHouse::saveNewHouse(QString map, QString name, QString x, QString z){
+    QSqlQuery query;
+    QString ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, mid, r,g,b, nX,nY,nZ;
+    for(int i=0; i<(int)polygon.size(); i++){
+        ax = QString::number(polygon[i][0][0]);
+        ay = QString::number(polygon[i][0][1]);
+        az = QString::number(polygon[i][0][2]);
+        bx = QString::number(polygon[i][1][0]);
+        by = QString::number(polygon[i][1][1]);
+        bz = QString::number(polygon[i][1][2]);
+        cx = QString::number(polygon[i][2][0]);
+        cy = QString::number(polygon[i][2][1]);
+        cz = QString::number(polygon[i][2][2]);
+        dx = QString::number(polygon[i][3][0]);
+        dy = QString::number(polygon[i][3][1]);
+        dz = QString::number(polygon[i][3][2]);
+        r = QString::number(polygon[i][6][0]);
+        g = QString::number(polygon[i][6][1]);
+        b = QString::number(polygon[i][6][2]);
+        nX = QString::number(polygon[i][7][0]);
+        nY = QString::number(polygon[i][7][1]);
+        nZ = QString::number(polygon[i][7][2]);
+        mid = id();
+        if(query.exec("INSERT INTO "+Db::mapTable+" (id, map, name, x,y,z, ax,ay,az, bx,by,bz, cx,cy,cz, dx,dy,dz, r,g,b, nX,nY,nZ) VALUES ("+mid+", "+map+", "+name+", "+x+",0,"+z+", "+ax+","+ay+","+az+", "+bx+","+by+","+bz+", "+cx+","+cy+","+cz+", "+dx+","+dy+","+dz+", "+r+","+g+","+b+", "+nX+","+nY+","+nZ+" )")) std::cout<<"house part inserted"<<std::endl;
+        else qDebug()<<query.lastError()<<" / "<<query.lastQuery();
     }
 }
 
@@ -215,7 +244,7 @@ void NewHouse::selectHouseByName(int name){
         polygon[index][4][1] = 0; //map y
         polygon[index][4][2] = World::map.tile[5]+1; //map z
 
-        polygon[index][5][0] = -1; //id
+        polygon[index][5][0] = -2; //id
         polygon[index][5][1] = 0; //turn
         polygon[index][5][2] = 0; //free slot
 
@@ -253,4 +282,13 @@ int NewHouse::sizeOfHousePolygon(int name){
         size = query.value(0).toInt();
     }
     return size;
+}
+
+QString NewHouse::id(){
+    int id = 0;
+    QSqlQuery query;
+    if(query.exec("SELECT MAX(id) FROM "+Db::mapTable+"")) std::cout<<"max id selected"<<std::endl;
+    else qDebug()<<"select max id error: "<<query.lastError()<<" / "<<query.lastQuery();
+    while(query.next()) id = query.value(0).toInt();
+    return QString::number(id+1);
 }

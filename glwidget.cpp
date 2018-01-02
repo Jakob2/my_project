@@ -283,6 +283,11 @@ void GlWidget::keyPressEvent(QKeyEvent *event){
     case Qt::Key_V:
         World::light.diffuse -= 0.05;
         break;
+    case Qt::Key_L:
+        for(auto i: newHousesOnMap){
+            i.saveNewHouse(QString::number(World::map.map), QString::number(World::gui.buildingOption),QString::number(World::map.tile[4]+1),QString::number(World::map.tile[5]+1));
+        }
+        break;
     }
     //std::cout<<"ambient: "<<World::light.ambient<<" - diffuse: "<<World::light.diffuse<<" - height: "<<World::light.height<<std::endl;
     //std::cout<<"AREA_X: "<<World::areaX<<" - AREA_Z: "<<World::areaZ<<std::endl;
@@ -340,6 +345,10 @@ void GlWidget::mouseMoveEvent(QMouseEvent *event){
             swapBuffers();
         //}
     }
+
+    //readPixelColor(moveWinX,moveWinY);
+    //hoverGui();
+
     //swapBuffers();
     //paintGL();
     //updateGL();
